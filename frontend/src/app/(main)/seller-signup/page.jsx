@@ -6,4 +6,4 @@ const SellerSignup = () => {
   )
 }
 
-export default SellerSignup
+export default SellerSignup;
