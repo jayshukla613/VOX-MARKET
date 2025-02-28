@@ -1,9 +1,10 @@
 'use client'
 import React from 'react'
 import { IconBrandGoogle } from '@tabler/icons-react';
-import {Form, useFormik } from 'formik';
+import { useFormik } from 'formik';
 
 import *as Yup from 'yup';
+import Link from 'next/link';
 
 
 
@@ -40,10 +41,9 @@ const usersignup = () => {
       password: '',
       confirmPassword: ''
       },
-      onSubmit: (values, {resetForm, setSubmitting }) => {
+      onSubmit: (values) => {
         console.log(values);
-        resetForm();
-        setSubmitting(false);
+        
         },
         validationSchema: SignupSchema
     });
@@ -59,93 +59,97 @@ const usersignup = () => {
       <h2 className="text-2xl font-bold mb-6 text-center text-blue-600">
         Sign Up
       </h2>
-      <Form onSubmit={signupform.handleSubmit}>
+      <form onSubmit={signupform.handleSubmit}>
         <div className="mb-4">
-          <label className="block text-gray-700 font-medium">Full Name</label>
+          <label htmlFor="name" className="block text-gray-700 font-medium">Full Name</label>
           <input
+          id="name"
             type="text"
-            name="name"
-            values={values.name}
-            onChange={handleChange}
+         
+            value={signupform.values.name}
+            onChange={signupform.handleChange}
 
             className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
             placeholder="First and Last Name"
           />
-          {errors.touched && errors.name}
-          <p>{errors.name}</p>
+          {(signupform.touched.name && signupform.errors.name) &&
+          <p>{signupform.errors.name}</p>}
         </div>
         <div className="mb-4">
-          <label className="block text-gray-700 font-medium">
+          <label htmlFor="email" className="block text-gray-700 font-medium">
             Email Address
           </label>
           <input
+          id="email"
             type="email"
-            name="email"
-            values={values.email}
-            onChange={handleChange}
+           
+             value={signupform.values.email}
+            onChange={signupform.handleChange}
             className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
             placeholder="Email Address"
           />
-          {errors.touched && errors.email}
-          <p>{errors.email}</p>
+         {(signupform.touched.email && signupform.errors.email) &&
+          <p>{signupform.errors.email}</p>}
         </div>
         <div className="mb-4">
-          <label className="block text-gray-700 font-medium">Password</label>
+          <label htmlFor="password" className="block text-gray-700 font-medium">Password</label>
           <input
+          id="password"
             type="password"
-            name='password'
-            values={values.password}
-            onChange={handleChange}
+           
+            value={signupform.values.password}
+            onChange={signupform.handleChange}
             className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
             placeholder="Password"
           />
-          {errors.touched && errors.password}
-          <p>{errors.password}</p>
+         {(signupform.touched.password && signupform.errors.password) &&
+          <p>{signupform.errors.password}</p>}
         </div>
-        <div className="mb-4">
-          <label className="block text-gray-700 font-medium">
-            Confirm Password
-          </label>
+         <div className="mb-4">
+          <label htmlFor="confirmPassword" className="block text-gray-700 font-medium">confirmPassword</label>
           <input
+          id="confirmPassword"
             type="password"
-            name="confirmPassword"
-             values={values.confirmPassword}
-            onChange={handleChange}
+           
+            value={signupform.values.confirmPassword}
+            onChange={signupform.handleChange}
             className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-            placeholder="Confirm Password"
+            placeholder="confirm-Password"
           />
-          {errors.touched && errors.confirmPassword}
-          <p>{errors.confirmPassword}</p>
+         {(signupform.touched.confirmPassword && signupform.errors.confirmPassword) &&
+          <p>{signupform.errors.confirmPassword}</p>}
         </div>
         <div className="mb-4">
-          <label className="block text-gray-700 font-medium">
+          <label htmlFor="phone" className="block text-gray-700 font-medium">
             Phone Number
           </label>
           <input
+          id="phone"
             type="text"
             name='phone'
-             values={values.phone}
-            onChange={handleChange}
+              value={signupform.values.phone}
+            onChange={signupform.handleChange}
             className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
             placeholder="Phone Number (Optional)"
           />
-          {errors.touched && errors.phone}
-          <p>{errors.phone}</p>
+         {(signupform.touched.phone && signupform.errors.phone) &&
+          <p>{signupform.errors.phone}</p>}
         </div>
         <div className="mb-4">
-          <label className="block text-gray-700 font-medium">
+          <label htmlFor="address" className="block text-gray-700 font-medium">
             Shipping Address
           </label>
           <input
+          id="address"
             type="text"
             name='address'
-             values={values.address}
-            onChange={handleChange}
+            value={signupform.values.address}
+            onChange={signupform.handleChange}
             className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
             placeholder="Street Address, City, State, ZIP Code (Optional)"
           />
-          {errors.touched && errors.address}
-          <p>{errors.address}</p>
+          {(signupform.touched.address && signupform.errors.address) &&
+          <p>{signupform.errors.address}</p>}
         </div>
         
         <div className="mb-4 flex items-center">
@@ -155,26 +159,27 @@ const usersignup = () => {
           />
           <label className="text-gray-700">
             I agree to the{" "}
-            <a href="#" className="text-blue-500">
+            <Link href="" className="text-blue-500">
               Terms and Conditions
-            </a>
+            </Link>
           </label>
         </div>
        
         <button
-          type="submit"
+          type='submit'
           className="w-full bg-blue-500
            text-white py-2 rounded-lg hover:bg-blue-600 transition duration-300"
+
            
         >
-          Sign Up
-        </button>
-        <div className="mt-4 text-center">
-          <button className="w-full bg-red-500 text-white py-2 rounded-lg flex items-center justify-center hover:bg-red-600 transition duration-300">
+          Sign 
+         </button>
+        {/* <div className="mt-4 text-center">
+          <button type='submit' className="w-full bg-red-500 text-white py-2 rounded-lg flex items-center justify-center hover:bg-red-600 transition duration-300">
             <IconBrandGoogle/> Sign Up with Google
           </button>
-        </div>
-      </Form>
+        </div> * */}
+      </form>
     </div>
   </div>
  

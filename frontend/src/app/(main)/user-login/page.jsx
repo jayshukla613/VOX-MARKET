@@ -10,7 +10,7 @@ const userlogin = () => {
       <h2 className="text-2xl font-bold mb-6 text-center text-blue-600">
         Sign In
       </h2>
-      <form>
+      <form onSubmit={userlogin.handlesubmit}>
         <div className="mb-4">
           <label className="block text-gray-700 font-medium">
             Email Address
@@ -41,7 +41,7 @@ const userlogin = () => {
           Sign In
         </button>
         <div className="mt-4 text-center">
-          <button className="w-full bg-red-500 text-white py-2 rounded-lg flex items-center justify-center hover:bg-red-600 transition duration-300">
+          <button type='submit' className="w-full bg-red-500 text-white py-2 rounded-lg flex items-center justify-center hover:bg-red-600 transition duration-300">
             <IconBrandGoogleFilled/> Sign In with Google
           </button>
         </div>
