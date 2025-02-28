@@ -1,8 +1,19 @@
-import Image from "next/image";
+import React from "react";
 
-export default function Home() {
+import Hero from "@/components/Hero";
+
+export default function page() {
   return (
     <>
+    <div>
+    
+      <Hero/>
+      
+      
+
+    </div>
     </>
   );
 }
+
+
