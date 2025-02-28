@@ -6,11 +6,11 @@ const Hero = () => {
       <section className="relative bg-white">
     <img
       alt="A stylish outfit displayed on a mannequin in a modern, well-lit store"
-      className="absolute inset-0 w-full h-full object-cover opacity-50"
+      className="absolute inset-0 w-full h-full object-cover "
       src="https://storage.googleapis.com/a1aa/image/EHfjni5AFRtLPOLgjfprqA9pypKrC44JcQsKwTxJs7E.jpg"
     />
     <div className="container mx-auto px-6 py-16 relative z-10 flex flex-col lg:flex-row items-start">
-      <div className="lg:w-1/3 bg-blue-900 bg-opacity-75 p-8 rounded-lg shadow-2xl text-left">
+      <div className="lg:w-1/3  p-8 rounded-lg  font-sans  text-left">
         <h2 className="text-4xl font-bold text-white leading-tight">
           Discover the Latest Trends
         </h2>

@@ -1,11 +1,12 @@
+'use client'
 import Link from 'next/link'
 import React from 'react'
 
 const Navbar = () => {
   return (
-    <div>
+    <div className=''>
         <nav className="bg-blue-800 text-white p-4">
-    <div className="container mx-auto flex justify-between items-center">
+    <div className=" mx-auto flex justify-between items-center">
       <div className="text-2xl font-bold">Vox Market</div>
       <ul className="flex space-x-4">
         <li>
@@ -35,8 +36,15 @@ const Navbar = () => {
           placeholder="Search..."
           className="px-2 py-1 rounded"
         />
-        <button className="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded">
-          Sign In
+        <button className="bg-black text-white px-8 font-bold py-2 rounded" onClick={() => {
+          window.location.href = '/user-login';
+        }}>
+          login
+        </button>
+        <button className="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded" onClick={() => {
+          window.location.href = '/user-signup';
+        }}>
+          Sign up
         </button>
       </div>
     </div>
