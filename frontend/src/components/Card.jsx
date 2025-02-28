@@ -1,7 +1,9 @@
+
+'use client'
 import React from 'react'
 import { IconStarFilled } from '@tabler/icons-react'
 
-const Card = (props) => {
+const Card = () => {
   return (
     <div>
         

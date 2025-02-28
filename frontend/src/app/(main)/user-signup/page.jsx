@@ -41,8 +41,8 @@ const usersignup = () => {
       password: '',
       confirmPassword: ''
       },
-      onSubmit: (values) => {
-        console.log(values);
+      onSubmit: (value) => {
+        console.log(value);
         
         },
         validationSchema: SignupSchema

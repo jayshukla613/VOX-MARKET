@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@hookform/resolvers": "^4.1.2",
     "@tabler/icons-react": "^3.30.0",
     "formik": "^2.4.6",
     "next": "^15.1.7",

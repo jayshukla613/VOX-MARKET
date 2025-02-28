@@ -1,8 +1,21 @@
+'use client'
 import { IconBrandGoogleFilled } from '@tabler/icons-react';
+import { useFormik } from 'formik';
 import Link from 'next/link';
 import React from 'react'
-
 const userlogin = () => {
+  const login = useFormik({
+    initialValues:{
+
+      email:"",
+      password:""
+    },
+
+    onSubmit:(value)=>{
+      console.log(value);
+      
+    }
+  })
   return (
     <div>
       <div className="min-h-screen flex items-center justify-center mt-8">
@@ -10,20 +23,26 @@ const userlogin = () => {
       <h2 className="text-2xl font-bold mb-6 text-center text-blue-600">
         Sign In
       </h2>
-      <form onSubmit={userlogin.handlesubmit}>
+      <form onSubmit={login.handleSubmit}>
         <div className="mb-4">
           <label className="block text-gray-700 font-medium">
             Email Address
           </label>
           <input
+          id='email'
+            onChange={login.handleChange}
+            value={login.values.email}
             type="email"
             className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
             placeholder="Email Address"
           />
         </div>
         <div className="mb-4">
-          <label className="block text-gray-700 font-medium">Password</label>
+          <label className="block text-gray-700 font-medium">enter Password</label>
           <input
+            id='password'
+            onChange={login.handleChange}
+            value={login.values.password}
             type="password"
             className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
             placeholder="Password"

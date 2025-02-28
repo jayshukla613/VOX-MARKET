@@ -1,3 +1,5 @@
+'use client'
+import Link from 'next/link'
 import React from 'react'
 
 const Footer = () => {
@@ -20,42 +22,46 @@ const Footer = () => {
           <h2 className="text-xl font-bold mb-4">Quick Links</h2>
           <ul>
             <li className="mb-2">
-              <a href="#" className="text-gray-400 hover:text-white">
+              <Link href="/" className="text-gray-400 hover:text-white">
                 Home
-              </a>
+              </Link>
             </li>
             <li className="mb-2">
-              <a href="#" className="text-gray-400 hover:text-white">
+              <Link href="/about" className="text-gray-400 hover:text-white">
                 About
-              </a>
+              </Link>
             </li>
             <li className="mb-2">
-              <a href="#" className="text-gray-400 hover:text-white">
+              <Link href="" className="text-gray-400 hover:text-white">
                 Services
-              </a>
+              </Link>
             </li>
             <li className="mb-2">
-              <a href="#" className="text-gray-400 hover:text-white">
+              <Link href="/contact" className="text-gray-400 hover:text-white">
                 Contact
-              </a>
+              </Link>
             </li>
           </ul>
         </div>
         {/* Contact Information */}
         <div className="w-full md:w-1/4 mb-6 md:mb-0">
-          <h2 className="text-xl font-bold mb-4">Contact Us</h2>
+          <h2 className="text-xl font-bold mb-4">Make Money with us</h2>
           <ul>
             <li className="mb-2 text-gray-400">
-              <i className="fas fa-map-marker-alt mr-2" />
-              1234 Street Name, City, State, 12345
+              <Link href="/seller-signup">Sell on Vox Market</Link>
+             
             </li>
             <li className="mb-2 text-gray-400">
-              <i className="fas fa-phone mr-2" />
-              (123) 456-7890
+            <Link href="">Sell under Vox market</Link>
+              
             </li>
             <li className="mb-2 text-gray-400">
-              <i className="fas fa-envelope mr-2" />
-              info@example.com
+            <Link href="">supply to Vox market</Link>
+              
+            </li>
+            <li className="mb-2 text-gray-400">
+            <Link href=""> Adversite your product</Link>
+              
             </li>
           </ul>
         </div>
@@ -64,19 +70,19 @@ const Footer = () => {
           <h2 className="text-xl font-bold mb-4">Privacy</h2>
           <ul>
             <li className="mb-2">
-              <a href="#" className="text-gray-400 hover:text-white">
+              <Link href="/about" className="text-gray-400 hover:text-white">
                 Privacy Policy
-              </a>
+              </Link>
             </li>
             <li className="mb-2">
-              <a href="#" className="text-gray-400 hover:text-white">
+              <Link href="" className="text-gray-400 hover:text-white">
                 Terms of Service
-              </a>
+              </Link>
             </li>
             <li className="mb-2">
-              <a href="#" className="text-gray-400 hover:text-white">
+              <Link href="" className="text-gray-400 hover:text-white">
                 Cookie Policy
-              </a>
+              </Link>
             </li>
           </ul>
         </div>
