@@ -13,7 +13,7 @@ import Link from 'next/link';
      .min(2, 'Too Short!')
      .max(50, 'Too Long!')
      .required('Required'),
-   phoneName: Yup.number()
+   phone: Yup.number()
      .min(3, 'Too Short!')
      .max(12, 'Too Long!')
      .required('Required'),
@@ -33,7 +33,7 @@ import Link from 'next/link';
 const usersignup = () => {
 
   const signupform = useFormik({
-    initialValues: {
+    initialValues:{
       name:'',
       phone:'',
       address:'',
@@ -41,8 +41,9 @@ const usersignup = () => {
       password: '',
       confirmPassword: ''
       },
-      onSubmit: (value) => {
+      onSubmit:(value,{resetForm}) => {
         console.log(value);
+        resetForm();
         
         },
         validationSchema: SignupSchema
@@ -61,9 +62,9 @@ const usersignup = () => {
       </h2>
       <form onSubmit={signupform.handleSubmit}>
         <div className="mb-4">
-          <label htmlFor="name" className="block text-gray-700 font-medium">Full Name</label>
+          <label className="block text-gray-700 font-medium">Full Name</label>
           <input
-          id="name"
+         name='name'
             type="text"
          
             value={signupform.values.name}
@@ -80,7 +81,7 @@ const usersignup = () => {
             Email Address
           </label>
           <input
-          id="email"
+          name="email"
             type="email"
            
              value={signupform.values.email}
@@ -94,7 +95,7 @@ const usersignup = () => {
         <div className="mb-4">
           <label htmlFor="password" className="block text-gray-700 font-medium">Password</label>
           <input
-          id="password"
+          name="password"
             type="password"
            
             value={signupform.values.password}
@@ -108,7 +109,7 @@ const usersignup = () => {
          <div className="mb-4">
           <label htmlFor="confirmPassword" className="block text-gray-700 font-medium">confirmPassword</label>
           <input
-          id="confirmPassword"
+          name="confirmPassword"
             type="password"
            
             value={signupform.values.confirmPassword}
@@ -124,9 +125,9 @@ const usersignup = () => {
             Phone Number
           </label>
           <input
-          id="phone"
+          name="phone"
             type="text"
-            name='phone'
+            
               value={signupform.values.phone}
             onChange={signupform.handleChange}
             className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
@@ -140,7 +141,7 @@ const usersignup = () => {
             Shipping Address
           </label>
           <input
-          id="address"
+          
             type="text"
             name='address'
             value={signupform.values.address}
@@ -166,7 +167,7 @@ const usersignup = () => {
         </div>
        
         <button
-          type='submit'
+          type="submit"
           className="w-full bg-blue-500
            text-white py-2 rounded-lg hover:bg-blue-600 transition duration-300"
 
@@ -174,11 +175,7 @@ const usersignup = () => {
         >
           Sign 
          </button>
-        {/* <div className="mt-4 text-center">
-          <button type='submit' className="w-full bg-red-500 text-white py-2 rounded-lg flex items-center justify-center hover:bg-red-600 transition duration-300">
-            <IconBrandGoogle/> Sign Up with Google
-          </button>
-        </div> * */}
+     
       </form>
     </div>
   </div>

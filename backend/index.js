@@ -3,7 +3,9 @@ const user = require('./routers/userRouter');
 const seller = require('./routers/sellerRouter');
 
 const app = express();
-const port = 3000;
+
+const port =process.env.PORT|| 5000;
+app.use(express.json());
 
 app.use('/user', user);
 app.use('/seller', seller);
@@ -13,6 +15,6 @@ app.get('/getall', (req, res) => {
 });
 
 // Corrected app.listen()
-app.listen( () => {
+app.listen(port, () => {
     console.log(`Server started on port ${port}`);
 });
