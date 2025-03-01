@@ -1,9 +1,11 @@
 'use client'
-import { IconBrandGoogleFilled } from '@tabler/icons-react';
+import { IconBrandFacebookFilled, IconBrandGoogleFilled, IconBrandInstagramFilled } from '@tabler/icons-react';
 import { useFormik } from 'formik';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import React from 'react'
 const userlogin = () => {
+  const router=useRouter();
   const login = useFormik({
     initialValues:{
 
@@ -17,54 +19,66 @@ const userlogin = () => {
     }
   })
   return (
-    <div>
-      <div className="min-h-screen flex items-center justify-center mt-8">
-    <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-md">
-      <h2 className="text-2xl font-bold mb-6 text-center text-blue-600">
-        Sign In
-      </h2>
-      <form onSubmit={login.handleSubmit}>
-        <div className="mb-4">
-          <label className="block text-gray-700 font-medium">
-            Email Address
-          </label>
+    <div className=' flex items-center justify-center p-8'>
+    <div className="p-8 rounded-lg shadow-lg flex max-w-4xl w-full">
+    <div className="bg-blue-500 text-white p-8 rounded-l-lg flex flex-col justify-center items-center w-1/2">
+      <h1 className="text-4xl font-bold mb-4">Hello, Welcome!</h1>
+      <p className="mb-4">Don't have an account?</p>
+      <button className="bg-transparent border-2 border-white text-white py-2 px-4 rounded-full hover:bg-white hover:text-blue-500 transition duration-300" onClick={()=>{
+        router.push('/user-signup')
+      }}>
+        Register
+      </button>
+    </div>
+    <div className="p-8 w-1/2">
+      <h2 className="text-3xl font-bold mb-6 text-center">Login</h2>
+      <form className="space-y-4" onSubmit={login.handleSubmit}>
+        <div className="relative">
           <input
-          id='email'
-            onChange={login.handleChange}
+            type="text"
+            name="email"
             value={login.values.email}
-            type="email"
-            className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-            placeholder="Email Address"
-          />
-        </div>
-        <div className="mb-4">
-          <label className="block text-gray-700 font-medium">enter Password</label>
-          <input
-            id='password'
             onChange={login.handleChange}
-            value={login.values.password}
-            type="password"
-            className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-            placeholder="Password"
+            placeholder="Email"
+            className="w-full p-4 pl-12 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
+          <i className="fas fa-user absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400" />
         </div>
-        <div className="mb-4 text-right">
-          <Link href="" className="text-blue-500">
+        <div className="relative">
+          <input
+            type="password"
+            name="password"
+            value={login.values.password}
+            onChange={login.handleChange}
+            placeholder="Password"
+            className="w-full p-4 pl-12 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+          />
+          <i className="fas fa-lock absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400" />
+        </div>
+        <div className="text-right">
+          <Link href="" className="text-sm text-gray-500 hover:underline">
             Forgot Password?
           </Link>
         </div>
-        <button
-          type="submit"
-          className="w-full bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600 transition duration-300"
-        >
-          Sign In
+        <button type='submit' className="w-full bg-blue-500 text-white py-4 rounded-lg hover:bg-blue-600 transition duration-300">
+          Login
         </button>
-        <div className="mt-4 text-center">
-          <button type='submit' className="w-full bg-red-500 text-white py-2 rounded-lg flex items-center justify-center hover:bg-red-600 transition duration-300">
-            <IconBrandGoogleFilled/> Sign In with Google
-          </button>
-        </div>
       </form>
+      <div className="mt-6 text-center">
+        <p className="text-gray-500 mb-4">or login with social platforms</p>
+        <div className="flex justify-center space-x-4">
+          <Link href="" className="text-gray-500 hover:text-gray-700">
+            <IconBrandGoogleFilled></IconBrandGoogleFilled>
+          </Link>
+          <Link href="" className="text-gray-500 hover:text-gray-700">
+           <IconBrandFacebookFilled></IconBrandFacebookFilled>
+          </Link>
+          <Link href="" className="text-gray-500 hover:text-gray-700">
+            <IconBrandInstagramFilled></IconBrandInstagramFilled>
+          </Link>
+          
+        </div>
+      </div>
     </div>
   </div>
     </div>

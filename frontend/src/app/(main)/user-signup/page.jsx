@@ -13,7 +13,7 @@ import Link from 'next/link';
      .min(2, 'Too Short!')
      .max(50, 'Too Long!')
      .required('Required'),
-   phoneName: Yup.number()
+   phone: Yup.number()
      .min(3, 'Too Short!')
      .max(12, 'Too Long!')
      .required('Required'),
@@ -33,7 +33,7 @@ import Link from 'next/link';
 const usersignup = () => {
 
   const signupform = useFormik({
-    initialValues: {
+    initialValues:{
       name:'',
       phone:'',
       address:'',
@@ -41,8 +41,9 @@ const usersignup = () => {
       password: '',
       confirmPassword: ''
       },
-      onSubmit: (value) => {
+      onSubmit:(value,{resetForm}) => {
         console.log(value);
+        resetForm();
         
         },
         validationSchema: SignupSchema
@@ -51,141 +52,126 @@ const usersignup = () => {
   
 
   return (
-    <div>
+    <div className='flex justify-center'>
     
       
-       <div className="min-h-screen flex items-center justify-center">
-    <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-md">
-      <h2 className="text-2xl font-bold mb-6 text-center text-blue-600">
-        Sign Up
-      </h2>
-      <form onSubmit={signupform.handleSubmit}>
-        <div className="mb-4">
-          <label htmlFor="name" className="block text-gray-700 font-medium">Full Name</label>
-          <input
-          id="name"
-            type="text"
-         
-            value={signupform.values.name}
-            onChange={signupform.handleChange}
-
-            className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-            placeholder="First and Last Name"
-          />
-          {(signupform.touched.name && signupform.errors.name) &&
-          <p>{signupform.errors.name}</p>}
-        </div>
-        <div className="mb-4">
-          <label htmlFor="email" className="block text-gray-700 font-medium">
-            Email Address
-          </label>
-          <input
-          id="email"
-            type="email"
-           
-             value={signupform.values.email}
-            onChange={signupform.handleChange}
-            className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-            placeholder="Email Address"
-          />
-         {(signupform.touched.email && signupform.errors.email) &&
-          <p>{signupform.errors.email}</p>}
-        </div>
-        <div className="mb-4">
-          <label htmlFor="password" className="block text-gray-700 font-medium">Password</label>
-          <input
-          id="password"
-            type="password"
-           
-            value={signupform.values.password}
-            onChange={signupform.handleChange}
-            className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-            placeholder="Password"
-          />
-         {(signupform.touched.password && signupform.errors.password) &&
-          <p>{signupform.errors.password}</p>}
-        </div>
-         <div className="mb-4">
-          <label htmlFor="confirmPassword" className="block text-gray-700 font-medium">confirmPassword</label>
-          <input
-          id="confirmPassword"
-            type="password"
-           
-            value={signupform.values.confirmPassword}
-            onChange={signupform.handleChange}
-            className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-            placeholder="confirm-Password"
-          />
-         {(signupform.touched.confirmPassword && signupform.errors.confirmPassword) &&
-          <p>{signupform.errors.confirmPassword}</p>}
-        </div>
-        <div className="mb-4">
-          <label htmlFor="phone" className="block text-gray-700 font-medium">
-            Phone Number
-          </label>
-          <input
-          id="phone"
-            type="text"
-            name='phone'
-              value={signupform.values.phone}
-            onChange={signupform.handleChange}
-            className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-            placeholder="Phone Number (Optional)"
-          />
-         {(signupform.touched.phone && signupform.errors.phone) &&
-          <p>{signupform.errors.phone}</p>}
-        </div>
-        <div className="mb-4">
-          <label htmlFor="address" className="block text-gray-700 font-medium">
-            Shipping Address
-          </label>
-          <input
-          id="address"
-            type="text"
-            name='address'
-            value={signupform.values.address}
-            onChange={signupform.handleChange}
-            className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-            placeholder="Street Address, City, State, ZIP Code (Optional)"
-          />
-          {(signupform.touched.address && signupform.errors.address) &&
-          <p>{signupform.errors.address}</p>}
-        </div>
-        
-        <div className="mb-4 flex items-center">
-          <input
-            type="checkbox"
-            className="mr-2 focus:ring-2 focus:ring-blue-500"
-          />
-          <label className="text-gray-700">
-            I agree to the{" "}
-            <Link href="" className="text-blue-500">
-              Terms and Conditions
-            </Link>
-          </label>
-        </div>
-       
-        <button
-          type='submit'
-          className="w-full bg-blue-500
-           text-white py-2 rounded-lg hover:bg-blue-600 transition duration-300"
-
-           
-        >
-          Sign 
-         </button>
-        {/* <div className="mt-4 text-center">
-          <button type='submit' className="w-full bg-red-500 text-white py-2 rounded-lg flex items-center justify-center hover:bg-red-600 transition duration-300">
-            <IconBrandGoogle/> Sign Up with Google
-          </button>
-        </div> * */}
-      </form>
-    </div>
+   
+  <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-md">
+    <h2 className="text-2xl font-semibold text-center text-blue-600 mb-6">
+     SIGN UP
+    </h2>
+    <form onSubmit={signupform.handleSubmit}>
+      <div className="mb-4">
+        <label className="block text-gray-700">Name</label>
+        <input
+        name='name'
+        value={signupform.values.name}
+        onChange={signupform.handleChange}
+          type="text"
+          className="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+        />
+        {signupform.errors.name && signupform.touched.name && (
+          <div className="text-red-500">{signupform.errors.name}</div>
+          )}
+      </div>
+      <div className="mb-4">
+        <label className="block text-gray-700">Email address</label>
+        <input
+          type="email"
+          name='email'
+          value={signupform.values.email}
+          onChange={signupform.handleChange}
+          className="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+        />
+         {signupform.errors.email && signupform.touched.email && (
+          <div className="text-red-500">{signupform.errors.email}</div>
+          )}
+      </div>
+      <div className="mb-4 relative">
+        <label className="block text-gray-700">Password</label>
+        <input
+          type="password"
+          name='password'
+          value={signupform.values.password}
+          onChange={signupform.handleChange}
+          className="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+        />
+         {signupform.errors.password && signupform.touched.password && (
+          <div className="text-red-500">{signupform.errors.password}</div>
+          )}
+        <i className="fas fa-eye absolute right-3 top-3 text-gray-500 cursor-pointer" />
+      </div>
+      <div className="mb-4 relative">
+        <label className="block text-gray-700"> ConFirm Password</label>
+        <input
+          type="password"
+          name='confirmPassword'
+          value={signupform.values.confirmPassword}
+          onChange={signupform.handleChange}
+          className="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+        />
+         {signupform.errors.confirmPassword && signupform.touched.confirmPassword && (
+          <div className="text-red-500">{signupform.errors.confirmPassword}</div>
+          )}
+        <i className="fas fa-eye absolute right-3 top-3 text-gray-500 cursor-pointer" />
+      </div>
+      <div className="mb-4">
+        <label className="block text-gray-700">Address</label>
+        <input
+          type="text"
+          name='address'
+          value={signupform.values.address}
+          onChange={signupform.handleChange}
+          className="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+        />
+         {signupform.errors.address && signupform.touched.address && (
+          <div className="text-red-500">{signupform.errors.address}</div>
+          )}
+      </div>
+      <div className="mb-4">
+        <label className="block text-gray-700">Phone</label>
+        <input
+          type="tel"
+          name='phone'
+          value={signupform.values.phone}
+          onChange={signupform.handleChange}
+          className="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+        />
+         {signupform.errors.phone && signupform.touched.phone && (
+          <div className="text-red-500">{signupform.errors.phone}</div>
+          )}
+      </div>
+     
+      <div className="mb-4 flex items-center">
+        <input type="checkbox" id="terms" className="mr-2" />
+        <label htmlFor="terms" className="text-gray-600 text-sm">
+          I agree to the{" "}
+          <a href="#" className="text-blue-500">
+            Terms
+          </a>{" "}
+          and{" "}
+          <a href="#" className="text-blue-500">
+            Privacy Policy
+          </a>
+        </label>
+      </div>
+      <button
+        type="submit"
+        className="w-full bg-blue-500 text-white py-2 rounded hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
+      >
+        CREATE ACCOUNT
+      </button>
+    </form>
+    <p className="text-center text-gray-600 text-sm mt-4">
+      Already have an account?{" "}
+      <a href="#" className="text-blue-500">
+        Sign in
+      </a>
+    </p>
   </div>
- 
-
-    </div>
-  )
+  
+  </div>
+  );
 }
 
 export default usersignup;

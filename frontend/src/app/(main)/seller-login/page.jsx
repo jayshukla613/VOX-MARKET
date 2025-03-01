@@ -1,52 +1,97 @@
 'use client'
-import { useState } from "react";
+import { useFormik } from 'formik';
+import Link from 'next/link';
+import React from 'react'
 
-export default function SellerLogin() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log("Logging in with", { email, password });
-    // Add authentication logic here
-  };
-
+const SellerLogin = () => {
+  const sellerlogin = useFormik({
+      initialValues:{
+  
+        email:"",
+        password:""
+      },
+  
+      onSubmit:(value)=>{
+        console.log(value);
+        
+      }
+    })
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gray-100">
-      <div className="bg-white p-8 rounded-lg shadow-md w-96">
-        <h2 className="text-2xl font-bold text-center mb-6">Seller Login</h2>
-        <form onSubmit={handleSubmit}>
-          <div className="mb-4">
-            <label className="block text-gray-700">Email</label>
-            <input
-              type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
-              required
-            />
-          </div>
-          <div className="mb-4">
-            <label className="block text-gray-700">Password</label>
-            <input
-              type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
-              required
-            />
-          </div>
-          <button
-            type="submit"
-            className="w-full bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600 transition"
-          >
-            Login
-          </button>
-        </form>
-        <p className="text-center text-sm text-gray-600 mt-4">
-          Don't have an account? <a href="/seller-signup" className="text-blue-500">Register</a>
-        </p>
-      </div>
+    <div className='flex justify-center p-8'>
+      <div className="bg-white rounded-lg shadow-lg overflow-hidden w-full max-w-4xl flex">
+    <div className="w-1/2 p-8 bg-gradient-to-r from-purple-500 to-pink-500 text-white flex flex-col justify-center">
+      <h1 className="text-3xl font-bold mb-4">WELCOME TO VOX MARKET</h1>
+      <p className="mb-8">
+        Please make sure to follow the website rules and guidelines. Contact the
+        US  for any queries or support.
+      </p>
+      
     </div>
-  );
+    <div className="w-1/2 p-8 flex flex-col justify-center">
+      <h2 className="text-2xl font-bold mb-6 text-center">SELLER LOGIN</h2>
+      <form onSubmit={sellerlogin.handleSubmit}>
+        <div className="mb-4">
+          <label
+            className="block text-gray-700 text-sm font-bold mb-2"
+            htmlFor="username"
+          >
+            <i className="fas fa-user"></i>
+            Username
+          </label>
+          <input
+            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            id="username"
+            name='email'
+            type="email"
+            value={sellerlogin.values.email}
+            onChange={sellerlogin.handleChange}
+
+            placeholder="Username"
+            
+          />
+        </div>
+        <div className="mb-6">
+          <label
+            className="block text-gray-700 text-sm font-bold mb-2"
+            htmlFor="password"
+          >
+            
+            Password
+          </label>
+          <input
+            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
+            id="password"
+            placeholder="******************"
+            type="password"
+            name='password'
+            value={sellerlogin.values.password}
+            onChange={sellerlogin.handleChange}
+          />
+        </div>
+        <div className="flex items-center justify-between mb-4">
+          <label className="inline-flex items-center">
+            <input className="form-checkbox text-indigo-600" type="checkbox" />
+            <span className="ml-2 text-gray-700">Remember me</span>
+          </label>
+          <Link
+            className="inline-block align-baseline font-bold text-sm text-indigo-600 hover:text-indigo-800"
+            href=""
+          >
+            Forgot Password?
+          </Link>
+        </div>
+        <div className="flex items-center justify-center">
+          <button
+            className="bg-gradient-to-r from-purple-500 to-pink-500 hover:from-pink-500 hover:to-purple-500 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+            type="submit"
+          >
+            LOGIN
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+    </div>
+  )
 }

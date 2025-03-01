@@ -1,6 +1,8 @@
+'use client'
+import Link from 'next/link'
 import React from 'react'
 
-const Hero = () => {
+const Herosection = () => {
   return (
     <div>
       <section className="relative bg-white">
@@ -18,12 +20,12 @@ const Hero = () => {
           Shop the latest fashion trends and find your perfect style. Enjoy
           exclusive offers and discounts.
         </p>
-        <a
+        <Link
           className="mt-6 inline-block bg-blue-500 text-white py-3 px-6 rounded-lg text-lg font-semibold hover:bg-blue-600 transition duration-300"
-          href="#"
+          href=""
         >
           Shop Now
-        </a>
+        </Link>
       </div>
     </div>
   </section>
@@ -32,4 +34,4 @@ const Hero = () => {
   )
 }
 
-export default Hero
+export default Herosection
