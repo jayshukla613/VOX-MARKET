@@ -15,7 +15,7 @@ export default function page() {
       <Herosection/>
       <h2 className='text-center  text-4xl text-black italic p-6 font-light' >POPULAR PRODUCTS</h2>
         <p className='text-center font-extralight text-3xl italic text-gray-400'> Trending Now</p>
-        <div className="flex gap-4 p-4">
+        <div className="flex gap-4 p-4 mx-auto ">
           <Card/>
           <Card/>
           <Card/>
