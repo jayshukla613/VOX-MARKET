@@ -11,11 +11,13 @@
   "dependencies": {
     "@hookform/resolvers": "^4.1.2",
     "@tabler/icons-react": "^3.30.0",
+    "axios": "^1.8.1",
     "formik": "^2.4.6",
     "next": "^15.1.7",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-hook-form": "^7.54.2",
+    "react-hot-toast": "^2.5.2",
     "toast": "^0.5.4",
     "yup": "^1.6.1"
   },
