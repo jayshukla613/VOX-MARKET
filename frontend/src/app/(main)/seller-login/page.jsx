@@ -95,3 +95,4 @@ const SellerLogin = () => {
     </div>
   )
 }
+export default SellerLogin
