@@ -14,9 +14,11 @@ import Link from 'next/link';
      .max(50, 'Too Long!')
      .required('Required'),
    phone: Yup.number()
-     .min(3, 'Too Short!')
-     .max(12, 'Too Long!')
-     .required('Required'),
+   .typeError("That doesn't look like a phone number")
+   .positive("A phone number can't start with a minus")
+   .integer("A phone number can't include a decimal point")
+   .min(8)
+   .required('A phone number is required'),
    email: Yup.string().email('Invalid email').required('Required'),
    password: Yup.string()
    .min(8, 'Password is too short - should be 8 chars minimum.')
