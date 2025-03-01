@@ -2,10 +2,10 @@ const { Schema, model } = require('../connection');
 
 const mySchema = new Schema({
     name: {type:String},
-    email: { type: String, unique: true, required: true },
+    email: { type: String, unique: true},
     password: { type: String, required: true },
-    confirmpassword: { type: String, required: true },
-    phone: { type: Number, unique: true, required: true, minlength: 10, maxlength: 12 },
+    
+    phone: { type: Number, unique: true },
     address: { type: String, required: true },
 
     createdAt: { type: Date, default: Date.now }

@@ -1,8 +1,10 @@
 'use client'
 import Link from 'next/link'
 import React from 'react'
+import { useRouter } from 'next/navigation'
 
 const Navbar = () => {
+  const router = useRouter()
   return (
     <div className=''>
         <nav className="bg-blue-800 text-white p-4">
@@ -37,16 +39,17 @@ const Navbar = () => {
           className="px-2 py-1 rounded"
         />
         <button className="bg-black text-white px-8 font-bold py-2 rounded" onClick={() => {
-          window.location.href = '/user-login';
-        }}>
+          router.push('/user-login')}}>
           login
         </button>
         <button className="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded" onClick={() => {
-          window.location.href = '/user-signup';
+          router.push('/user-signup')
         }}>
           Sign up
         </button>
       </div>
+      
+
     </div>
   </nav>
       
