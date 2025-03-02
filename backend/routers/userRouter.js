@@ -23,4 +23,43 @@ router.get('/getall', (req,res)=>{
     });
  });
 
+ router.post('/authenticate',(req,res)=>{
+    Model.findOne(req.body)
+    .then((result) => {
+        if(result){
+            //generate tokan
+            const{_id,name,email}=result;
+            const payload={_id,name,email}
+            jwt.sign(
+                payload,
+                process.env.JWT_SECRET,
+                {
+                    expiresIn:'1h'
+                },
+                (err,token)=>{
+                    if(err){
+                        console.log(err);
+                        res.status(500).json(err)
+                    }
+                    else{
+                        res.status(200).json({token});
+                    }
+                }
+            )
+
+
+        }
+        else{
+            res.status(401).json({message : 'invalid user email or password'});
+        }
+
+        
+    }).catch((err) => {
+        console.log(err);
+        res.status(500).json(err)
+        
+    });
+
+});
+
  module.exports= router;

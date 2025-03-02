@@ -3,7 +3,11 @@ import { IconBrandFacebookFilled, IconBrandGoogleFilled, IconBrandInstagramFille
 import { useFormik } from 'formik';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import React from 'react'
+import React from 'react';
+import toast from 'react-hot-toast';
+import axios from 'axios';
+
+
 const userlogin = () => {
   const router=useRouter();
   const login = useFormik({
@@ -15,6 +19,20 @@ const userlogin = () => {
 
     onSubmit:(value)=>{
       console.log(value);
+
+      axios.post('http://localhost:5000/user/authenticate',value)
+      .then((result) => {
+        toast.success('login succesfull')
+        console.log(result.data?.token);
+        
+        
+
+        
+      }).catch((err) => {
+        console.log(err);
+        toast.error('login failed')
+        
+      });
       
     }
   })
