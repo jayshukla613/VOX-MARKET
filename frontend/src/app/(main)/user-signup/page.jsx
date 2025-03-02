@@ -1,6 +1,6 @@
 'use client'
 import React from 'react'
-import { IconBrandGoogle } from '@tabler/icons-react';
+import { IconBrandGoogle, IconLoader3, IconSend2 } from '@tabler/icons-react';
 import { useFormik } from 'formik';
 
 import *as Yup from 'yup';
@@ -46,7 +46,22 @@ const usersignup = () => {
       },
       onSubmit:(value,{resetForm, setSubmitting}) => {
         console.log(value);
-        resetForm();
+        axios.post('http://localhost:5000/user/add',value)
+        .then((result) => {
+          toast.success('user data succesfully save');
+          resetForm();
+          
+
+          
+
+        }).catch((err) => {
+         console.log(err);
+         toast.error('error while saving user data');
+         setSubmitting(false);
+         
+
+          
+        });
         
         },
         validationSchema: SignupSchema
@@ -116,7 +131,7 @@ const usersignup = () => {
          {signupform.errors.confirmPassword && signupform.touched.confirmPassword && (
           <div className="text-red-500">{signupform.errors.confirmPassword}</div>
           )}
-        <i className="fas fa-eye absolute right-3 top-3 text-gray-500 cursor-pointer" />
+       
       </div>
       <div className="mb-4">
         <label className="block text-gray-700">Address</label>
@@ -149,27 +164,29 @@ const usersignup = () => {
         <input type="checkbox" id="terms" className="mr-2" />
         <label htmlFor="terms" className="text-gray-600 text-sm">
           I agree to the{" "}
-          <a href="#" className="text-blue-500">
+          <Link href="" className="text-blue-500">
             Terms
-          </a>{" "}
+          </Link>{" "}
           and{" "}
-          <a href="#" className="text-blue-500">
+          <Link href="" className="text-blue-500">
             Privacy Policy
-          </a>
+          </Link>
         </label>
       </div>
       <button
+       disabled={signupform.isSubmitting}
         type="submit"
         className="w-full bg-blue-500 text-white py-2 rounded hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
       >
+       
         CREATE ACCOUNT
       </button>
     </form>
     <p className="text-center text-gray-600 text-sm mt-4">
       Already have an account?{" "}
-      <a href="#" className="text-blue-500">
+      <Link href="/user-login" className="text-blue-500">
         Sign in
-      </a>
+      </Link>
     </p>
   </div>
   
