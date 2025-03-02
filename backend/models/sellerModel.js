@@ -9,7 +9,8 @@ const mySchema = new Schema({
     taxId:{type:Number,required:true,unique:true},
     storeName:{type:String,required:true},
     storeCategory:{type:String,required:true},
-    businessAddress:{type:String,required:true},
+    businessType:{type:String,required:true},
+   address:{type:String,required:true},
     createdAt: { type: Date, default: Date.now }
 
 })

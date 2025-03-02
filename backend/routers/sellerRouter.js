@@ -13,6 +13,7 @@ seller.post('/add',(req, res) => {
         res.status(500).json(err);
     });
 });
+
 seller.get('/getall', (req,res)=>{
     Model.find()
     .then((result) => {
