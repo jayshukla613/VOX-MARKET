@@ -5,6 +5,8 @@ import { useFormik } from 'formik';
 
 import *as Yup from 'yup';
 import Link from 'next/link';
+import axios from 'axios';
+import toast from 'react-hot-toast';
 
 
 
@@ -26,7 +28,6 @@ import Link from 'next/link';
    confirmPassword: Yup.string()
    .oneOf([Yup.ref('password'), null], 'Passwords must match'),
    address:Yup.string().required()
-
  });
 
 
@@ -43,13 +44,9 @@ const usersignup = () => {
       password: '',
       confirmPassword: ''
       },
-      onSubmit:(value,{resetForm}) => {
+      onSubmit:(value,{resetForm, setSubmitting}) => {
         console.log(value);
-
-
         resetForm();
-
-        axiox
         
         },
         validationSchema: SignupSchema
