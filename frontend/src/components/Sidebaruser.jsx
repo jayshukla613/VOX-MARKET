@@ -24,14 +24,12 @@ const Sidebaruser = () => {
                 My Orders
               </button>
             </li>
+           
             <li>
-              <button className="w-full text-left bg-gray-200 p-2 rounded-lg hover:bg-yellow-500">
-                Manage Address
-              </button>
-            </li>
-            <li>
-              <button className="w-full text-left bg-gray-200 p-2 rounded-lg hover:bg-yellow-500">
-                Payment Method
+              <button className="w-full text-left bg-gray-200 p-2 rounded-lg hover:bg-yellow-500" onClick={()=>{
+                router.push('/user/cart')
+              }}>
+                cart
               </button>
             </li>
             <li>
