@@ -45,7 +45,11 @@ const usersignup = () => {
       },
       onSubmit:(value,{resetForm}) => {
         console.log(value);
+
+
         resetForm();
+
+        axiox
         
         },
         validationSchema: SignupSchema
