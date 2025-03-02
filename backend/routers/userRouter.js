@@ -2,6 +2,11 @@ const express = require('express');
 const Model = require('../models/userModel');
 const router = express.Router();
 
+const jwt = require('jsonwebtoken');
+// const verifyToken = require('../middleware/verifyToken')
+require('dotenv').config();
+
+
 router.post('/add',(req, res) => { 
     console.log(req.body);
     new Model(req.body).save()
