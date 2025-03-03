@@ -2,8 +2,12 @@
 import { useFormik } from 'formik';
 import Link from 'next/link';
 import React from 'react'
+import axios from 'axios';
+import toast from 'react-hot-toast';
+import { useRouter } from 'next/navigation';
 
 const SellerLogin = () => {
+  const router = useRouter();
   const sellerlogin = useFormik({
       initialValues:{
   
@@ -13,6 +17,24 @@ const SellerLogin = () => {
   
       onSubmit:(value)=>{
         console.log(value);
+
+        axios.post('http://localhost:5000/seller/authenticate',value)
+      .then((result) => {
+        toast.success('login succesfull')
+        console.log(result.data?.token);
+        localStorage.setItem('token', result.data?.token);
+        router.push('/seller/profile');
+        
+        
+
+        
+      }).catch((err) => {
+        console.log(err);
+        toast.error('login failed')
+        
+      });
+
+
         
       }
     })

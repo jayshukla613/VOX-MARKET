@@ -5,6 +5,7 @@ import { useFormik } from "formik";
 import Link from "next/link";
 import toast from "react-hot-toast";
 import axios from "axios";
+import { useRouter } from "next/navigation";
 
 const schema = yup.object().shape({
   fullName: yup.string().required("Full Name is required"),
@@ -24,6 +25,7 @@ const schema = yup.object().shape({
 });
 
  const SellerRegistrationForm =() => {
+  const router=useRouter();
   const sellersignup = useFormik({
     initialValues: {
       fullName: "",
@@ -43,7 +45,10 @@ const schema = yup.object().shape({
       axios.post('http://localhost:5000/seller/add',values)
       .then((result) => {
         toast.success('sellesignup successful')
+
         resetForm();
+        router.push('seller/profile')
+
 
       }).catch((err) => {
         console.log(err);
