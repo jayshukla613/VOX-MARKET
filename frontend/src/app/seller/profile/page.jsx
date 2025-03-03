@@ -6,10 +6,10 @@ import { Edit3, Save, Camera } from "lucide-react";
 export default function SellerProfile() {
   const [isEditing, setIsEditing] = useState(false);
   const [profile, setProfile] = useState({
-    name: "John Doe",
-    email: "johndoe@example.com",
-    phone: "123-456-7890",
-    storeName: "John's Store",
+    name: "",
+    email: "",
+    phone: "",
+    storeName: "",
     profileImage: null,
   });
 
