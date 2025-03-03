@@ -1,5 +1,6 @@
 'use client'
 import Footeruserpage from '@/components/Footeruserpage';
+import Ordercard from '@/components/Ordercard';
 import Sidebaruser from '@/components/Sidebaruser';
 
 import React from 'react'
@@ -41,45 +42,39 @@ const viewOrder = () => {
                         </div>
                       </div>
                       <div className="p-4">
-                        <div className="flex items-center mb-4">
+                      <div className="flex flex-col sm:flex-row items-center justify-between p-4 border rounded-lg">
+                        <div className="flex items-center">
                           <img
-                            alt="Fresh Orange"
-                            className="w-12 h-12 rounded-full mr-4"
-                            height={50}
-                            src="https://storage.googleapis.com/a1aa/image/f7msyEjuKmJMhx2fJ_UjndtjiLsUX4tVzJHkUS-szQc.jpg"
-                            width={50}
+                            alt="Image of a stylish red t-shirt"
+                            className="w-20 h-20 object-cover rounded-lg"
+                            height={100}
+                            src="https://storage.googleapis.com/a1aa/image/21JcgxxV7BjxP3tD-98tqYgy-sN8oHVosyY81AgDjnM.jpg"
+                            width={100}
                           />
-                          <div>
-                            <div className="font-bold">Fresh Orange</div>
-                            <div>1kg</div>
+                          <div className="ml-4">
+                            <h3 className="text-lg font-semibold">Red T-Shirt</h3>
+                            <p className="text-gray-600">Size: M</p>
+                            <p className="text-gray-600">Color: Red</p>
                           </div>
                         </div>
-                        <div className="flex items-center mb-4">
-                          <img
-                            alt="Red Tomato"
-                            className="w-12 h-12 rounded-full mr-4"
-                            height={50}
-                            src="https://storage.googleapis.com/a1aa/image/E8FpBiGzMyTAeORHgV4yZSTjzEgtz2nBXEuiAM-YVd4.jpg"
-                            width={50}
-                          />
-                          <div>
-                            <div className="font-bold">Red Tomato</div>
-                            <div>1kg</div>
+                        <div className="flex items-center mt-4 sm:mt-0">
+                          <div className="flex items-center border rounded-lg">
+                            <button className="px-2 py-1 text-gray-600 hover:text-gray-800">
+                              <i className="fas fa-minus"></i>
+                            </button>
+                            <span className="px-4 py-1">1</span>
+                            <button className="px-2 py-1 text-gray-600 hover:text-gray-800">
+                              <i className="fas fa-plus"></i>
+                            </button>
                           </div>
+                          <p className="ml-4 text-lg font-semibold">$20.00</p>
+                          <button className="ml-4 text-red-600 hover:text-red-800">
+                            <i className="fas fa-trash"></i>
+                          </button>
                         </div>
-                        <div className="flex items-center mb-4">
-                          <img
-                            alt="Yellow Lemon"
-                            className="w-12 h-12 rounded-full mr-4"
-                            height={50}
-                            src="https://storage.googleapis.com/a1aa/image/PWIWuhdVt-snhC5lf1uSGZOe4IlVHvZAvvyFgtr8OCk.jpg"
-                            width={50}
-                          />
-                          <div>
-                            <div className="font-bold">Yellow Lemon</div>
-                            <div>1kg</div>
-                          </div>
-                        </div>
+                      </div>
+                      <Ordercard/>
+                       
                         <div className="flex justify-between items-center">
                           <button className="bg-yellow-500 text-white px-4 py-2 rounded-lg hover:bg-yellow-600">
                             Track Order
@@ -105,32 +100,8 @@ const viewOrder = () => {
                         </div>
                       </div>
                       <div className="p-4">
-                        <div className="flex items-center mb-4">
-                          <img
-                            alt="Fresh Strawberry"
-                            className="w-12 h-12 rounded-full mr-4"
-                            height={50}
-                            src="https://storage.googleapis.com/a1aa/image/QIlYFtWiS9_sJJuxVfQyvBGWEIZHuCAGYR_xTvcKnzc.jpg"
-                            width={50}
-                          />
-                          <div>
-                            <div className="font-bold">Fresh Strawberry</div>
-                            <div>1kg</div>
-                          </div>
-                        </div>
-                        <div className="flex items-center mb-4">
-                          <img
-                            alt="Peach Cranberry"
-                            className="w-12 h-12 rounded-full mr-4"
-                            height={50}
-                            src="https://storage.googleapis.com/a1aa/image/qca-qsuDKL_9VatIdXjryqb1WAckiNc9aoKnJLtnkAQ.jpg"
-                            width={50}
-                          />
-                          <div>
-                            <div className="font-bold">Peach Cranberry</div>
-                            <div>1kg</div>
-                          </div>
-                        </div>
+                       <Ordercard/>
+                        <Ordercard/>
                         <div className="flex justify-between items-center">
                           <button className="bg-yellow-500 text-white px-4 py-2 rounded-lg hover:bg-yellow-600">
                             Track Order
