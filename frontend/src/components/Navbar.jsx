@@ -83,16 +83,16 @@ const Navbar = () => {
               </button>
 
               {open && (
-                <div className="absolute left-0 mt-2 w-56 bg-white text-black rounded-lg shadow-lg ring-1 ring-black ring-opacity-5 z-50">
+                <div className="absolute right-0  mt-2 w-56 bg-white text-black rounded-lg shadow-lg ring-1 ring-black ring-opacity-5 z-50">
                   <ul className="py-2 list-none">
                     
                     <li>
-                      <Link href="" className="flex items-center gap-2 px-4 py-2 hover:bg-gray-100">
+                      <Link href="/admin/profile" className="flex items-center gap-2 px-4 py-2 hover:bg-gray-100">
                         Admin Account
                       </Link>
                     </li>
                     <li>
-                      <Link href="" className="flex items-center gap-2 px-4 py-2 hover:bg-gray-100">
+                      <Link href="/seller/profile" className="flex items-center gap-2 px-4 py-2 hover:bg-gray-100">
                        Seller Account
                       </Link>
                     </li>
