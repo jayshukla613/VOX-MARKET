@@ -3,6 +3,7 @@ import Link from "next/link";
 import { useState, useRef, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { ChevronDown, ShoppingCart, Smartphone, Monitor, Headphones, Gamepad } from "lucide-react";
+import { IconUserCircle } from "@tabler/icons-react";
 
 const Navbar = () => {
   const router = useRouter();
@@ -43,47 +44,12 @@ const Navbar = () => {
                 Contact
               </Link>
             </li>
-            {/* Dropdown Menu */}
-            <li className="relative" ref={dropdownRef}>
-              <button
-                onClick={toggleDropdown}
-                className="flex items-center gap-1 hover:text-gray-300"
-              >
-                Category <ChevronDown size={18} />
-              </button>
-
-              {open && (
-                <div className="absolute left-0 mt-2 w-56 bg-white text-black rounded-lg shadow-lg ring-1 ring-black ring-opacity-5 z-50">
-                  <ul className="py-2">
-                    <li>
-                      <Link href="/category/electronics" className="flex items-center gap-2 px-4 py-2 hover:bg-gray-100">
-                        <ShoppingCart size={18} /> Electronics
-                      </Link>
-                    </li>
-                    <li>
-                      <Link href="/category/mobiles" className="flex items-center gap-2 px-4 py-2 hover:bg-gray-100">
-                        <Smartphone size={18} /> Mobile Phones
-                      </Link>
-                    </li>
-                    <li>
-                      <Link href="/category/computers" className="flex items-center gap-2 px-4 py-2 hover:bg-gray-100">
-                        <Monitor size={18} /> Computers
-                      </Link>
-                    </li>
-                    <li>
-                      <Link href="/category/headphones" className="flex items-center gap-2 px-4 py-2 hover:bg-gray-100">
-                        <Headphones size={18} /> Headphones
-                      </Link>
-                    </li>
-                    <li>
-                      <Link href="/category/gaming" className="flex items-center gap-2 px-4 py-2 hover:bg-gray-100">
-                        <Gamepad size={18} /> Gaming
-                      </Link>
-                    </li>
-                  </ul>
-                </div>
-              )}
+            <li>
+              <Link href="/" className="hover:text-gray-300">
+               Category
+              </Link>
             </li>
+           
           </ul>
           <div className="flex items-center space-x-4">
             <input
@@ -107,7 +73,40 @@ const Navbar = () => {
             >
               Sign up
             </button>
-          </div>
+          
+          <li className="relative list-none " >
+              <button
+                onClick={toggleDropdown}
+                className="flex gap-1  hover:text-gray-300"
+              >
+                <IconUserCircle  size={50}/> 
+              </button>
+
+              {open && (
+                <div className="absolute left-0 mt-2 w-56 bg-white text-black rounded-lg shadow-lg ring-1 ring-black ring-opacity-5 z-50">
+                  <ul className="py-2 list-none">
+                    
+                    <li>
+                      <Link href="" className="flex items-center gap-2 px-4 py-2 hover:bg-gray-100">
+                        Admin Account
+                      </Link>
+                    </li>
+                    <li>
+                      <Link href="" className="flex items-center gap-2 px-4 py-2 hover:bg-gray-100">
+                       Seller Account
+                      </Link>
+                    </li>
+                    <li>
+                      <Link href="/user/profile" className="flex items-center gap-2 px-4 py-2 hover:bg-gray-100">
+                         User Account
+                      </Link>
+                    </li>
+                    
+                  </ul>
+                </div>
+              )}
+            </li>
+            </div >
         </div>
       </nav>
     </div>

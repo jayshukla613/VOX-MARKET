@@ -24,6 +24,8 @@ const userlogin = () => {
       .then((result) => {
         toast.success('login succesfull')
         console.log(result.data?.token);
+        localStorage.setItem('token', result.data?.token);
+        router.push('/user/profile');
         
         
 

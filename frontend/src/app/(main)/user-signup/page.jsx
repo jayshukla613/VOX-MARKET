@@ -7,6 +7,7 @@ import *as Yup from 'yup';
 import Link from 'next/link';
 import axios from 'axios';
 import toast from 'react-hot-toast';
+import { useRouter } from 'next/navigation';
 
 
 
@@ -35,6 +36,10 @@ import toast from 'react-hot-toast';
 
 const usersignup = () => {
 
+  
+
+  const router=useRouter();
+
   const signupform = useFormik({
     initialValues:{
       name:'',
@@ -50,6 +55,7 @@ const usersignup = () => {
         .then((result) => {
           toast.success('user data succesfully save');
           resetForm();
+          router.push('/user/profile')
           
 
           
