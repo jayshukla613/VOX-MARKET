@@ -1,111 +1,155 @@
 'use client'
-import { useState } from "react";
-import { motion } from "framer-motion";
-import { Edit3, Save, Camera } from "lucide-react";
+
+import Sellerdashboard from "@/components/Sellerdashboard";
 
 export default function SellerProfile() {
-  const [isEditing, setIsEditing] = useState(false);
-  const [profile, setProfile] = useState({
-    name: "",
-    email: "",
-    phone: "",
-    storeName: "",
-    profileImage: null,
-  });
+  // const [isEditing, setIsEditing] = useState(false);
+  // const [profile, setProfile] = useState({
+  //   name: "",
+  //   email: "",
+  //   phone: "",
+  //   storeName: "",
+  //   profileImage: null,
+  // });
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setProfile((prev) => ({ ...prev, [name]: value }));
-  };
+  // const handleChange = (e) => {
+  //   const { name, value } = e.target;
+  //   setProfile((prev) => ({ ...prev, [name]: value }));
+  // };
 
-  const handleImageUpload = (e) => {
-    const file = e.target.files[0];
-    if (file && file.type.startsWith("image/")) {
-      setProfile((prev) => ({ ...prev, profileImage: URL.createObjectURL(file) }));
-    } else {
-      alert("Please upload a valid image file.");
-    }
-  };
+  // const handleImageUpload = (e) => {
+  //   const file = e.target.files[0];
+  //   if (file && file.type.startsWith("image/")) {
+  //     setProfile((prev) => ({ ...prev, profileImage: URL.createObjectURL(file) }));
+  //   } else {
+  //     alert("Please upload a valid image file.");
+  //   }
+  // };
 
   return (
-    <motion.div 
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      transition={{ duration: 0.5 }}
-      className="min-h-screen bg-gray-100 flex flex-col items-center p-6"
-    >
-      <h1 className="text-3xl font-bold mb-6">Seller Profile</h1>
-      <div className="bg-white p-6 rounded-lg shadow-md w-full max-w-md text-center">
-        <div className="relative w-32 h-32 mx-auto mb-4">
+    <div  className="flex flex-col md:flex-row">
+      <Sellerdashboard/>
+
+       <div className="flex-1 p-6">
+      {/* Header */}
+      <header className="flex justify-between items-center py-4">
+        <h1 className="text-2xl font-bold">Seller Account</h1>
+      </header>
+      {/* Seller Information */}
+      <section className="bg-white p-6 rounded-lg shadow-md">
+        <div className="flex flex-col md:flex-row items-center space-y-4 md:space-y-0 md:space-x-4">
           <img
-            src={profile.profileImage || "/default-avatar.png"}
-            alt="Profile"
-            className="w-full h-full object-cover rounded-full border"
+            alt="Profile picture of the seller"
+            className="w-24 h-24 rounded-full"
+            height={100}
+            src="https://storage.googleapis.com/a1aa/image/JziZH711k-MMaWppSn-n4PhaPwEmm330bkRN5igX0Ts.jpg"
+            width={100}
           />
-          {isEditing && (
-            <label className="absolute bottom-2 right-2 bg-gray-800 text-white p-2 rounded-full cursor-pointer">
-              <Camera size={16} />
-              <input type="file" accept="image/*" onChange={handleImageUpload} className="hidden" />
-            </label>
-          )}
+          <div>
+            <h2 className="text-xl font-semibold">John Doe</h2>
+            <p className="text-gray-600">johndoe@example.com</p>
+            <p className="text-gray-600">Phone: (123) 456-7890</p>
+            <p className="text-gray-600">Store Name: John's Electronics</p>
+            <p className="text-gray-600">Joined: January 1, 2022</p>
+          </div>
         </div>
-        <motion.div
-          initial={{ scale: 0.9 }}
-          animate={{ scale: 1 }}
-          transition={{ duration: 0.3 }}
-        >
-          <div className="mb-4">
-            <label className="block text-gray-700">Full Name</label>
-            <input
-              type="text"
-              name="name"
-              value={profile.name}
-              onChange={handleChange}
-              className="w-full p-2 border rounded mt-1"
-              disabled={!isEditing}
+      </section>
+      {/* Seller Statistics */}
+      <section className="mt-6 grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div className="bg-white p-6 rounded-lg shadow-md">
+          <h3 className="text-lg font-semibold">Total Sales</h3>
+          <p className="text-2xl font-bold mt-2">$12,345</p>
+        </div>
+        <div className="bg-white p-6 rounded-lg shadow-md">
+          <h3 className="text-lg font-semibold">Products Listed</h3>
+          <p className="text-2xl font-bold mt-2">150</p>
+        </div>
+        <div className="bg-white p-6 rounded-lg shadow-md">
+          <h3 className="text-lg font-semibold">Orders Received</h3>
+          <p className="text-2xl font-bold mt-2">1,234</p>
+        </div>
+      </section>
+      {/* Recent Orders */}
+      <section className="mt-6 bg-white p-6 rounded-lg shadow-md">
+        <h3 className="text-lg font-semibold mb-4">Recent Orders</h3>
+        <div className="overflow-x-auto">
+          <table className="min-w-full bg-white">
+            <thead>
+              <tr>
+                <th className="py-2 px-4 border-b">Order ID</th>
+                <th className="py-2 px-4 border-b">Product</th>
+                <th className="py-2 px-4 border-b">Date</th>
+                <th className="py-2 px-4 border-b">Status</th>
+                <th className="py-2 px-4 border-b">Total</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td className="py-2 px-4 border-b">#12345</td>
+                <td className="py-2 px-4 border-b">Product Name 1</td>
+                <td className="py-2 px-4 border-b">2023-10-01</td>
+                <td className="py-2 px-4 border-b text-green-600">Completed</td>
+                <td className="py-2 px-4 border-b">$100</td>
+              </tr>
+              <tr>
+                <td className="py-2 px-4 border-b">#12346</td>
+                <td className="py-2 px-4 border-b">Product Name 2</td>
+                <td className="py-2 px-4 border-b">2023-10-02</td>
+                <td className="py-2 px-4 border-b text-yellow-600">Pending</td>
+                <td className="py-2 px-4 border-b">$200</td>
+              </tr>
+              <tr>
+                <td className="py-2 px-4 border-b">#12347</td>
+                <td className="py-2 px-4 border-b">Product Name 3</td>
+                <td className="py-2 px-4 border-b">2023-10-03</td>
+                <td className="py-2 px-4 border-b text-red-600">Cancelled</td>
+                <td className="py-2 px-4 border-b">$150</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+      {/* Product Listings */}
+      <section className="mt-6 bg-white p-6 rounded-lg shadow-md">
+        <h3 className="text-lg font-semibold mb-4">Product Listings</h3>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          <div className="bg-gray-100 p-4 rounded-lg shadow-md">
+            <img
+              alt="Image of Product 1"
+              className="w-full h-48 object-cover rounded-lg"
+              height={200}
+              src="https://storage.googleapis.com/a1aa/image/6oRnKBRybW6RsxGOjgZX9DjL-k-JRF9VswE5h-C3K1Q.jpg"
+              width={300}
             />
+            <h4 className="text-lg font-semibold mt-2">Product Name 1</h4>
+            <p className="text-gray-600">$50</p>
           </div>
-          <div className="mb-4">
-            <label className="block text-gray-700">Email</label>
-            <input
-              type="email"
-              name="email"
-              value={profile.email}
-              onChange={handleChange}
-              className="w-full p-2 border rounded mt-1"
-              disabled={!isEditing}
+          <div className="bg-gray-100 p-4 rounded-lg shadow-md">
+            <img
+              alt="Image of Product 2"
+              className="w-full h-48 object-cover rounded-lg"
+              height={200}
+              src="https://storage.googleapis.com/a1aa/image/KV3AxbRHY1V0AFZsthKZb7xusyyj-LxmkObjmKiC8O4.jpg"
+              width={300}
             />
+            <h4 className="text-lg font-semibold mt-2">Product Name 2</h4>
+            <p className="text-gray-600">$75</p>
           </div>
-          <div className="mb-4">
-            <label className="block text-gray-700">Phone</label>
-            <input
-              type="text"
-              name="phone"
-              value={profile.phone}
-              onChange={handleChange}
-              className="w-full p-2 border rounded mt-1"
-              disabled={!isEditing}
+          <div className="bg-gray-100 p-4 rounded-lg shadow-md">
+            <img
+              alt="Image of Product 3"
+              className="w-full h-48 object-cover rounded-lg"
+              height={200}
+              src="https://storage.googleapis.com/a1aa/image/wBRj65PgL3jk-g426l2ykedfO3UGgyJAlVYdXcadsGA.jpg"
+              width={300}
             />
+            <h4 className="text-lg font-semibold mt-2">Product Name 3</h4>
+            <p className="text-gray-600">$100</p>
           </div>
-          <div className="mb-4">
-            <label className="block text-gray-700">Store Name</label>
-            <input
-              type="text"
-              name="storeName"
-              value={profile.storeName}
-              onChange={handleChange}
-              className="w-full p-2 border rounded mt-1"
-              disabled={!isEditing}
-            />
-          </div>
-        </motion.div>
-        <button
-          className={`w-full py-2 mt-4 text-white font-bold rounded flex items-center justify-center gap-2 ${isEditing ? "bg-green-500 hover:bg-green-600" : "bg-blue-600 hover:bg-blue-700"}`}
-          onClick={() => setIsEditing(!isEditing)}
-        >
-          {isEditing ? <Save size={20} /> : <Edit3 size={20} />} {isEditing ? "Save Changes" : "Edit Profile"}
-        </button>
-      </div>
-    </motion.div>
-  );
-}
+        </div>
+      </section>
+    </div>
+  </div>
+    
+  )}
+

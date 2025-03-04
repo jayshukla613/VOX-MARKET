@@ -70,7 +70,7 @@ const Footer = () => {
           <h2 className="text-xl font-bold mb-4">Privacy</h2>
           <ul>
             <li className="mb-2">
-              <Link href="/about" className="text-gray-400 hover:text-white">
+              <Link href="/privacyandpolicypage" className="text-gray-400 hover:text-white">
                 Privacy Policy
               </Link>
             </li>
