@@ -6,8 +6,6 @@ const seller = require('./routers/sellerRouter');
 
 const app = express();
 
-
-
 const port =process.env.PORT|| 5000;
 app.use(cors({
     origin: ['http://localhost:3000'],
@@ -26,3 +24,4 @@ app.get('/getall', (req, res) => {
 app.listen(port, () => {
     console.log(`Server started on port ${port}`);
 });
+
