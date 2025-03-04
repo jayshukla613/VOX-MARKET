@@ -2,8 +2,9 @@
 import Link from "next/link";
 import { useState, useRef, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { ChevronDown, ShoppingCart, Smartphone, Monitor, Headphones, Gamepad } from "lucide-react";
+import { ChevronDown, ShoppingCart, Smartphone, Monitor, Headphones, Gamepad, User } from "lucide-react";
 import { IconUserCircle } from "@tabler/icons-react";
+import {  Dropdown,  DropdownTrigger,  DropdownMenu,  DropdownSection,  DropdownItem} from "@heroui/dropdown";
 
 const Navbar = () => {
   const router = useRouter();
@@ -74,38 +75,27 @@ const Navbar = () => {
               Sign up
             </button>
           
-          <li className="relative list-none " >
-              <button
-                onClick={toggleDropdown}
-                className="flex gap-1  hover:text-gray-300"
-              >
-                <IconUserCircle  size={50}/> 
-              </button>
-
-              {open && (
-                <div className="absolute left-0 mt-2 w-56 bg-white text-black rounded-lg shadow-lg ring-1 ring-black ring-opacity-5 z-50">
-                  <ul className="py-2 list-none">
-                    
-                    <li>
-                      <Link href="" className="flex items-center gap-2 px-4 py-2 hover:bg-gray-100">
-                        Admin Account
-                      </Link>
-                    </li>
-                    <li>
-                      <Link href="" className="flex items-center gap-2 px-4 py-2 hover:bg-gray-100">
-                       Seller Account
-                      </Link>
-                    </li>
-                    <li>
-                      <Link href="/user/profile" className="flex items-center gap-2 px-4 py-2 hover:bg-gray-100">
-                         User Account
-                      </Link>
-                    </li>
-                    
-                  </ul>
-                </div>
-              )}
-            </li>
+            <Dropdown placement="bottom-start">
+        <DropdownTrigger>
+          <User
+            as="button"
+           size={32}
+            className=""
+            description="@tonyreichert"
+            name="Tony Reichert"
+          />
+        </DropdownTrigger>
+        <DropdownMenu className="bg-white italic font-semibold p-4" aria-label="User Actions" variant="flat">
+          <DropdownItem key="user" className="h-10 gap-2 " >
+           <Link href="/user/profile">User Account</Link> </DropdownItem>
+          <DropdownItem key="seller" className="h-10 gap-2" >
+           <Link href="/seller/seller-introducepage">Seller Account</Link> </DropdownItem>
+          <DropdownItem key="admin" className="h-10 gap-2" >
+           <Link href="/admin/profile">Admin Account</Link> </DropdownItem>
+          
+          
+        </DropdownMenu>
+      </Dropdown>
             </div >
         </div>
       </nav>
