@@ -1,3 +1,4 @@
+'use client'
 import Footeruserpage from '@/components/Footeruserpage'
 import Sidebaruser from '@/components/Sidebaruser'
 import React from 'react'

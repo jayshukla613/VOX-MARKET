@@ -75,6 +75,7 @@ const Navbar = () => {
               Sign up
             </button>
           
+<<<<<<< HEAD
             <Dropdown placement="bottom-start">
         <DropdownTrigger>
           <User
@@ -96,6 +97,40 @@ const Navbar = () => {
           
         </DropdownMenu>
       </Dropdown>
+=======
+          <li className="relative list-none " >
+              <button
+                onClick={toggleDropdown}
+                className="flex gap-1  hover:text-gray-300"
+              >
+                <IconUserCircle  size={50}/> 
+              </button>
+
+              {open && (
+                <div className="absolute right-0  mt-2 w-56 bg-white text-black rounded-lg shadow-lg ring-1 ring-black ring-opacity-5 z-50">
+                  <ul className="py-2 list-none">
+                    
+                    <li>
+                      <Link href="/admin/profile" className="flex items-center gap-2 px-4 py-2 hover:bg-gray-100">
+                        Admin Account
+                      </Link>
+                    </li>
+                    <li>
+                      <Link href="/seller/profile" className="flex items-center gap-2 px-4 py-2 hover:bg-gray-100">
+                       Seller Account
+                      </Link>
+                    </li>
+                    <li>
+                      <Link href="/user/profile" className="flex items-center gap-2 px-4 py-2 hover:bg-gray-100">
+                         User Account
+                      </Link>
+                    </li>
+                    
+                  </ul>
+                </div>
+              )}
+            </li>
+>>>>>>> 07c98d398a1fe3ba3d7419f1f707b9570e7cb9e2
             </div >
         </div>
       </nav>
