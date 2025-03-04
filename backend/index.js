@@ -6,8 +6,6 @@ const seller = require('./routers/sellerRouter');
 
 const app = express();
 
-
-
 const port =process.env.PORT|| 5000;
 app.use(cors({
     origin: ['http://localhost:3000'],
