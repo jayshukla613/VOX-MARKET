@@ -72,6 +72,28 @@ router.get('/getdetails', verifytoken, (req, res) => {
         res.status(500).json(err)
         
     });
+<<<<<<< HEAD
+=======
+});
+router.get('/getall', (req,res)=>{
+    Model.find()
+    .then((result) => {
+          res.status(200).json(result);
+    }).catch((err) => {
+         console.log(err);
+         res.status(500).json(err);
+    });
+ });
+ router.get('/getbyid/:id', (req,res)=>{
+    Model.findById(req.params.id)
+    .then((result) => {
+        res.status(200).json(result);
+        }).catch((err) => {
+            console.log(err);
+            res.status(500).json(err);
+            });
+            });
+>>>>>>> 8238d681290e0689cae8530f1cabd557c379febf
 
 });
 
