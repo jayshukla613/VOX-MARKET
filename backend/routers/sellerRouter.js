@@ -27,6 +27,16 @@ seller.get('/getall', (req,res)=>{
          res.status(500).json(err);
     });
  });
+
+ seller.get('/getdetails', (req,res)=>{
+    Model.find()
+    .then((result) => {
+          res.status(200).json(result);
+    }).catch((err) => {
+         console.log(err);
+         res.status(500).json(err);
+    });
+ });
  
  seller.post('/authenticate',(req,res)=>{
     Model.findOne(req.body)

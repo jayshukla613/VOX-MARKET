@@ -3,6 +3,34 @@
 import Sellerdashboard from "@/components/Sellerdashboard";
 
 export default function SellerProfile() {
+
+ 
+    const [userdata, setuserdata] = useState({
+      name: '',
+      email: '',
+      password: '',
+      phone: ''
+    });
+    const token = typeof window !== 'undefined' ? localStorage.getItem('seller-token') : null;
+
+    const getProfileData = () => {
+      axios.get(`${process.env.NEXT_PUBLIC_API_URL}/seller/getdetails`, {
+        headers: { 'x-auth-token': token }
+      })
+        .then((result) => {
+          console.log("API Response:", result.data);
+          setuserdata(result.data);
+        })
+        .catch((err) => console.log("Error fetching profile data:", err));
+    };
+  
+    useEffect(() => {
+      if (token) getProfileData();
+    }, [token]);
+  
+    const handleSubmit = async (e) => {
+      e.preventDefault();
+    };
   // const [isEditing, setIsEditing] = useState(false);
   // const [profile, setProfile] = useState({
   //   name: "",
@@ -46,11 +74,19 @@ export default function SellerProfile() {
             width={100}
           />
           <div>
-            <h2 className="text-xl font-semibold">John Doe</h2>
-            <p className="text-gray-600">johndoe@example.com</p>
-            <p className="text-gray-600">Phone: (123) 456-7890</p>
-            <p className="text-gray-600">Store Name: John's Electronics</p>
-            <p className="text-gray-600">Joined: January 1, 2022</p>
+            {
+              userdata ? (
+                <>
+                  <h2 className="text-xl font-semibold"></h2>
+                  <p className="text-gray-600">userdata.email</p>
+                  <p className="text-gray-600">userdata.phone</p>
+                  <p className="text-gray-600">userdata.store</p>
+                  <p className="text-gray-600">Joined: January 1, 2022</p>
+                </>
+              ) : (
+                <></>
+              )
+            }
           </div>
         </div>
       </section>
