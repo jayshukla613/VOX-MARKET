@@ -8,7 +8,7 @@ const userProfile = () => {
   const [userdata, setuserdata] = useState({
     name: '',
     email: '',
-    password: '',
+    address: '',
     phone: ''
   });
   const token = typeof window !== 'undefined' ? localStorage.getItem('user-token') : null;
