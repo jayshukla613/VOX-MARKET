@@ -1,7 +1,7 @@
 const jwt=require('jsonwebtoken');
 require('dotenv').config();
 
-const varifytoken=(req,res,next)=>{
+const verifytoken=(req,res,next)=>{
     const token=req.headers['x-auth-token'];
     if(!token){
         res.status(403).json({message:'token not provided'})
@@ -28,4 +28,4 @@ const varifytoken=(req,res,next)=>{
 
 }
 
-module.exports=varifytoken;
+module.exports=verifytoken;
