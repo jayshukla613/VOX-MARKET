@@ -73,7 +73,10 @@ router.get('/getdetails', verifytoken, (req, res) => {
         
     });
 
+<<<<<<< HEAD
+=======
 // <<<<< HEAD
+>>>>>>> 3b779d5fa9533b818fd5590beddd6561518acbc8
 });
 router.get('/getall', (req,res)=>{
     Model.find()
@@ -93,6 +96,9 @@ router.get('/getall', (req,res)=>{
             res.status(500).json(err);
             });
             });
+<<<<<<< HEAD
+=======
 ;
+>>>>>>> 3b779d5fa9533b818fd5590beddd6561518acbc8
 
 module.exports = router;
