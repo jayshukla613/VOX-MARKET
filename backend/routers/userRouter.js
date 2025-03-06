@@ -72,8 +72,7 @@ router.get('/getdetails', verifytoken, (req, res) => {
         res.status(500).json(err)
         
     });
-<<<<<<< HEAD
-=======
+
 });
 router.get('/getall', (req,res)=>{
     Model.find()
@@ -93,8 +92,5 @@ router.get('/getall', (req,res)=>{
             res.status(500).json(err);
             });
             });
->>>>>>> 8238d681290e0689cae8530f1cabd557c379febf
-
-});
 
 module.exports = router;
