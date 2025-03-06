@@ -56,6 +56,8 @@ const usersignup = () => {
           toast.success('user data succesfully save');
           resetForm();
           router.push('/user/profile')
+          l
+
           
 
           
