@@ -40,10 +40,10 @@ const Sellerdashboard = () => {
           <li className="px-4 py-2">
             <Link
               className="text-gray-700 hover:text-gray-900 flex items-center"
-              href="/seller/lagout"
+              href="/seller/logout"
             >
               
-             Lagout
+             Logout
             </Link>
           </li>
         </ul>
