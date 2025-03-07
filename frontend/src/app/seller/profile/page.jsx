@@ -3,7 +3,7 @@ import { useState ,useEffect} from "react";
 
 import Sellerdashboard from "@/components/Sellerdashboard";
 import axios from "axios";
-import { useState,useEffect } from "react";
+
 
 
 export default function SellerProfile() {

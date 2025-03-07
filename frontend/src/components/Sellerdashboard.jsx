@@ -1,5 +1,8 @@
 import Link from 'next/link'
 import React from 'react'
+// import Sellerdashboard from Sellerdashboard
+import  { useState, useEffect } from "react";
+
 
 const Sellerdashboard = () => {
   return (
@@ -54,4 +57,4 @@ const Sellerdashboard = () => {
   )
 }
 
-export default Sellerdashboard
+export default Sellerdashboard;
