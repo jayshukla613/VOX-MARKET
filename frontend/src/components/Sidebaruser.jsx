@@ -40,7 +40,7 @@ const Sidebaruser = () => {
             <li>
               <button className="w-full text-left bg-gray-200 p-2 rounded-lg hover:bg-yellow-500" 
               onClick={()=>{
-                router.push('/user/lagout')
+                router.push('/user/logout')
               }}
               >
                 Logout
