@@ -73,7 +73,6 @@ router.get('/getdetails', verifytoken, (req, res) => {
         
     });
 
-// <<<<< HEAD
 });
 router.get('/getall', (req,res)=>{
     Model.find()
@@ -93,6 +92,19 @@ router.get('/getall', (req,res)=>{
             res.status(500).json(err);
             });
             });
-;
+<<<<<<< HEAD
+=======
+
+ router.delete('/deletebyid/:id', (req,res)=> {
+    Model.findByIdAndDelete(req.params.id)
+    .then((result) => {
+        res.status(200).json(result);
+    }).catch((err) => {
+        console.log(err);
+        res.status(500).json(err);
+        
+    });
+ })
+>>>>>>> c95c9a25990da5c00999e431777dd7c8bb1f782f
 
 module.exports = router;

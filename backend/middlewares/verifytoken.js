@@ -18,7 +18,6 @@ const verifytoken=(req,res,next)=>{
                 else{
                     req.user=payload;
                     next();
-
                 }
 
             }
