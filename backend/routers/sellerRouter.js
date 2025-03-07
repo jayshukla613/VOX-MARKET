@@ -3,7 +3,7 @@ const Model = require('../models/sellerModel');
 const seller = express.Router();
 
 const jwt = require('jsonwebtoken');
-// const verifyToken = require('../middleware/verifyToken')
+ const verifytoken = require('../middlewares/verifytoken')
 require('dotenv').config();
 
 seller.post('/add',(req, res) => { 
@@ -27,16 +27,15 @@ seller.get('/getall', (req,res)=>{
          res.status(500).json(err);
     });
  });
-
- seller.get('/getdetails', (req,res)=>{
-    Model.find()
-    .then((result) => {
-          res.status(200).json(result);
-    }).catch((err) => {
-         console.log(err);
-         res.status(500).json(err);
-    });
- });
+ seller.get('/getdetails', verifytoken, (req, res) => {
+    Model.findById(req.user._id)
+        .then((result) => {
+            res.status(200).json(result);
+        }).catch((err) => {
+            console.log(err);
+            res.status(500).json(err);
+        });
+});
  
  seller.post('/authenticate',(req,res)=>{
     Model.findOne(req.body)

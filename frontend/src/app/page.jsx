@@ -1,4 +1,5 @@
-import React from "react";
+'use client'
+import React, { useEffect } from "react";
 import Card from "@/components/Card";
 import { IconStarFilled } from "@tabler/icons-react";
 
@@ -8,7 +9,10 @@ import Herosection1 from "@/components/Herosection1";
 import Reviewsection from "@/components/Reviewsection";
 
 
-export default function page() {
+const Homepage = () => {
+
+  
+ 
   return (
     <>
     <div>
@@ -17,11 +21,12 @@ export default function page() {
       <h2 className='text-center  text-4xl text-black italic p-6 font-light' >POPULAR PRODUCTS</h2>
         <p className='text-center font-extralight text-3xl italic text-gray-400'> Trending Now</p>
         <div className="flex gap-4 p-4 mx-auto ">
-          <Card/>
-          <Card/>
-          <Card/>
-          <Card/>
           
+          <Card/>
+          <Card/>
+          <Card/>
+          <Card/> 
+           
         </div>
 
         <div className="flex gap-4 p-4">
@@ -69,3 +74,5 @@ export default function page() {
 }
 
 
+
+export default Homepage
