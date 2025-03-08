@@ -56,12 +56,7 @@ const usersignup = () => {
           toast.success('user data succesfully save');
           resetForm();
           router.push('/user/profile')
-          l
-
           
-
-          
-
         }).catch((err) => {
          console.log(err);
          toast.error('error while saving user data');
@@ -174,8 +169,11 @@ const usersignup = () => {
           I agree to the{" "}
           <Link href="" className="text-blue-500">
             Terms
-          </Link>{" "}
-          and{" "}
+          </Link>
+
+          {" "} 
+and{" "}
+
           <Link href="" className="text-blue-500">
             Privacy Policy
           </Link>

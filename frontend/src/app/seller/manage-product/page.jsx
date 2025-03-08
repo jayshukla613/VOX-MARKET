@@ -1,11 +1,41 @@
 'use client'
 import Sellerdashboard from '@/components/Sellerdashboard';
-import { IconPlus, IconTrashFilled, IconUserEdit } from '@tabler/icons-react';
+import { IconPencil, IconPlus, IconTrashFilled, IconUserEdit } from '@tabler/icons-react';
+import axios from 'axios';
+import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import React from 'react'
+import React, { useEffect, useState } from 'react'
+import toast from 'react-hot-toast';
 
 const manageproduct = () => {
+  const [product, setproduct] = useState([])
   const router = useRouter();
+
+  const fetchproductdata = async () => {
+    const res = await axios.get('http://localhost:5000/product/getall');
+    
+    console.table(res.data);
+    setproduct(res.data);
+}
+
+useEffect(() => {
+ fetchproductdata();
+}, []);
+
+
+const deleteProduct= (id) => {
+  axios.delete(`http://localhost:5000/product/delete/${id}`)
+      .then((result) => {
+          toast.success('product  deleted successfully');
+          fetchproductdata();
+      }).catch((err) => {
+          console.log(err);
+          toast.error('Failed to delete product');
+      });
+}
+
+
+
   return (
     <div className="flex flex-col md:flex-row">
       <Sellerdashboard />
@@ -23,9 +53,10 @@ const manageproduct = () => {
           </button>
         </div>
         <div className="bg-white shadow-md rounded-lg overflow-hidden">
-          <table className="min-w-full bg-white">
-            <thead className="bg-gray-800 text-white">
+          <table className="min-w-full bg-white p-6">
+            <thead className="bg-gray-800 text-white p-4">
               <tr>
+                <th>S.NO</th>
                 <th className="w-1/6 py-3 px-4 uppercase font-semibold text-sm">
                   Image
                 </th>
@@ -41,34 +72,52 @@ const manageproduct = () => {
                 <th className="w-1/6 py-3 px-4 uppercase font-semibold text-sm">
                   Sold
                 </th>
-                <th className="w-1/6 py-3 px-4 uppercase font-semibold text-sm">
+                <th colSpan={2} className="w-1/6 py-3 px-4 uppercase font-semibold text-sm">
                   Actions
                 </th>
               </tr>
             </thead>
             <tbody className="text-gray-700">
-              <tr>
-                <td className="w-1/6 py-3 px-4">
-                  <img
-                    alt="Image of Product 1"
-                    height={100}
-                    src="https://storage.googleapis.com/a1aa/image/0farZEPS7yeYbpn5FvaBh8tczmMFHsORMXzv-yLtM9Q.jpg"
-                    width={100}
-                  />
-                </td>
-                <td className="w-1/6 py-3 px-4">Product 1</td>
-                <td className="w-1/6 py-3 px-4">$10.00</td>
-                <td className="w-1/6 py-3 px-4">20</td>
-                <td className="w-1/6 py-3 px-4">5</td>
-                <td className="w-1/6 col-span-2 py-3 space-x-4 px-4">
-                  <button className="bg-yellow-500 text-white px-2 py-1 rounded hover:bg-yellow-600">
-                    <IconUserEdit />
-                  </button>
-                  <button className="bg-red-500 text-white px-2 py-1 rounded hover:bg-red-600">
-                    <IconTrashFilled />
-                  </button>
-                </td>
-              </tr>
+            {
+              product.map((item, index) => {
+                return (
+                  <tr key={item._id}>
+                    <td>{index+1}</td>
+                    <td className="w-1/6 py-3 px-4">
+                      <img
+                        alt={item.name}
+                        height={100}
+                        src={item.image}
+                        width={100}
+                      />
+                    </td>
+                    <td className="w-1/6 py-3 px-4">{item.name}</td>
+                    <td className="w-1/6 py-3 px-4"> Rs. {item.price}</td>
+                    <td className="w-1/6 py-3 px-4"> {item.stock}</td>
+                    <td className="w-1/6 py-3 px-4"> {item.sold}</td>
+                    <td className="w-1/6 col-span-2 py-3 space-x-4 px-4">
+                     
+
+                      <button className="bg-red-500 text-white px-2 py-1 rounded hover:bg-red-600"
+                      onClick={()=>{
+                        deleteProduct(item._id);
+                        // setProduct(product.filter((product) => product._id !== item._id));
+                        
+
+                      }} 
+                      >
+                        <IconTrashFilled />
+                      </button>
+                    </td>
+                    
+                    <td className="w-1/6 col-span-2 py-3 space-x-4 px-4">
+                      <Link href={`/update-product/${item._id}`}>
+                      <IconPencil/></Link>
+                    </td>
+                  </tr>
+                );
+              })
+            }
 
             </tbody>
           </table>
