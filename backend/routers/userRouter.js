@@ -105,6 +105,9 @@ router.get('/getall', (req,res)=>{
     });
  })
 
+<<<<<<< HEAD
+=======
 
+>>>>>>> b114df3951bdb13b3b3508e85532fe5a2c2312d7
 
 module.exports = router;
