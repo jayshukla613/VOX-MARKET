@@ -23,7 +23,7 @@ product.get('/getall', (req,res)=>{
     });
  });
 
- product.get('/getbyid/id',(req,res)=>{
+ product.get('/getbyid/:id',(req,res)=>{
     Model.findById(req.params.id)
     .then((result) => {
         res.status(200).json(result);
@@ -31,8 +31,6 @@ product.get('/getall', (req,res)=>{
             console.log(err);
             res.status(500).json(err);
             });
-        
-
- })
+        })
 
  module.exports= product;
