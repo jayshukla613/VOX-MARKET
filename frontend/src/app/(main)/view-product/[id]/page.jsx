@@ -6,14 +6,16 @@ import React, { useState, useEffect } from 'react'
 
 const viewProduct = () => {
   const router = useRouter();
-  const { id } = useParams;
+const { id } = useParams();
+
   const [product, setProduct] = useState(null);
 
   useEffect(() => {
     if (id) {
       const fetchProduct = async () => {
         const res = await axios.get(`http://localhost:5000/product/getbyid/${id}`);
-        const data = await res.json();
+        const data = res.data;
+
         setProduct(data);
       };
 
