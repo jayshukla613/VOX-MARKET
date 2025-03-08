@@ -2,29 +2,38 @@ const express = require('express');
 const Model = require('../models/productModel');
 const product = express.Router();
 
-product.post('/add',(req, res) => { 
+product.post('/add', (req, res) => {
     console.log(req.body);
     new Model(req.body).save()
-    .then((result) => {
-        res.status(200).json(result);
-        
-    }).catch((err) => {
-        console.log(err);
-        res.status(500).json(err);
-    });
-});
-product.get('/getall', (req,res)=>{
-    Model.find()
-    .then((result) => {
-          res.status(200).json(result);
-    }).catch((err) => {
-         console.log(err);
-         res.status(500).json(err);
-    });
- });
+        .then((result) => {
+            res.status(200).json(result);
 
- product.get('/getbyid/:id',(req,res)=>{
+        }).catch((err) => {
+            console.log(err);
+            res.status(500).json(err);
+        });
+});
+product.get('/getall', (req, res) => {
+    Model.find()
+        .then((result) => {
+            res.status(200).json(result);
+        }).catch((err) => {
+            console.log(err);
+            res.status(500).json(err);
+        });
+});
+
+product.get('/getbyid/:id', (req, res) => {
     Model.findById(req.params.id)
+        .then((result) => {
+            res.status(200).json(result);
+        }).catch((err) => {
+            console.log(err);
+            res.status(500).json(err);
+        });
+})
+product.delete('/delete/:id',(req,res)=>{
+    Model.findByIdAndDelete(req.params.id)
     .then((result) => {
         res.status(200).json(result);
         }).catch((err) => {
@@ -33,4 +42,15 @@ product.get('/getall', (req,res)=>{
             });
         })
 
- module.exports= product;
+     product.put('/update/:id',(req,res)=>{
+        Model.findByIdAndUpdate(req.params.id,req.body,{ new: true })
+        .then((result) => {
+            res.status(200).json(result);
+            }).catch((err) => {
+                console.log(err);
+                res.status(500).json(err);
+                });
+            })   
+
+
+module.exports = product;
