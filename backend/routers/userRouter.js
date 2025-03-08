@@ -92,6 +92,7 @@ router.get('/getall', (req,res)=>{
             res.status(500).json(err);
             });
             });
+<<<<<<< HEAD
 
 
  router.delete('/deletebyid/:id', (req,res)=> {
@@ -105,5 +106,7 @@ router.get('/getall', (req,res)=>{
     });
  })
 
+=======
+>>>>>>> ca9e0bc013da0e0238e7219eb8640634e20cab81
 
 module.exports = router;
