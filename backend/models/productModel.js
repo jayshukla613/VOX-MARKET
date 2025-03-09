@@ -2,7 +2,7 @@ const {Schema  ,model}=require('../connection');
 
 const myschema=Schema({
     name:{type:String,require:true},
-    // image:{ type:String,require:true},
+    image:{type:String,require:true},
     material: {type:String ,require:true},
     
     price:{type:Number,require:true},

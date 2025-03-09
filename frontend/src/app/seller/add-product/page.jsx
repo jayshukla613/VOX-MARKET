@@ -1,10 +1,11 @@
 'use client'
 import React, { useState, useEffect } from 'react'
 import Sellerdashboard from "@/components/Sellerdashboard";
-import { useFormik } from 'formik';
+import { Field, useFormik } from 'formik';
 import *as Yup from 'yup';
 import axios from 'axios';
 import toast from 'react-hot-toast';
+
 const validationschema = Yup.object().shape({
 
   name: Yup.string().required("product name is required"),
@@ -13,24 +14,24 @@ const validationschema = Yup.object().shape({
   // offer:Yup.string().required(" offer is required"),
   
 
-  // image:  Yup.array()
-  // .min(2, "You must upload at least 2 images.")  
-  // .max(4, "You must upload more 4 images.")  
-  // .required("At least one image is required.") 
-  // .test("fileSize", "Each file must be less than 2MB", (value) => {
-  //   return value.every((file) => file.size <= 2 * 1024 * 1024); 
-  // })
-  // .test("fileType", "Only JPG and PNG files are allowed", (value) => {
-  //   return value.every(
-  //     (file) => file.type === "image/jpeg" || file.type === "image/png"
-  //   );
-  // }),
+  image:  Yup.array()
+  
+  .max(4, "You must upload more 4 images.")  
+  .required("At least one image is required.") 
+  .test("fileSize", "Each file must be less than 2MB", (value) => {
+    return value.every((file) => file.size <= 2 * 1024 * 1024); 
+  })
+  .test("fileType", "Only JPG and PNG files are allowed", (value) => {
+    return value.every(
+      (file) => file.type === "image/jpeg" || file.type === "image/png"
+    );
+  }),
 
   
   // category: Yup.string().required(" category is required"),
   quantity: Yup.number().required( "quantity is required"),
   brand:Yup.string().required(" brand is required"),
-  // warranty:Yup.string().required(" warranty is required"),
+  warranty:Yup.string().required(" warranty is required"),
   color:Yup.string().required(" color is required"),
   size:Yup.string().required(" size is required"),
  
@@ -65,32 +66,32 @@ const addproduct = () => {
       name: "",
       price: "",
       description: "",
-      // image: [],
+      image: [],
       // offer: "",
       // category: "",
       quantity: "",
       size: "",
       color: "",
       brand: "",
-      // warranty: "",
+      warranty: "",
       returnpolicy: "",
       feature: ""
      
      },
     onSubmit: (value,{resetForm,setSubmitting}) => {
       console.log(value);
-      // axios.post('http://localhost:5000/product/add',value)
-      // .then((result) => {
-      //   console.log(result.data);
-      //   toast.success('data added successfully');
-      //   resetForm();
+      axios.post('http://localhost:5000/product/add',value)
+      .then((result) => {
+        console.log(result.data);
+        toast.success('data added successfully');
+        resetForm();
         
-      // }).catch((err) => {
-      //   console.log(err);
-      //   toast.error('data not added');
-      //   setSubmitting(false)
+      }).catch((err) => {
+        console.log(err);
+        toast.error('data not added');
+        setSubmitting(false)
         
-      // });
+      });
     },
     validationSchema: validationschema
 
@@ -149,22 +150,10 @@ const addproduct = () => {
               <div className="text-red-500">{addform.errors.description}</div>
             )}
           </div>
-          <div className="mb-4">
-            <label
-              htmlFor="category"
-              className="block text-gray-700 font-bold mb-2"
-            >
-              Category
-            </label>
-            <select
-              id="category"
-              className="w-full p-2 border border-gray-300 rounded"
-            >
-              <option>Electronics</option>
-              <option>Clothing</option>
-              <option>Home Appliances</option>
-            </select>
-          </div>
+        
+            
+            
+            
           
           <div className="mb-4">
             <label
@@ -363,6 +352,23 @@ const addproduct = () => {
               className="w-full p-2 border border-gray-300 rounded"
               placeholder="Enter tags (comma-separated)"
             />
+          </div>
+          <div className="mb-4">
+            <label htmlFor="color" className="block text-gray-700 font-bold mb-2">
+             Warranty
+            </label>
+            <input
+              type="text"
+              name='warranty'
+              value={addform.values.warranty}
+              onChange={addform.handleChange}
+              className="w-full p-2 border border-gray-300 rounded"
+              placeholder="Enter Warrnty policy"
+            /> {
+              addform.errors.warranty && addform.touched.warranty && (
+                <div className="text-red-500">{addform.errors.warranty}</div>
+              )
+            }
           </div>
          
           <div className="mb-4">
