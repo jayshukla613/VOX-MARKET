@@ -10,29 +10,47 @@ import toast from 'react-hot-toast';
 const manageproduct = () => {
   const [product, setproduct] = useState([])
   const router = useRouter();
+  const token = typeof window !== 'undefined' ? localStorage.getItem('seller-token') : null;
 
   const fetchproductdata = async () => {
-    const res = await axios.get('http://localhost:5000/product/getall');
-    
-    console.table(res.data);
-    setproduct(res.data);
-}
 
-useEffect(() => {
- fetchproductdata();
-}, []);
+    const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/product/getbyseller`, {
+      headers: { 'x-auth-token': token }
 
-
-const deleteProduct= (id) => {
-  axios.delete(`http://localhost:5000/product/delete/${id}`)
+    })
       .then((result) => {
-          toast.success('product  deleted successfully');
-          fetchproductdata();
+        console.log('API Response:', result.data)
+        setproduct(res.data);
+
+
       }).catch((err) => {
-          console.log(err);
-          toast.error('Failed to delete product');
+        console.log('response fail')
+
       });
-}
+
+
+
+
+
+
+  }
+
+  useEffect(() => {
+    if (token) fetchproductdata();
+  }, [token]);
+
+
+  const deleteProduct = (id) => {
+    axios.delete(`http://localhost:5000/product/delete/${id}`)
+      .then((result) => {
+        toast.success('product  deleted successfully');
+        fetchproductdata();
+      }).catch((err) => {
+        console.log(err);
+        toast.error('Failed to delete product');
+      });
+  }
+
 
 
 
@@ -78,46 +96,46 @@ const deleteProduct= (id) => {
               </tr>
             </thead>
             <tbody className="text-gray-700">
-            {
-              product.map((item, index) => {
-                return (
-                  <tr key={item._id}>
-                    <td>{index+1}</td>
-                    <td className="w-1/6 py-3 px-4">
-                      <img
-                        alt={item.name}
-                        height={100}
-                        src={item.image}
-                        width={100}
-                      />
-                    </td>
-                    <td className="w-1/6 py-3 px-4">{item.name}</td>
-                    <td className="w-1/6 py-3 px-4"> Rs. {item.price}</td>
-                    <td className="w-1/6 py-3 px-4"> {item.stock}</td>
-                    <td className="w-1/6 py-3 px-4"> {item.sold}</td>
-                    <td className="w-1/6 col-span-2 py-3 space-x-4 px-4">
-                     
+              {
+                product.map((item, index) => {
+                  return (
+                    <tr key={item._id}>
+                      <td>{index + 1}</td>
+                      <td className="w-1/6 py-3 px-4">
+                        <img
+                          alt={item.name}
+                          height={100}
+                          src={item.image}
+                          width={100}
+                        />
+                      </td>
+                      <td className="w-1/6 py-3 px-4">{item.name}</td>
+                      <td className="w-1/6 py-3 px-4"> Rs. {item.price}</td>
+                      <td className="w-1/6 py-3 px-4"> {item.stock}</td>
+                      <td className="w-1/6 py-3 px-4"> {item.sold}</td>
+                      <td className="w-1/6 col-span-2 py-3 space-x-4 px-4">
 
-                      <button className="bg-red-500 text-white px-2 py-1 rounded hover:bg-red-600"
-                      onClick={()=>{
-                        deleteProduct(item._id);
-                        // setProduct(product.filter((product) => product._id !== item._id));
-                        
 
-                      }} 
-                      >
-                        <IconTrashFilled />
-                      </button>
-                    </td>
-                    
-                    <td className="w-1/6 col-span-2 py-3 space-x-4 px-4">
-                      <Link href={`/update-product/${item._id}`}>
-                      <IconPencil/></Link>
-                    </td>
-                  </tr>
-                );
-              })
-            }
+                        <button className="bg-red-500 text-white px-2 py-1 rounded hover:bg-red-600"
+                          onClick={() => {
+                            deleteProduct(item._id);
+                            // setProduct(product.filter((product) => product._id !== item._id));
+
+
+                          }}
+                        >
+                          <IconTrashFilled />
+                        </button>
+                      </td>
+
+                      <td className="w-1/6 col-span-2 py-3 space-x-4 px-4">
+                        <Link href={`/update-product/${item._id}`}>
+                          <IconPencil /></Link>
+                      </td>
+                    </tr>
+                  );
+                })
+              }
 
             </tbody>
           </table>

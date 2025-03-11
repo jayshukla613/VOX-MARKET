@@ -1,12 +1,15 @@
 'use client'
 import React, { useState, useEffect } from 'react'
 import Sellerdashboard from "@/components/Sellerdashboard";
-import { useFormik } from 'formik';
+import { Field, useFormik } from 'formik';
 import *as Yup from 'yup';
 import axios from 'axios';
 import toast from 'react-hot-toast';
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> f264e5abfdd2632e5cdaa37c7b37302a4f9608b7
 const validationschema = Yup.object().shape({
 
   name: Yup.string().required("product name is required"),
@@ -16,18 +19,8 @@ const validationschema = Yup.object().shape({
 
 
   // image:  Yup.array()
-  // .min(2, "You must upload at least 2 images.")  
-  // .max(4, "You must upload more 4 images.")  
-  // .required("At least one image is required.") 
-  // .test("fileSize", "Each file must be less than 2MB", (value) => {
-  //   return value.every((file) => file.size <= 2 * 1024 * 1024); 
-  // })
-  // .test("fileType", "Only JPG and PNG files are allowed", (value) => {
-  //   return value.every(
-  //     (file) => file.type === "image/jpeg" || file.type === "image/png"
-  //   );
-  // }),
 
+<<<<<<< HEAD
 
   // category: Yup.string().required(" category is required"),
   quantity: Yup.number().required("quantity is required"),
@@ -62,6 +55,34 @@ const Addproduct = () => {
       });
 
   }
+=======
+  // .max(4, "You must upload more 4 images.")
+  //   .required("At least one image is required.")
+  //   .test("fileSize", "Each file must be less than 2MB", (value) => {
+  //     return value.every((file) => file.size <= 2 * 1024 * 1024);
+  //   })
+  //   .test("fileType", "Only JPG and PNG files are allowed", (value) => {
+  //     return value.every(
+  //       (file) => file.type === "image/jpeg" || file.type === "image/png"
+  //     );
+  //   }),
+
+
+  // category: Yup.string().required(" category is required"),
+  quantity: Yup.number().required("quantity is required"),
+  brand: Yup.string().required(" brand is required"),
+  warranty: Yup.string().required(" warranty is required"),
+  color: Yup.string().required(" color is required"),
+  size: Yup.string().required(" size is required"),
+
+  // material:Yup.string().required(" material is required"),
+  returnpolicy: Yup.string().required(" retunepolicy is required").min(20, " return policy should be at least 20 characters"),
+  feature: Yup.string().required(" feature is required").min(20, " feature should be at least 20 characters")
+
+})
+const Addproduct = () => {
+
+>>>>>>> f264e5abfdd2632e5cdaa37c7b37302a4f9608b7
 
 
   const addform = useFormik({
@@ -76,18 +97,22 @@ const Addproduct = () => {
       size: "",
       color: "",
       brand: "",
-      // warranty: "",
+      warranty: "",
       returnpolicy: "",
       feature: ""
 
     },
     onSubmit: (value, { resetForm, setSubmitting }) => {
       console.log(value);
+<<<<<<< HEAD
       axios.post('http://localhost:5000/product/add', value, {
         headers: {
           'x-auth-token': token
         }
       })
+=======
+      axios.post(`${process.env.NEXT_PUBLIC_API_URL}/product/add`, value)
+>>>>>>> f264e5abfdd2632e5cdaa37c7b37302a4f9608b7
         .then((result) => {
           console.log(result.data);
           toast.success('data added successfully');
@@ -104,10 +129,35 @@ const Addproduct = () => {
 
   });
 
+<<<<<<< HEAD
 
 
 
   console.log(addform.errors);
+=======
+
+
+  const handleFileUplaod = (e) => {
+    const file = e.target.files[0];
+    if (!file) toast.error('No file selected');
+
+    const formData = new FormData();
+    formData.append('file', file);
+    formData.append('upload_preset', 'VoxMarket');
+    formData.append('cloud_name', 'drwbpgiun');
+
+    axios.post('https://api.cloudinary.com/v1_1/drwbpgiun/image/upload', formData)
+      .then((result) => {
+        toast.success('File uploaded successfully');
+        addform.setFieldValue('image', result.data.url);
+      }).catch((err) => {
+        toast.error('File upload failed');
+      });
+
+  }
+
+  //console.log(addform.errors);
+>>>>>>> f264e5abfdd2632e5cdaa37c7b37302a4f9608b7
 
   return (
     <div className="flex flex-col md:flex-row">
@@ -157,6 +207,7 @@ const Addproduct = () => {
               <div className="text-red-500">{addform.errors.description}</div>
             )}
           </div>
+<<<<<<< HEAD
           <div className="mb-4">
             <label
               htmlFor="category"
@@ -173,6 +224,12 @@ const Addproduct = () => {
               <option>Home Appliances</option>
             </select>
           </div>
+=======
+
+
+
+
+>>>>>>> f264e5abfdd2632e5cdaa37c7b37302a4f9608b7
 
           <div className="mb-4">
             <label
@@ -184,15 +241,19 @@ const Addproduct = () => {
             <input
               type="file"
               name="image"
-              onChange={handleFileUplaod}
+              onChange={(e) => handleFileUplaod(e)}
               accept="image/png, image/jpeg"
 
               className="w-full p-2 border border-gray-300 rounded"
               multiple=""
             />
+<<<<<<< HEAD
             {addform.errors.image && addform.touched.image && (
               <div className="text-red-500">{addform.errors.image}</div>
             )}
+=======
+
+>>>>>>> f264e5abfdd2632e5cdaa37c7b37302a4f9608b7
 
           </div>
           <div className="mb-4">
@@ -372,6 +433,26 @@ const Addproduct = () => {
               placeholder="Enter tags (comma-separated)"
             />
           </div>
+<<<<<<< HEAD
+=======
+          <div className="mb-4">
+            <label htmlFor="color" className="block text-gray-700 font-bold mb-2">
+              Warranty
+            </label>
+            <input
+              type="text"
+              name='warranty'
+              value={addform.values.warranty}
+              onChange={addform.handleChange}
+              className="w-full p-2 border border-gray-300 rounded"
+              placeholder="Enter Warrnty policy"
+            /> {
+              addform.errors.warranty && addform.touched.warranty && (
+                <div className="text-red-500">{addform.errors.warranty}</div>
+              )
+            }
+          </div>
+>>>>>>> f264e5abfdd2632e5cdaa37c7b37302a4f9608b7
 
           <div className="mb-4">
             <label
@@ -510,4 +591,8 @@ const Addproduct = () => {
   )
 }
 
+<<<<<<< HEAD
 export default Addproduct
+=======
+export default Addproduct
+>>>>>>> f264e5abfdd2632e5cdaa37c7b37302a4f9608b7

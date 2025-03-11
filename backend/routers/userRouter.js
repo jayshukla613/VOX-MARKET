@@ -102,7 +102,10 @@ router.delete('/deletebyid/:id', (req, res) => {
             console.log(err);
             res.status(500).json(err);
 
+<<<<<<< HEAD
         });
 })
+=======
+>>>>>>> f264e5abfdd2632e5cdaa37c7b37302a4f9608b7
 
 module.exports = router;

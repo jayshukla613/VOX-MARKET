@@ -61,13 +61,7 @@ export default function SellerProfile() {
       {/* Seller Information */}
       <section className="bg-white p-6 rounded-lg shadow-md">
         <div className="flex flex-col md:flex-row items-center space-y-4 md:space-y-0 md:space-x-4">
-          <img
-            alt="Profile picture of the seller"
-            className="w-24 h-24 rounded-full"
-            height={100}
-            src="https://storage.googleapis.com/a1aa/image/JziZH711k-MMaWppSn-n4PhaPwEmm330bkRN5igX0Ts.jpg"
-            width={100}
-          />
+          
           <div>
             {
               sellerdata ? (
