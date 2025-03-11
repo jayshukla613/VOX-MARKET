@@ -18,6 +18,7 @@ router.post('/add', (req, res) => {
             res.status(500).json(err);
         });
 });
+
 router.get('/getall', (req, res) => {
     Model.find()
         .then((result) => {
@@ -27,6 +28,7 @@ router.get('/getall', (req, res) => {
             res.status(500).json(err);
         });
 });
+
 router.get('/getdetails', verifytoken, (req, res) => {
     Model.findById(req.user._id)
         .then((result) => {
@@ -36,74 +38,74 @@ router.get('/getdetails', verifytoken, (req, res) => {
             res.status(500).json(err);
         });
 });
- router.post('/authenticate',(req,res)=>{
+
+router.post('/authenticate', (req, res) => {
     Model.findOne(req.body)
-    .then((result) => {
-        if(result){
-            //generate tokan
-            const{_id,name,email}=result;
-            const payload={_id,name,email}
-            jwt.sign(
-                payload,
-                process.env.JWT_SECRET,
-                {
-                    expiresIn:'1h'
-                },
-                (err,token)=>{
-                    if(err){
-                        console.log(err);
-                        res.status(500).json(err)
+        .then((result) => {
+            if (result) {
+                //generate tokan
+                const { _id, name, email } = result;
+                const payload = { _id, name, email }
+                jwt.sign(
+                    payload,
+                    process.env.JWT_SECRET,
+                    {
+                        expiresIn: '1h'
+                    },
+                    (err, token) => {
+                        if (err) {
+                            console.log(err);
+                            res.status(500).json(err)
+                        }
+                        else {
+                            res.status(200).json({ token });
+                        }
                     }
-                    else{
-                        res.status(200).json({token});
-                    }
-                }
-            )
+                )
+            }
+            else {
+                res.status(401).json({ message: 'invalid user email or password' });
+            }
+        }).catch((err) => {
+            console.log(err);
+            res.status(500).json(err)
 
-
-        }
-        else{
-            res.status(401).json({message : 'invalid user email or password'});
-        }
-
-        
-    }).catch((err) => {
-        console.log(err);
-        res.status(500).json(err)
-        
-    });
-
+        });
 });
-router.get('/getall', (req,res)=>{
+
+router.get('/getall', (req, res) => {
     Model.find()
-    .then((result) => {
-          res.status(200).json(result);
-    }).catch((err) => {
-         console.log(err);
-         res.status(500).json(err);
-    });
- });
- router.get('/getbyid/:id', (req,res)=>{
-    Model.findById(req.params.id)
-    .then((result) => {
-        res.status(200).json(result);
+        .then((result) => {
+            res.status(200).json(result);
         }).catch((err) => {
             console.log(err);
             res.status(500).json(err);
-            });
-            });
+        });
+});
+
+router.get('/getbyid/:id', (req, res) => {
+    Model.findById(req.params.id)
+        .then((result) => {
+            res.status(200).json(result);
+        }).catch((err) => {
+            console.log(err);
+            res.status(500).json(err);
+        });
+});
 
 
- router.delete('/deletebyid/:id', (req,res)=> {
+router.delete('/deletebyid/:id', (req, res) => {
     Model.findByIdAndDelete(req.params.id)
-    .then((result) => {
-        res.status(200).json(result);
-    }).catch((err) => {
-        console.log(err);
-        res.status(500).json(err);
-        
-    });
- })
+        .then((result) => {
+            res.status(200).json(result);
+        }).catch((err) => {
+            console.log(err);
+            res.status(500).json(err);
 
+<<<<<<< HEAD
+=======
+        });
+})
+>>>>>>> f4cb9e89dacab95c441c8a47d41c7d436dd5a735
 
 module.exports = router;
