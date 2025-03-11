@@ -3,13 +3,6 @@ const Model = require('../models/productModel');
 const verifytoken = require('../middlewares/verifytoken');
 const product = express.Router();
 
-<<<<<<< HEAD
-=======
-const jwt = require('jsonwebtoken')
-const verifytoken = require('../middlewares/verifytoken');
-require('dotenv').config();
-
->>>>>>> f264e5abfdd2632e5cdaa37c7b37302a4f9608b7
 product.post('/add', verifytoken, (req, res) => {
     req.body.seller = req.user._id;
     console.log(req.body);
