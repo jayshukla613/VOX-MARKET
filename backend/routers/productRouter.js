@@ -2,7 +2,12 @@ const express = require('express');
 const Model = require('../models/productModel');
 const product = express.Router();
 
-product.post('/add', (req, res) => {
+const jwt = require('jsonwebtoken')
+const verifytoken = require('../middlewares/verifytoken');
+require('dotenv').config();
+
+product.post('/add', verifytoken, (req, res) => {
+    req.body.seller = req.user._id;
     console.log(req.body);
     new Model(req.body).save()
         .then((result) => {
@@ -23,6 +28,16 @@ product.get('/getall', (req, res) => {
         });
 });
 
+product.get('/getbyseller', verifytoken, (req, res) => {
+    Model.find({ seller: req.user._id })
+        .then((result) => {
+            res.status(200).json(result);
+        }).catch((err) => {
+            console.log(err);
+            res.status(500).json(err);
+        });
+});
+
 product.get('/getbyid/:id', (req, res) => {
     Model.findById(req.params.id)
         .then((result) => {
@@ -32,25 +47,25 @@ product.get('/getbyid/:id', (req, res) => {
             res.status(500).json(err);
         });
 })
-product.delete('/delete/:id',(req,res)=>{
+product.delete('/delete/:id', (req, res) => {
     Model.findByIdAndDelete(req.params.id)
-    .then((result) => {
-        res.status(200).json(result);
+        .then((result) => {
+            res.status(200).json(result);
         }).catch((err) => {
             console.log(err);
             res.status(500).json(err);
-            });
-        })
+        });
+})
 
-     product.put('/update/:id',(req,res)=>{
-        Model.findByIdAndUpdate(req.params.id,req.body,{ new: true })
+product.put('/update/:id', (req, res) => {
+    Model.findByIdAndUpdate(req.params.id, req.body, { new: true })
         .then((result) => {
             res.status(200).json(result);
-            }).catch((err) => {
-                console.log(err);
-                res.status(500).json(err);
-                });
-            })   
+        }).catch((err) => {
+            console.log(err);
+            res.status(500).json(err);
+        });
+})
 
 
 module.exports = product;

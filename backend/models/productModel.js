@@ -1,10 +1,10 @@
-const {Schema  ,model}=require('../connection');
+const {Schema  ,model,Types}=require('../connection');
 
 const myschema=Schema({
     name:{type:String,require:true},
     image:{type:String,require:true},
     material: {type:String ,require:true},
-    
+    seller:{type:Types.ObjectId, ref:'seller'},
     price:{type:Number,require:true},
     offer:{type:Number,require:true},
     description:{type:String,require:true},
