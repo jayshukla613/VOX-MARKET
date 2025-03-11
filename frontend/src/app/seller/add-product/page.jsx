@@ -33,25 +33,6 @@ const Addproduct = () => {
 
   const token = localStorage.getItem('seller-token');
 
-  const handleFileUplaod = (e) => {
-    const file = e.target.files[0];
-    if (!file) toast.error('No file selected');
-
-    const formData = new FormData();
-    formData.append('file', file);
-    formData.append('upload_preset', 'VoxMarket');
-    formData.append('cloud_name', 'drwbpgiun');
-
-    axios.post('https://api.cloudinary.com/v1_1/drwbpgiun/image/upload', formData)
-      .then((result) => {
-        toast.success('File uploaded successfully');
-      }).catch((err) => {
-        toast.error('File upload failed');
-      });
-
-  }
-
-
   const addform = useFormik({
     initialValues: {
       name: "",
@@ -71,15 +52,11 @@ const Addproduct = () => {
     },
     onSubmit: (value, { resetForm, setSubmitting }) => {
       console.log(value);
-<<<<<<< HEAD
-      axios.post('http://localhost:5000/product/add', value, {
+      axios.post(`${process.env.NEXT_PUBLIC_API_URL}/product/add`, value, {
         headers: {
           'x-auth-token': token
         }
       })
-=======
-      axios.post(`${process.env.NEXT_PUBLIC_API_URL}/product/add`, value)
->>>>>>> f264e5abfdd2632e5cdaa37c7b37302a4f9608b7
         .then((result) => {
           console.log(result.data);
           toast.success('data added successfully');
@@ -93,16 +70,7 @@ const Addproduct = () => {
         });
     },
     validationSchema: validationschema
-
   });
-
-<<<<<<< HEAD
-
-
-
-  console.log(addform.errors);
-=======
-
 
   const handleFileUplaod = (e) => {
     const file = e.target.files[0];
@@ -116,15 +84,16 @@ const Addproduct = () => {
     axios.post('https://api.cloudinary.com/v1_1/drwbpgiun/image/upload', formData)
       .then((result) => {
         toast.success('File uploaded successfully');
-        addform.setFieldValue('image', result.data.url);
+        // console.log(result);
+        
+        addform.setFieldValue('image', [result.data.url]);
+        console.log(result.data.url);
+        
       }).catch((err) => {
         toast.error('File upload failed');
       });
-
   }
-
-  //console.log(addform.errors);
->>>>>>> f264e5abfdd2632e5cdaa37c7b37302a4f9608b7
+  console.log(addform.errors);
 
   return (
     <div className="flex flex-col md:flex-row">
@@ -174,7 +143,6 @@ const Addproduct = () => {
               <div className="text-red-500">{addform.errors.description}</div>
             )}
           </div>
-<<<<<<< HEAD
           <div className="mb-4">
             <label
               htmlFor="category"
@@ -191,12 +159,6 @@ const Addproduct = () => {
               <option>Home Appliances</option>
             </select>
           </div>
-=======
-
-
-
-
->>>>>>> f264e5abfdd2632e5cdaa37c7b37302a4f9608b7
 
           <div className="mb-4">
             <label
@@ -208,19 +170,15 @@ const Addproduct = () => {
             <input
               type="file"
               name="image"
-              onChange={(e) => handleFileUplaod(e)}
+              onChange={handleFileUplaod}
               accept="image/png, image/jpeg"
 
               className="w-full p-2 border border-gray-300 rounded"
               multiple=""
             />
-<<<<<<< HEAD
             {addform.errors.image && addform.touched.image && (
               <div className="text-red-500">{addform.errors.image}</div>
             )}
-=======
-
->>>>>>> f264e5abfdd2632e5cdaa37c7b37302a4f9608b7
 
           </div>
           <div className="mb-4">
@@ -400,26 +358,6 @@ const Addproduct = () => {
               placeholder="Enter tags (comma-separated)"
             />
           </div>
-<<<<<<< HEAD
-=======
-          <div className="mb-4">
-            <label htmlFor="color" className="block text-gray-700 font-bold mb-2">
-              Warranty
-            </label>
-            <input
-              type="text"
-              name='warranty'
-              value={addform.values.warranty}
-              onChange={addform.handleChange}
-              className="w-full p-2 border border-gray-300 rounded"
-              placeholder="Enter Warrnty policy"
-            /> {
-              addform.errors.warranty && addform.touched.warranty && (
-                <div className="text-red-500">{addform.errors.warranty}</div>
-              )
-            }
-          </div>
->>>>>>> f264e5abfdd2632e5cdaa37c7b37302a4f9608b7
 
           <div className="mb-4">
             <label
@@ -557,9 +495,4 @@ const Addproduct = () => {
     </div>
   )
 }
-
-<<<<<<< HEAD
 export default Addproduct
-=======
-export default Addproduct
->>>>>>> f264e5abfdd2632e5cdaa37c7b37302a4f9608b7

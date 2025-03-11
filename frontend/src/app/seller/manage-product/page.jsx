@@ -12,20 +12,17 @@ const manageproduct = () => {
   const router = useRouter();
   const token = typeof window !== 'undefined' ? localStorage.getItem('seller-token') : null;
 
-  const fetchproductdata = async () => {
+  const fetchproductdata = () => {
 
-    const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/product/getbyseller`, {
+    axios.get(`${process.env.NEXT_PUBLIC_API_URL}/product/getbyseller`, {
       headers: { 'x-auth-token': token }
 
     })
       .then((result) => {
         console.log('API Response:', result.data)
-        setproduct(res.data);
-
-
+        setproduct(result.data);
       }).catch((err) => {
-        console.log('response fail')
-
+        console.log(err)
       });
 
 
@@ -136,7 +133,6 @@ const manageproduct = () => {
                   );
                 })
               }
-
             </tbody>
           </table>
         </div>
