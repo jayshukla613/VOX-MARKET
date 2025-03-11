@@ -2,7 +2,7 @@ const { Schema, model, Types } = require('../connection');
 
 const myschema = Schema({
     name: { type: String, require: true },
-    image:{ type:String,require:true},
+    image: { type: [String], require: true },
     material: { type: String, require: true },
     seller: { type: Types.ObjectId, ref: 'seller', require: true },
     price: { type: Number, require: true },

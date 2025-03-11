@@ -33,25 +33,6 @@ const Addproduct = () => {
 
   const token = localStorage.getItem('seller-token');
 
-  const handleFileUplaod = (e) => {
-    const file = e.target.files[0];
-    if (!file) toast.error('No file selected');
-
-    const formData = new FormData();
-    formData.append('file', file);
-    formData.append('upload_preset', 'VoxMarket');
-    formData.append('cloud_name', 'drwbpgiun');
-
-    axios.post('https://api.cloudinary.com/v1_1/drwbpgiun/image/upload', formData)
-      .then((result) => {
-        toast.success('File uploaded successfully');
-      }).catch((err) => {
-        toast.error('File upload failed');
-      });
-
-  }
-
-
   const addform = useFormik({
     initialValues: {
       name: "",
@@ -71,7 +52,11 @@ const Addproduct = () => {
     },
     onSubmit: (value, { resetForm, setSubmitting }) => {
       console.log(value);
+<<<<<<< HEAD
       axios.post('http://localhost:5000/product/add', value, {
+=======
+      axios.post(`${process.env.NEXT_PUBLIC_API_URL}/product/add`, value, {
+>>>>>>> 22b1dccacfa16740f474dc59ffe18497df389f6b
         headers: {
           'x-auth-token': token
         }
@@ -89,12 +74,35 @@ const Addproduct = () => {
         });
     },
     validationSchema: validationschema
-
   });
 
+<<<<<<< HEAD
 
 
 
+=======
+  const handleFileUplaod = (e) => {
+    const file = e.target.files[0];
+    if (!file) toast.error('No file selected');
+
+    const formData = new FormData();
+    formData.append('file', file);
+    formData.append('upload_preset', 'VoxMarket');
+    formData.append('cloud_name', 'drwbpgiun');
+
+    axios.post('https://api.cloudinary.com/v1_1/drwbpgiun/image/upload', formData)
+      .then((result) => {
+        toast.success('File uploaded successfully');
+        // console.log(result);
+        
+        addform.setFieldValue('image', [result.data.url]);
+        console.log(result.data.url);
+        
+      }).catch((err) => {
+        toast.error('File upload failed');
+      });
+  }
+>>>>>>> 22b1dccacfa16740f474dc59ffe18497df389f6b
   console.log(addform.errors);
 
   return (
@@ -172,7 +180,7 @@ const Addproduct = () => {
             <input
               type="file"
               name="image"
-              onChange={(e) => handleFileUplaod(e)}
+              onChange={handleFileUplaod}
               accept="image/png, image/jpeg"
 
               className="w-full p-2 border border-gray-300 rounded"
@@ -497,5 +505,8 @@ const Addproduct = () => {
     </div>
   )
 }
+<<<<<<< HEAD
 
+=======
+>>>>>>> 22b1dccacfa16740f474dc59ffe18497df389f6b
 export default Addproduct
