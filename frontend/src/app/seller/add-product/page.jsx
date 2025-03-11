@@ -5,13 +5,15 @@ import { useFormik } from 'formik';
 import *as Yup from 'yup';
 import axios from 'axios';
 import toast from 'react-hot-toast';
+
+
 const validationschema = Yup.object().shape({
 
   name: Yup.string().required("product name is required"),
-  price: Yup.number().required( "price is required"),
-  description: Yup.string().required( "description is required").min(30," description should be at least 30 characters"),
+  price: Yup.number().required("price is required"),
+  description: Yup.string().required("description is required").min(30, " description should be at least 30 characters"),
   // offer:Yup.string().required(" offer is required"),
-  
+
 
   // image:  Yup.array()
   // .min(2, "You must upload at least 2 images.")  
@@ -26,24 +28,26 @@ const validationschema = Yup.object().shape({
   //   );
   // }),
 
-  
-  // category: Yup.string().required(" category is required"),
-  quantity: Yup.number().required( "quantity is required"),
-  brand:Yup.string().required(" brand is required"),
-  // warranty:Yup.string().required(" warranty is required"),
-  color:Yup.string().required(" color is required"),
-  size:Yup.string().required(" size is required"),
- 
-  // material:Yup.string().required(" material is required"),
-  returnpolicy:Yup.string().required(" retunepolicy is required").min(20," return policy should be at least 20 characters"),
-  feature: Yup.string().required( " feature is required").min(20," feature should be at least 20 characters")
- 
-})
-const addproduct = () => {
 
-  const handleFileUplaod = (e) => { 
+  // category: Yup.string().required(" category is required"),
+  quantity: Yup.number().required("quantity is required"),
+  brand: Yup.string().required(" brand is required"),
+  // warranty:Yup.string().required(" warranty is required"),
+  color: Yup.string().required(" color is required"),
+  size: Yup.string().required(" size is required"),
+
+  // material:Yup.string().required(" material is required"),
+  returnpolicy: Yup.string().required(" retunepolicy is required").min(20, " return policy should be at least 20 characters"),
+  feature: Yup.string().required(" feature is required").min(20, " feature should be at least 20 characters")
+
+})
+const Addproduct = () => {
+
+  const token = localStorage.getItem('seller-token');
+
+  const handleFileUplaod = (e) => {
     const file = e.target.files[0];
-    if(!file) toast.error('No file selected');
+    if (!file) toast.error('No file selected');
 
     const formData = new FormData();
     formData.append('file', file);
@@ -51,11 +55,11 @@ const addproduct = () => {
     formData.append('cloud_name', 'drwbpgiun');
 
     axios.post('https://api.cloudinary.com/v1_1/drwbpgiun/image/upload', formData)
-    .then((result) => {
+      .then((result) => {
         toast.success('File uploaded successfully');
-    }).catch((err) => {
+      }).catch((err) => {
         toast.error('File upload failed');
-    });
+      });
 
   }
 
@@ -65,8 +69,8 @@ const addproduct = () => {
       name: "",
       price: "",
       description: "",
-      // image: [],
-      // offer: "",
+      image: [],
+      offer: "",
       // category: "",
       quantity: "",
       size: "",
@@ -75,32 +79,36 @@ const addproduct = () => {
       // warranty: "",
       returnpolicy: "",
       feature: ""
-     
-     },
-    onSubmit: (value,{resetForm,setSubmitting}) => {
+
+    },
+    onSubmit: (value, { resetForm, setSubmitting }) => {
       console.log(value);
-      // axios.post('http://localhost:5000/product/add',value)
-      // .then((result) => {
-      //   console.log(result.data);
-      //   toast.success('data added successfully');
-      //   resetForm();
-        
-      // }).catch((err) => {
-      //   console.log(err);
-      //   toast.error('data not added');
-      //   setSubmitting(false)
-        
-      // });
+      axios.post('http://localhost:5000/product/add', value, {
+        headers: {
+          'x-auth-token': token
+        }
+      })
+        .then((result) => {
+          console.log(result.data);
+          toast.success('data added successfully');
+          resetForm();
+
+        }).catch((err) => {
+          console.log(err);
+          toast.error('data not added');
+          setSubmitting(false)
+
+        });
     },
     validationSchema: validationschema
 
   });
 
-  
+
 
 
   console.log(addform.errors);
-  
+
   return (
     <div className="flex flex-col md:flex-row">
       <Sellerdashboard />
@@ -108,8 +116,8 @@ const addproduct = () => {
         <h1 className="text-3xl font-bold mb-6 text-center md:text-left">
           Add New Product
         </h1>
-        <form className="bg-white p-6 rounded-lg shadow-lg" 
-        onSubmit={addform.handleSubmit} >
+        <form className="bg-white p-6 rounded-lg shadow-lg"
+          onSubmit={addform.handleSubmit} >
           <div className="mb-4">
             <label
               htmlFor="productName"
@@ -127,8 +135,8 @@ const addproduct = () => {
               placeholder="Enter product name"
             />
             {addform.errors.name && addform.touched.name && (
-          <div className="text-red-500">{addform.errors.name}</div>
-          )}
+              <div className="text-red-500">{addform.errors.name}</div>
+            )}
           </div>
           <div className="mb-4">
             <label
@@ -138,12 +146,12 @@ const addproduct = () => {
               Product Description
             </label>
             <textarea
-            name='description'
-            value={addform.values.description}
-            onChange={addform.handleChange}
-            className="w-full p-2 border border-gray-300 rounded"
-            rows={4}
-            placeholder="Enter product description"
+              name='description'
+              value={addform.values.description}
+              onChange={addform.handleChange}
+              className="w-full p-2 border border-gray-300 rounded"
+              rows={4}
+              placeholder="Enter product description"
             />
             {addform.errors.description && addform.touched.description && (
               <div className="text-red-500">{addform.errors.description}</div>
@@ -165,7 +173,7 @@ const addproduct = () => {
               <option>Home Appliances</option>
             </select>
           </div>
-          
+
           <div className="mb-4">
             <label
               htmlFor="productImages"
@@ -178,11 +186,11 @@ const addproduct = () => {
               name="image"
               onChange={handleFileUplaod}
               accept="image/png, image/jpeg"
-              
+
               className="w-full p-2 border border-gray-300 rounded"
               multiple=""
             />
-             {addform.errors.image && addform.touched.image && (
+            {addform.errors.image && addform.touched.image && (
               <div className="text-red-500">{addform.errors.image}</div>
             )}
 
@@ -239,7 +247,7 @@ const addproduct = () => {
                 <div className="text-red-500">{addform.errors.quantity}</div>
               )
             }</div>
-          
+
           <div className="mb-4">
             <label htmlFor="brand" className="block text-gray-700 font-bold mb-2">
               Brand
@@ -250,7 +258,7 @@ const addproduct = () => {
               value={addform.values.brand}
               onChange={addform.handleChange}
 
-              
+
               className="w-full p-2 border border-gray-300 rounded"
               placeholder="Enter brand name"
             />
@@ -364,7 +372,7 @@ const addproduct = () => {
               placeholder="Enter tags (comma-separated)"
             />
           </div>
-         
+
           <div className="mb-4">
             <label
               htmlFor="returnPolicy"
@@ -373,20 +381,20 @@ const addproduct = () => {
               Return Policy
             </label>
             <textarea
-            name="returnpolicy"
-             
-             value={addform.values.returnpolicy}
-             onChange={addform.handleChange}
-             className="w-full p-2 border border-gray-300 rounded"
-             rows={4}
-             placeholder="Enter return policy"
-            
-           />
-           {
-            addform.errors.returnpolicy && addform.touched.returnpolicy && (
-              <div className="text-red-500">{addform.errors.returnpolicy}</div>
-            )
-           }
+              name="returnpolicy"
+
+              value={addform.values.returnpolicy}
+              onChange={addform.handleChange}
+              className="w-full p-2 border border-gray-300 rounded"
+              rows={4}
+              placeholder="Enter return policy"
+
+            />
+            {
+              addform.errors.returnpolicy && addform.touched.returnpolicy && (
+                <div className="text-red-500">{addform.errors.returnpolicy}</div>
+              )
+            }
 
 
           </div>
@@ -404,12 +412,12 @@ const addproduct = () => {
               className="w-full p-2 border border-gray-300 rounded"
               rows={4}
               placeholder="Enter product features"
-              
+
             />
             {
               addform.errors.feature && addform.touched.feature && (
                 <div className="text-red-500">{addform.errors.feature}</div>
-                )
+              )
             }
           </div>
           <div className="mb-4">
@@ -502,4 +510,4 @@ const addproduct = () => {
   )
 }
 
-export default addproduct
+export default Addproduct

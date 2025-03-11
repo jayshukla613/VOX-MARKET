@@ -1,8 +1,10 @@
 const express = require('express');
 const Model = require('../models/productModel');
+const verifytoken = require('../middlewares/verifytoken');
 const product = express.Router();
 
-product.post('/add', (req, res) => {
+product.post('/add', verifytoken, (req, res) => {
+    req.body.seller = req.user._id;
     console.log(req.body);
     new Model(req.body).save()
         .then((result) => {
@@ -13,6 +15,7 @@ product.post('/add', (req, res) => {
             res.status(500).json(err);
         });
 });
+
 product.get('/getall', (req, res) => {
     Model.find()
         .then((result) => {
