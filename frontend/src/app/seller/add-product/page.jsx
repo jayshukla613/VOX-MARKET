@@ -6,10 +6,6 @@ import *as Yup from 'yup';
 import axios from 'axios';
 import toast from 'react-hot-toast';
 
-<<<<<<< HEAD
-
-=======
->>>>>>> f264e5abfdd2632e5cdaa37c7b37302a4f9608b7
 const validationschema = Yup.object().shape({
 
   name: Yup.string().required("product name is required"),
@@ -20,7 +16,6 @@ const validationschema = Yup.object().shape({
 
   // image:  Yup.array()
 
-<<<<<<< HEAD
 
   // category: Yup.string().required(" category is required"),
   quantity: Yup.number().required("quantity is required"),
@@ -55,34 +50,6 @@ const Addproduct = () => {
       });
 
   }
-=======
-  // .max(4, "You must upload more 4 images.")
-  //   .required("At least one image is required.")
-  //   .test("fileSize", "Each file must be less than 2MB", (value) => {
-  //     return value.every((file) => file.size <= 2 * 1024 * 1024);
-  //   })
-  //   .test("fileType", "Only JPG and PNG files are allowed", (value) => {
-  //     return value.every(
-  //       (file) => file.type === "image/jpeg" || file.type === "image/png"
-  //     );
-  //   }),
-
-
-  // category: Yup.string().required(" category is required"),
-  quantity: Yup.number().required("quantity is required"),
-  brand: Yup.string().required(" brand is required"),
-  warranty: Yup.string().required(" warranty is required"),
-  color: Yup.string().required(" color is required"),
-  size: Yup.string().required(" size is required"),
-
-  // material:Yup.string().required(" material is required"),
-  returnpolicy: Yup.string().required(" retunepolicy is required").min(20, " return policy should be at least 20 characters"),
-  feature: Yup.string().required(" feature is required").min(20, " feature should be at least 20 characters")
-
-})
-const Addproduct = () => {
-
->>>>>>> f264e5abfdd2632e5cdaa37c7b37302a4f9608b7
 
 
   const addform = useFormik({
