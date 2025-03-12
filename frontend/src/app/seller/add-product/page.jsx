@@ -8,25 +8,25 @@ import toast from 'react-hot-toast';
 
 const validationschema = Yup.object().shape({
 
-  name: Yup.string().required("product name is required"),
-  price: Yup.number().required("price is required"),
-  description: Yup.string().required("description is required").min(30, " description should be at least 30 characters"),
+  // name: Yup.string().required("product name is required"),
+  // price: Yup.number().required("price is required"),
+   description: Yup.string().required("description is required").min(30, " description should be at least 30 characters"),
   // offer:Yup.string().required(" offer is required"),
 
 
-  // image:  Yup.array()
+   image:  Yup.array()
 
 
   // category: Yup.string().required(" category is required"),
-  quantity: Yup.number().required("quantity is required"),
-  brand: Yup.string().required(" brand is required"),
+  // quantity: Yup.number().required("quantity is required"),
+  // brand: Yup.string().required(" brand is required"),
   // warranty:Yup.string().required(" warranty is required"),
-  color: Yup.string().required(" color is required"),
-  size: Yup.string().required(" size is required"),
+  // color: Yup.string().required(" color is required"),
+  // size: Yup.string().required(" size is required"),
 
   // material:Yup.string().required(" material is required"),
-  returnpolicy: Yup.string().required(" retunepolicy is required").min(20, " return policy should be at least 20 characters"),
-  feature: Yup.string().required(" feature is required").min(20, " feature should be at least 20 characters")
+  // returnpolicy: Yup.string().required(" retunepolicy is required").min(20, " return policy should be at least 20 characters"),
+  // feature: Yup.string().required(" feature is required").min(20, " feature should be at least 20 characters")
 
 })
 const Addproduct = () => {
@@ -35,28 +35,24 @@ const Addproduct = () => {
 
   const addform = useFormik({
     initialValues: {
-      name: "",
-      price: "",
+      // name: "",
+      // price: "",
       description: "",
       image: [],
-      offer: "",
+      // offer: "",
       // category: "",
-      quantity: "",
-      size: "",
-      color: "",
-      brand: "",
-      warranty: "",
-      returnpolicy: "",
-      feature: ""
+      // quantity: "",
+    //  size: "",
+      // color: "",
+      // brand: "",
+      // warranty: "",
+      // returnpolicy: "",
+      // feature: ""
 
     },
     onSubmit: (value, { resetForm, setSubmitting }) => {
       console.log(value);
-<<<<<<< HEAD
-      axios.post('http://localhost:5000/product/add', value, {
-=======
       axios.post(`${process.env.NEXT_PUBLIC_API_URL}/product/add`, value, {
->>>>>>> 22b1dccacfa16740f474dc59ffe18497df389f6b
         headers: {
           'x-auth-token': token
         }
@@ -76,11 +72,6 @@ const Addproduct = () => {
     validationSchema: validationschema
   });
 
-<<<<<<< HEAD
-
-
-
-=======
   const handleFileUplaod = (e) => {
     const file = e.target.files[0];
     if (!file) toast.error('No file selected');
@@ -102,7 +93,9 @@ const Addproduct = () => {
         toast.error('File upload failed');
       });
   }
->>>>>>> 22b1dccacfa16740f474dc59ffe18497df389f6b
+
+
+
   console.log(addform.errors);
 
   return (
@@ -505,8 +498,4 @@ const Addproduct = () => {
     </div>
   )
 }
-<<<<<<< HEAD
-
-=======
->>>>>>> 22b1dccacfa16740f474dc59ffe18497df389f6b
-export default Addproduct
+export default Addproduct;

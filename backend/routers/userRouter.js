@@ -101,11 +101,7 @@ router.delete('/deletebyid/:id', (req, res) => {
         }).catch((err) => {
             console.log(err);
             res.status(500).json(err);
+        })
+    })
 
-<<<<<<< HEAD
-=======
-        });
-})
->>>>>>> f4cb9e89dacab95c441c8a47d41c7d436dd5a735
-
-module.exports = router;
+            module.exports = router;
