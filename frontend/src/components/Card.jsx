@@ -5,6 +5,7 @@ import { IconStarFilled } from '@tabler/icons-react';
 import Link from 'next/link';
 import axios from 'axios';
 import { useRouter } from 'next/navigation';
+import { px } from 'framer-motion';
 
 const Card = ({ product }) => {
   const router=useRouter();
@@ -15,15 +16,18 @@ const Card = ({ product }) => {
   }
 
   return (
-    <div className=" rounded overflow-hidden shadow-lg bg-white  w-[600px] h-[300px]">
+    <div className=" rounded shadow-lg bg-white  h-[10%] w-[25%]">
       <img
         alt={product.name} // Use product name for alt text
-        className="w-full"
+        className=""
+        width={600}
+        height={300}
+        
         src={product.image} // Use product image URL
       />
       <div className="px-6 py-4">
-        <div className="font-bold text-xl mb-2">{product.name}</div>
-        <p className="text-gray-700 mb-4">{product.description}</p>
+        <div className="font-bold text-xl mb-2 mr-1">{product.name}</div>
+       <p className="text-gray-700 mb-4 mr-2">{product.description}</p>
         <p className="text-gray-700 text-base">${product.price}</p>
         <p className="text-green-500 font-semibold mb-4">{product.discount} OFF</p>
         <div className="flex items-center mt-2">

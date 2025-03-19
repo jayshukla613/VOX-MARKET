@@ -52,7 +52,11 @@ const Addproduct = () => {
     },
     onSubmit: (value, { resetForm, setSubmitting }) => {
       console.log(value);
+<<<<<<< HEAD
+      axios.post('http://localhost:5000/product/add', value, {
+=======
       axios.post(`${process.env.NEXT_PUBLIC_API_URL}/product/add`, value, {
+>>>>>>> 04f7a3e89922af2ac8cb451e13d41e11341f61f3
         headers: {
           'x-auth-token': token
         }
@@ -72,6 +76,8 @@ const Addproduct = () => {
     validationSchema: validationschema
   });
 
+<<<<<<< HEAD
+=======
   const handleFileUplaod = (e) => {
     const file = e.target.files[0];
     if (!file) toast.error('No file selected');
@@ -93,6 +99,7 @@ const Addproduct = () => {
         toast.error('File upload failed');
       });
   }
+>>>>>>> 04f7a3e89922af2ac8cb451e13d41e11341f61f3
 
 
 
@@ -498,4 +505,8 @@ const Addproduct = () => {
     </div>
   )
 }
+<<<<<<< HEAD
+export default Addproduct
+=======
 export default Addproduct;
+>>>>>>> 04f7a3e89922af2ac8cb451e13d41e11341f61f3
