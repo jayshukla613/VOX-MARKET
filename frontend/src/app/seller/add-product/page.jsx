@@ -8,25 +8,25 @@ import toast from 'react-hot-toast';
 
 const validationschema = Yup.object().shape({
 
-  name: Yup.string().required("product name is required"),
-  price: Yup.number().required("price is required"),
-  description: Yup.string().required("description is required").min(30, " description should be at least 30 characters"),
+  // name: Yup.string().required("product name is required"),
+  // price: Yup.number().required("price is required"),
+   description: Yup.string().required("description is required").min(30, " description should be at least 30 characters"),
   // offer:Yup.string().required(" offer is required"),
 
 
-  // image:  Yup.array()
+   image:  Yup.array()
 
 
   // category: Yup.string().required(" category is required"),
-  quantity: Yup.number().required("quantity is required"),
-  brand: Yup.string().required(" brand is required"),
+  // quantity: Yup.number().required("quantity is required"),
+  // brand: Yup.string().required(" brand is required"),
   // warranty:Yup.string().required(" warranty is required"),
-  color: Yup.string().required(" color is required"),
-  size: Yup.string().required(" size is required"),
+  // color: Yup.string().required(" color is required"),
+  // size: Yup.string().required(" size is required"),
 
   // material:Yup.string().required(" material is required"),
-  returnpolicy: Yup.string().required(" retunepolicy is required").min(20, " return policy should be at least 20 characters"),
-  feature: Yup.string().required(" feature is required").min(20, " feature should be at least 20 characters")
+  // returnpolicy: Yup.string().required(" retunepolicy is required").min(20, " return policy should be at least 20 characters"),
+  // feature: Yup.string().required(" feature is required").min(20, " feature should be at least 20 characters")
 
 })
 const Addproduct = () => {
@@ -35,24 +35,28 @@ const Addproduct = () => {
 
   const addform = useFormik({
     initialValues: {
-      name: "",
-      price: "",
+      // name: "",
+      // price: "",
       description: "",
       image: [],
-      offer: "",
+      // offer: "",
       // category: "",
-      quantity: "",
-      size: "",
-      color: "",
-      brand: "",
-      warranty: "",
-      returnpolicy: "",
-      feature: ""
+      // quantity: "",
+    //  size: "",
+      // color: "",
+      // brand: "",
+      // warranty: "",
+      // returnpolicy: "",
+      // feature: ""
 
     },
     onSubmit: (value, { resetForm, setSubmitting }) => {
       console.log(value);
+<<<<<<< HEAD
       axios.post('http://localhost:5000/product/add', value, {
+=======
+      axios.post(`${process.env.NEXT_PUBLIC_API_URL}/product/add`, value, {
+>>>>>>> 04f7a3e89922af2ac8cb451e13d41e11341f61f3
         headers: {
           'x-auth-token': token
         }
@@ -72,6 +76,30 @@ const Addproduct = () => {
     validationSchema: validationschema
   });
 
+<<<<<<< HEAD
+=======
+  const handleFileUplaod = (e) => {
+    const file = e.target.files[0];
+    if (!file) toast.error('No file selected');
+
+    const formData = new FormData();
+    formData.append('file', file);
+    formData.append('upload_preset', 'VoxMarket');
+    formData.append('cloud_name', 'drwbpgiun');
+
+    axios.post('https://api.cloudinary.com/v1_1/drwbpgiun/image/upload', formData)
+      .then((result) => {
+        toast.success('File uploaded successfully');
+        // console.log(result);
+        
+        addform.setFieldValue('image', [result.data.url]);
+        console.log(result.data.url);
+        
+      }).catch((err) => {
+        toast.error('File upload failed');
+      });
+  }
+>>>>>>> 04f7a3e89922af2ac8cb451e13d41e11341f61f3
 
 
 
@@ -477,4 +505,8 @@ const Addproduct = () => {
     </div>
   )
 }
+<<<<<<< HEAD
 export default Addproduct
+=======
+export default Addproduct;
+>>>>>>> 04f7a3e89922af2ac8cb451e13d41e11341f61f3
