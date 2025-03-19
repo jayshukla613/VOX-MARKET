@@ -42,7 +42,7 @@ const Homepage = () => {
         <p className='text-center font-extralight text-3xl italic text-gray-400'>Trending Now</p>
         <div className="flex gap-4 p-4 mx-auto">
         {(() => {
-          const num1 = Math.floor(Math.random() * 10 + 1);
+          const num1 = Math.floor(Math.random() * 40 + 1);
           const num2 = num1 + 4;
           return products.slice(num1, num2).map((product) => (
             <Card key={`${product._id}-${product.name}`} product={product} />
@@ -52,7 +52,7 @@ const Homepage = () => {
 
         <div className="flex gap-4 p-4">
         {(() => {
-          const num1 = Math.floor(Math.random() * 10 + 1);
+          const num1 = Math.floor(Math.random() * 40 + 1);
           const num2 = num1 + 4;
           return products.slice(num1, num2).map((product) => (
             <Card key={`${product._id}-${product.name}`} product={product} />
@@ -65,7 +65,7 @@ const Homepage = () => {
         <div className="flex gap-4 p-4">
        
         {(() => {
-          const num1 = Math.floor(Math.random() * 10 + 1);
+          const num1 = Math.floor(Math.random() * 40 + 1);
           const num2 = num1 + 4;
           return products.slice(num1, num2).map((product) => (
             <Card key={`${product._id}-${product.name}`} product={product} />
