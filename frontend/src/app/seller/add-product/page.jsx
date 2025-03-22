@@ -8,9 +8,9 @@ import toast from 'react-hot-toast';
 
 const validationschema = Yup.object().shape({
 
-  // name: Yup.string().required("product name is required"),
-  // price: Yup.number().required("price is required"),
-   description: Yup.string().required("description is required").min(30, " description should be at least 30 characters"),
+  name: Yup.string().required("product name is required"),
+  price: Yup.number().required("price is required"),
+   description: Yup.string().required("description is required").min(30, "description  should be at least 30 characters"),
   // offer:Yup.string().required(" offer is required"),
 
 
@@ -478,3 +478,7 @@ const Addproduct = () => {
   )
 }
 export default Addproduct
+<<<<<<< HEAD
+=======
+
+>>>>>>> 254a772d8af534e12bf18ef0852e760ddf9bf5f9
