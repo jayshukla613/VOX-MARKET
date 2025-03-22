@@ -477,8 +477,5 @@ const Addproduct = () => {
     </div>
   )
 }
-<<<<<<< HEAD
 export default Addproduct
-=======
-export default Addproduct;
->>>>>>> 04f7a3e89922af2ac8cb451e13d41e11341f61f3
+
