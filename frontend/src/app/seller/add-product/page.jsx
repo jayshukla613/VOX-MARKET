@@ -494,4 +494,7 @@ const Addproduct = () => {
   )
 }
 export default Addproduct
+<<<<<<< HEAD
+=======
 
+>>>>>>> 254a772d8af534e12bf18ef0852e760ddf9bf5f9
