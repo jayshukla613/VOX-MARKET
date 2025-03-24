@@ -10,7 +10,7 @@ const validationschema = Yup.object().shape({
 
   name: Yup.string().required("product name is required"),
   price: Yup.number().required("price is required"),
-   description: Yup.string().required("description is required").min(30, "description  should be at least 30 characters"),
+   description: Yup.string().required("description is required").min(20, "description  should be at least 30 characters"),
   // offer:Yup.string().required(" offer is required"),
 
 
@@ -72,7 +72,26 @@ const Addproduct = () => {
     validationSchema: validationschema
   });
 
+<<<<<<< HEAD
+=======
+  const handleFileUplaod = (e) => { 
+    const file = e.target.files[0];
+    if(!file) toast.error('No file selected');
 
+    const formData = new FormData();
+    formData.append('file', file);
+    formData.append('upload_preset', 'VoxMarket');
+    formData.append('cloud_name', 'drwbpgiun');
+
+    axios.post('https://api.cloudinary.com/v1_1/drwbpgiun/image/upload', formData)
+    .then((result) => {
+        toast.success('File uploaded successfully');
+    }).catch((err) => {
+        toast.error('File upload failed');
+    });
+>>>>>>> 10a14330f7ec8a4a0b7708b349a77f2688ef4913
+
+  }
 
 
   console.log(addform.errors);

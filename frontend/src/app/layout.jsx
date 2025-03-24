@@ -4,6 +4,7 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { Toaster } from "react-hot-toast";
 import Dropdownmenu from "@/components/Dropdownmenu";
+import { VoiceProvider } from "@/context/VoiceContext";
 
 
 
@@ -30,15 +31,16 @@ export default function RootLayout({ children }) {
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         {/* <Dropdownmenu/> */}
-          
-       <Navbar>
-       <Dropdownmenu/></Navbar>
-    
-       <Toaster position="top-right" />
-        {children}
-        
 
-       <Footer/>
+
+        <Navbar>
+          <Dropdownmenu /></Navbar>
+
+        <Toaster position="top-right" />
+        {children}
+
+
+        <Footer />
 
       </body>
     </html>

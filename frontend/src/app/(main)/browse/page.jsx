@@ -1,30 +1,54 @@
-import React from "react";
-
-const products = [
-  { id: 1, name: "Product 1", price: "$10", image: "https://via.placeholder.com/150" },
-  { id: 2, name: "Product 2", price: "$20", image: "https://via.placeholder.com/150" },
-  { id: 3, name: "Product 3", price: "$30", image: "https://via.placeholder.com/150" },
-];
-
-const ProductCard = ({ product }) => {
-  return (
-    <div className="border rounded-lg p-4 shadow-md text-center">
-      <img src={product.image} alt={product.name} className="w-full h-32 object-cover mb-2 rounded" />
-      <h2 className="text-lg font-semibold">{product.name}</h2>
-      <p className="text-gray-600">{product.price}</p>
-      <button className="mt-2 bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
-        Add to Cart
-      </button>
-    </div>
-  );
-};
+'use client'
+import React, { useEffect, useState } from "react";
+import { Card, CardContent } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Select, SelectItem } from "@/components/ui/select";
+import { Button } from "@/components/ui/button";
 
 const ProductBrowser = () => {
+  const [products, setProducts] = useState([]);
+  const [search, setSearch] = useState("");
+  const [category, setCategory] = useState("all");
+
+  useEffect(() => {
+    fetch("/api/products")
+      .then((response) => response.json())
+      .then((data) => setProducts(data))
+      .catch((error) => console.error("Error fetching products:", error));
+  }, []);
+
+  const filteredProducts = products.filter((product) =>
+    (category === "all" || product.category === category) &&
+    product.name.toLowerCase().includes(search.toLowerCase())
+  );
+
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 p-4">
-      {products.map((product) => (
-        <ProductCard key={product.id} product={product} />
-      ))}
+    <div className="p-6">
+      <div className="flex gap-4 mb-6">
+        <Input
+          placeholder="Search products..."
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+        />
+        <Select value={category} onValueChange={setCategory}>
+          <SelectItem value="all">All Categories</SelectItem>
+          <SelectItem value="electronics">Electronics</SelectItem>
+          <SelectItem value="clothing">Clothing</SelectItem>
+          <SelectItem value="home">Home</SelectItem>
+        </Select>
+      </div>
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+        {filteredProducts.map((product) => (
+          <Card key={product.id}>
+            <img src={product.image} alt={product.name} className="w-full h-40 object-cover rounded-t-lg" />
+            <CardContent className="p-4">
+              <h3 className="text-lg font-semibold">{product.name}</h3>
+              <p className="text-gray-500">${product.price}</p>
+              <Button className="mt-2 w-full">Add to Cart</Button>
+            </CardContent>
+          </Card>
+        ))}
+      </div>
     </div>
   );
 };
