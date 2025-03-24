@@ -1,95 +1,66 @@
-'use client'
-import { useState, useEffect } from "react";
-import axios from "axios";
+import React, { useState } from "react";
+import StarRatings from "react-star-ratings";
 
-const ReviewComponent = () => {
+const ReviewRating = () => {
+  const [rating, setRating] = useState(0);
+  const [review, setReview] = useState("");
   const [reviews, setReviews] = useState([]);
-  const [name, setName] = useState("");
-  const [comment, setComment] = useState("");
-  const [rating, setRating] = useState(5);
-  const [loading, setLoading] = useState(false);
 
-  // Fetch reviews from the backend
-  useEffect(() => {
-    axios.get("http://localhost:5000/")
-      .then((res) => setReviews(res.data))
-      .catch((err) => console.error("Error fetching reviews:", err));
-  }, []);
+  const handleRatingChange = (newRating) => {
+    setRating(newRating);
+  };
 
-  // Handle form submission
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    if (!name || !comment || !rating) return alert("All fields are required!");
-
-    const newReview = { name, comment, rating };
-    setLoading(true);
-
-    try {
-      const res = await axios.post("http://localhost:5000/api/reviews", newReview);
-      setReviews([res.data, ...reviews]); // Add new review to list
-      setName("");
-      setComment("");
-      setRating(5);
-    } catch (error) {
-      console.error("Error submitting review:", error);
-    } finally {
-      setLoading(false);
+  const handleSubmit = () => {
+    if (review.trim() && rating > 0) {
+      setReviews([...reviews, { rating, review }]);
+      setReview("");
+      setRating(0);
     }
   };
 
   return (
-    <div className="max-w-md mx-auto p-4 bg-white shadow-lg rounded-lg">
-      <h2 className="text-xl font-bold mb-4">Leave a Review</h2>
-
-      {/* Review Form */}
-      <form onSubmit={handleSubmit} className="mb-4">
-        <input
-          type="text"
-          placeholder="Your Name"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-          className="w-full p-2 border rounded mb-2"
+    <div className="max-w-md mx-auto p-4">
+      <div className="border rounded-lg p-4 shadow">
+        <h2 className="text-xl font-semibold mb-4">Leave a Review</h2>
+        <StarRatings
+          rating={rating}
+          starRatedColor="#ffd700"
+          changeRating={handleRatingChange}
+          numberOfStars={5}
+          starDimension="30px"
+          starSpacing="5px"
         />
         <textarea
-          placeholder="Your Review"
-          value={comment}
-          onChange={(e) => setComment(e.target.value)}
-          className="w-full p-2 border rounded mb-2"
+          className="w-full border rounded p-2 mt-2"
+          placeholder="Write your review..."
+          value={review}
+          onChange={(e) => setReview(e.target.value)}
         />
-        <select
-          value={rating}
-          onChange={(e) => setRating(Number(e.target.value))}
-          className="w-full p-2 border rounded mb-2"
-        >
-          {[5, 4, 3, 2, 1].map((num) => (
-            <option key={num} value={num}>
-              {num} Stars
-            </option>
-          ))}
-        </select>
-        <button type="submit" className="w-full bg-blue-500 text-white p-2 rounded" disabled={loading}>
-          {loading ? "Submitting..." : "Submit"}
+        <button className="mt-2 w-full bg-blue-500 text-white py-2 rounded" onClick={handleSubmit}>
+          Submit
         </button>
-      </form>
-
-      {/* Display Reviews */}
-      <div>
-        <h3 className="text-lg font-semibold">Reviews:</h3>
-        {reviews.length === 0 ? (
-          <p className="text-gray-500">No reviews yet.</p>
+      </div>
+      <div className="mt-4">
+        <h3 className="text-lg font-medium">Reviews</h3>
+        {reviews.length > 0 ? (
+          reviews.map((r, index) => (
+            <div key={index} className="border rounded-lg p-4 shadow mt-2">
+              <StarRatings
+                rating={r.rating}
+                starRatedColor="#ffd700"
+                numberOfStars={5}
+                starDimension="20px"
+                starSpacing="5px"
+              />
+              <p className="mt-1">{r.review}</p>
+            </div>
+          ))
         ) : (
-          <ul>
-            {reviews.map((review) => (
-              <li key={review._id} className="border-b p-2">
-                <strong>{review.name}:</strong> {review.comment} <br />
-                <span>⭐ {review.rating}/5</span>
-              </li>
-            ))}
-          </ul>
+          <p className="text-gray-500">No reviews yet.</p>
         )}
       </div>
     </div>
   );
 };
 
-export default ReviewComponent;
+export default ReviewRating;
