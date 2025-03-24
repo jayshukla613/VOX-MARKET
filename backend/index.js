@@ -1,6 +1,8 @@
 const express = require('express');
 const cors = require('cors');
 
+
+const review = require('./routers/reviewRouter');
 const user = require('./routers/userRouter');
 const seller = require('./routers/sellerRouter');
 const product = require('./routers/productRouter');
@@ -14,9 +16,11 @@ app.use(cors({
 }))
 app.use(express.json());
 
+
 app.use('/user', user);
 app.use('/seller', seller);
 app.use('/product',product);
+app.use('/review', review);
 
 app.get('/getall', (req, res) => {
     res.send('Database connected');

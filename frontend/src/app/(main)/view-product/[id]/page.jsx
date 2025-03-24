@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { useParams, useRouter } from 'next/navigation';
 
 import React, { useState, useEffect } from 'react'
+import ReviewRating from '../../reviewProduct/page';
 
 const viewProduct = () => {
   const router = useRouter();
@@ -134,18 +135,11 @@ const { id } = useParams();
     {/* Customer Ratings & Reviews */}
     <div className="mb-4">
       <h2 className="text-2xl font-bold mb-2">
+       
+       
         Customer Ratings &amp; {product.rating}
       </h2>
-      <div className="flex items-center mb-2">
-        <div className="text-yellow-500">
-          <i className="fas fa-star"></i>
-          <i className="fas fa-star"></i>
-          <i className="fas fa-star"></i>
-          <i className="fas fa-star"></i>
-          <i className="fas fa-star-half-alt"></i>
-        </div>
-        <span className="ml-2">({product.rating} out of 5 stars)</span>
-      </div>
+      <ReviewRating/> 
       <div className="mb-2">
         <p className="font-bold">John Doe</p>
         <p>Great product! Highly recommend.</p>
