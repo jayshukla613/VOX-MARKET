@@ -19,8 +19,8 @@ const ReviewRating = () => {
   };
 
   return (
-    <div className="max-w-md mx-auto p-4">
-      <div className="border rounded-lg p-4 shadow">
+    <div className="   max-w-md">
+      <div className="rounded-lg p-4 ">
         <h2 className="text-xl font-semibold mb-4">Leave a Review</h2>
         <StarRatings
           rating={rating}
@@ -36,7 +36,7 @@ const ReviewRating = () => {
           value={review}
           onChange={(e) => setReview(e.target.value)}
         />
-        <button className="mt-2 w-full bg-blue-500 text-white py-2 rounded" onClick={handleSubmit}>
+        <button className="mt-2 w-full bg-blue-500 text-white py-2 max-w-md rounded" onClick={handleSubmit}>
           Submit
         </button>
       </div>

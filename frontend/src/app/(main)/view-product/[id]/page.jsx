@@ -134,10 +134,10 @@ const { id } = useParams();
     </div>
     {/* Customer Ratings & Reviews */}
     <div className="mb-4">
-      <h2 className="text-2xl font-bold mb-2">
+      <h2 className="text-2xl font-bold">
        
        
-        Customer Ratings &amp; {product.rating}
+        Customer Ratings & Reviews 
       </h2>
       <ReviewRating/> 
       <div className="mb-2">
