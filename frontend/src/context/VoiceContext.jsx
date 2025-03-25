@@ -60,7 +60,7 @@ const InstructionModal = ({ setShowModal }) => {
 
 const pageDetails = [
     {
-        pageName: 'home',
+        homepage: 'home',
         pagePath: '/'
     },
     {
@@ -89,15 +89,15 @@ const pageDetails = [
     },
     {
         pageName: 'sellerdashboard',
-        pagePath: '/seller/sellerdashboard'
+        pagePath: '/seller/profile'
     },
     {
         pageName: 'addProduct',
-        pagePath: '/seller/addProduct'
+        pagePath: '/seller/add-product'
     },
     {
         pageName: 'manageProduct',
-        pagePath: '/seller/manageProduct'
+        pagePath: '/seller/manage-product'
     },
     {
         pageName: 'sellersignup',
@@ -161,10 +161,10 @@ export const VoiceProvider = ({ children }) => {
 
     const commands = [
         {
-            command: 'Open :pageName page',
-            callback: (pageName) => {
-                console.log('Opening page: ', pageName);
-                voicePageNavigator(pageName)
+            command: 'Open :home page',
+            callback: (homepage) => {
+                console.log('Opening page: ', homepage);
+                voicePageNavigator(homepage)
             }
         },
         {
@@ -515,7 +515,7 @@ export const VoiceProvider = ({ children }) => {
             checkExistenceInTranscript
         }}>
 
-            <div className='bg-[#8C52FF] text-white text-center'>
+            <div className='bg-[#8C52FF] text-white text-center border-4 border-red-900 '>
                 <button className='floating-mic bg-blue-500' onClick={() => {
                     if (listening) {
                         SpeechRecognition.stopListening();
@@ -524,8 +524,8 @@ export const VoiceProvider = ({ children }) => {
                     }
                 }}>{listening ?
                     (
-                        <span >
-                            <IconPlayerRecordFilled style={{ display: 'inline', color: 'blue' }} color='#f00' /> listening... {transcript}
+                        <span className=''>
+                            <IconPlayerRecordFilled style={{ display: 'inline', color: 'blue', }} color='#f00' /> listening... {transcript}
                         </span>
                     ) : (
                         <span className='text-xl'><FaMicrophone /></span>

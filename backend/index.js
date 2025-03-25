@@ -6,6 +6,7 @@ const review = require('./routers/reviewRouter');
 const user = require('./routers/userRouter');
 const seller = require('./routers/sellerRouter');
 const product = require('./routers/productRouter');
+const contact=require('./routers/contactRouter');
 
 const app = express();
 
@@ -21,6 +22,7 @@ app.use('/user', user);
 app.use('/seller', seller);
 app.use('/product',product);
 app.use('/review', review);
+app.use('/contact',contact);
 
 app.get('/getall', (req, res) => {
     res.send('Database connected');

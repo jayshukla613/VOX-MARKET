@@ -140,14 +140,14 @@ const { id } = useParams();
         Customer Ratings & Reviews 
       </h2>
       <ReviewRating/> 
-      <div className="mb-2">
+      {/* <div className="mb-2">
         <p className="font-bold">John Doe</p>
         <p>Great product! Highly recommend.</p>
-      </div>
-      <div className="mb-2">
+      </div> */}
+      {/* <div className="mb-2">
         <p className="font-bold">Jane Smith</p>
         <p>Good value for money. Will buy again.</p>
-      </div>
+      </div> */}
       <Link className="text-blue-500" href="">
         Read more reviews
       </Link>
@@ -210,13 +210,13 @@ const { id } = useParams();
     </div>
     
     {/* Wishlist Option */}
-    <div className="mb-4">
+    {/* <div className="mb-4">
       <button className="bg-gray-200 text-gray-700 px-4 py-2 rounded w-full md:w-auto">
         Add to Wishlist
       </button>
-    </div>
+    </div> */}
     {/* Questions & Answers */}
-    <div className="mb-4">
+    {/* <div className="mb-4">
       <h2 className="text-2xl font-bold mb-2">Questions &amp; Answers</h2>
       <div className="mb-2">
         <p className="font-bold">Customer Question 1</p>
@@ -229,9 +229,9 @@ const { id } = useParams();
       <a className="text-blue-500" href="#">
         Ask a question
       </a>
-    </div>
+    </div> */}
   
-   \
+ 
     
   </div>
    
