@@ -72,6 +72,8 @@ const Addproduct = () => {
     validationSchema: validationschema
   });
 
+<<<<<<< HEAD
+=======
   const handleFileUplaod = (e) => { 
     const file = e.target.files[0];
     if(!file) toast.error('No file selected');
@@ -87,6 +89,7 @@ const Addproduct = () => {
     }).catch((err) => {
         toast.error('File upload failed');
     });
+>>>>>>> 10a14330f7ec8a4a0b7708b349a77f2688ef4913
 
   }
 
