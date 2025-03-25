@@ -1,56 +1,87 @@
 'use client'
+import { IconStarFilled } from "@tabler/icons-react";
+import axios from "axios";
+import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
-import { Card, CardContent } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Select, SelectItem } from "@/components/ui/select";
-import { Button } from "@/components/ui/button";
 
 const ProductBrowser = () => {
-  const [products, setProducts] = useState([]);
-  const [search, setSearch] = useState("");
-  const [category, setCategory] = useState("all");
+   const router=useRouter();
+   const [products, setProducts] = useState([]);
+  
+   const fetchProducts = async () => {
+      try {
+        const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/product/getall`);
+      
+         // Adjust the URL based on your API
+        setProducts(res.data);
+       
+        
+  
+      } catch (error) {
+        console.error('Error fetching products:', error);
+      }
+    };
+  
+    useEffect(() => {
+      fetchProducts();
+  
+    },[]);
+    return (
+      <div className="  mx-auto">
+       <h1 className="text-center text-3xl text-green-400 p-4 ">Product Browser</h1>
+       <div className=" rounded shadow-lg bg-white  h-[10%] w-full">
+       <ul className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-8">
+        {products.map((product, index) => (
+          <li key={index}>
+    
+      <img
+        alt={product.name} // Use product name for alt text
+        width={600}
+        height={600}
+        src={product.image} 
+        className="w-full h-64 fill-current"
 
-  useEffect(() => {
-    fetch("/api/products")
-      .then((response) => response.json())
-      .then((data) => setProducts(data))
-      .catch((error) => console.error("Error fetching products:", error));
-  }, []);
-
-  const filteredProducts = products.filter((product) =>
-    (category === "all" || product.category === category) &&
-    product.name.toLowerCase().includes(search.toLowerCase())
-  );
-
-  return (
-    <div className="p-6">
-      <div className="flex gap-4 mb-6">
-        <Input
-          placeholder="Search products..."
-          value={search}
-          onChange={(e) => setSearch(e.target.value)}
-        />
-        <Select value={category} onValueChange={setCategory}>
-          <SelectItem value="all">All Categories</SelectItem>
-          <SelectItem value="electronics">Electronics</SelectItem>
-          <SelectItem value="clothing">Clothing</SelectItem>
-          <SelectItem value="home">Home</SelectItem>
-        </Select>
+      />
+      <div className="px-6 py-4">
+        <div className="font-bold text-xl mb-2 mr-1">{product.name}</div>
+       <p className="text-gray-700 mb-4 mr-2">{product.description}</p>
+        <p className="text-gray-700 text-base">${product.price}</p>
+        <p className="text-green-500 font-semibold mb-4">{product.discount} OFF</p>
+        <div className="flex items-center mt-2">
+          <span className="text-yellow-500 flex">
+            {/* Assuming you have a rating property in your product */}
+            {Array.from({ length: product.rating }).map((_, index) => (
+              <IconStarFilled key={index} />
+            ))}
+          </span>
+         
+        </div>
       </div>
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-        {filteredProducts.map((product) => (
-          <Card key={product.id}>
-            <img src={product.image} alt={product.name} className="w-full h-40 object-cover rounded-t-lg" />
-            <CardContent className="p-4">
-              <h3 className="text-lg font-semibold">{product.name}</h3>
-              <p className="text-gray-500">${product.price}</p>
-              <Button className="mt-2 w-full">Add to Cart</Button>
-            </CardContent>
-          </Card>
+      <div className="px-6 pt-4 pb-2 flex justify-between">
+        <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+        onClick={()=>{
+          // when user click on view button then it will redirect to view-product/id page and show all details of product 
+
+          router.push(`/view-product/${product._id}`)
+
+        }}>
+          View
+        </button>
+        <button className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">
+          Buy
+        </button>
+      </div>
+
+            </li>
+
         ))}
+       </ul>
+       </div>
       </div>
-    </div>
-  );
+      
+    )
+  
+  
 };
 
 export default ProductBrowser;

@@ -19,6 +19,9 @@ router.post('/add', (req, res) => {
         });
 });
 
+
+
+
 router.get('/getall', (req, res) => {
     Model.find()
         .then((result) => {

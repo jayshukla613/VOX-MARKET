@@ -1,12 +1,12 @@
-const mongoose = require("mongoose");
 
-const reviewSchema = new mongoose.Schema({
-  name: { type: String, required: true },
-  comment: { type: String, required: true },
-  rating: { type: Number, required: true, min: 1, max: 5 }, // Rating (1 to 5)
-  createdAt: { type: Date, default: Date.now },
+const { Schema, model, Types } = require('../connection');
+
+const reviewSchema = Schema({
+   user: { type: Types.ObjectId, ref: 'user', require: true },
+  rating: {type: Number, required: true, min: 1,max: 5,},
+  review: {type: String,required: true,minlength: 10, }
 });
 
-const Review = mongoose.model("Review", reviewSchema);
+const Review = model("Review", reviewSchema);
 
-module.exports = Review;
+
