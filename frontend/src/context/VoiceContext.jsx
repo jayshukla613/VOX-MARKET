@@ -69,7 +69,7 @@ const pageDetails = [
     },
     {
         pageName: 'login',
-        pagePath: '/login'
+        pagePath: '/user-login'
     },
     {
         pageName: 'contact',
@@ -176,8 +176,8 @@ export const VoiceProvider = ({ children }) => {
         },
         {
             command: 'I want to login',
-            callback: (pageName) => {
-                console.log('Opening page: ', pageName);
+            callback: (login) => {
+                console.log('Opening page: ', login);
                 voicePageNavigator('login')
             }
         },
