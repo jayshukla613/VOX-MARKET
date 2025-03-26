@@ -1,32 +1,32 @@
 const express = require("express");
 const Review = require("../models/reviewModel");
+const verifytoken = require('../middlewares/verifytoken');
 
 const router = express.Router();
 
 // Create a new review
-router.post("/Rating", async (req, res) => {
-  try {
-    const { name, comment, rating } = req.body;
-    if (!name || !comment || !rating) {
-      return res.status(400).json({ message: "All fields are required" });
-    }
-
-    const newReview = new Review({ name, comment, rating });
-    await newReview.save();
-    res.status(201).json(newReview);
-  } catch (error) {
-    res.status(500).json({ message: "Error creating review", error });
-  }
+router.post('/reviews', verifytoken,  async (req, res) => {
+  req.body.user = req.user._id;
+   console.log(req.body);
+      new Review(req.body).save()
+          .then((result) => {
+              res.status(200).json(result);
+  
+          }).catch((err) => {
+              console.log(err);
+              res.status(500).json(err);
+          });
 });
 
-// Get all reviews
-router.get("/GetRating", async (req, res) => {
-  try {
-    const reviews = await Review.find().sort({ createdAt: -1 });
-    res.json(reviews);
-  } catch (error) {
-    res.status(500).json({ message: "Error fetching reviews", error });
-  }
+// GET route to fetch all reviews
+router.get('/reviews', verifytoken,  async (req, res) => {
+    Review.find({ seller: req.user._id })
+          .then((result) => {
+              res.status(200).json(result);
+          }).catch((err) => {
+              console.log(err);
+              res.status(500).json(err);
+          });
 });
 
 module.exports = router;

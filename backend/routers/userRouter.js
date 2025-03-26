@@ -19,6 +19,9 @@ router.post('/add', (req, res) => {
         });
 });
 
+
+
+
 router.get('/getall', (req, res) => {
     Model.find()
         .then((result) => {
@@ -73,6 +76,16 @@ router.post('/authenticate', (req, res) => {
         });
 });
 
+router.put('/updatedetails/:id', (req, res) => {
+    Model.findByIdAndUpdate(req.params.id, req.body, { new: true })
+    .then((result) => {
+        res.status(200).json(result);
+    }).catch((err) => {
+        console.log(err);
+        res.status(500).json(err);
+    });
+  });
+  
 router.get('/getall', (req, res) => {
     Model.find()
         .then((result) => {
