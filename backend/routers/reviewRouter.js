@@ -20,7 +20,7 @@ router.post('/reviews', verifytoken,  async (req, res) => {
 
 // GET route to fetch all reviews
 router.get('/reviews', verifytoken,  async (req, res) => {
-    Review.find({ seller: req.user._id })
+    Review.find({ user: req.user._id })
           .then((result) => {
               res.status(200).json(result);
           }).catch((err) => {

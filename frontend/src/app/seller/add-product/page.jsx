@@ -51,6 +51,8 @@ const Addproduct = () => {
     validationSchema: validationschema
   });
 
+  console.log(addform.errors);
+
   const handleFileUpload = (e) => {
     const files = Array.from(e.target.files);
     addform.setFieldValue('image', files);

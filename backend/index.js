@@ -8,6 +8,7 @@ const seller = require('./routers/sellerRouter');
 const product = require('./routers/productRouter');
 const contact=require('./routers/contactRouter');
 
+
 const app = express();
 
 const port =process.env.PORT|| 5000;
@@ -23,6 +24,7 @@ app.use('/seller', seller);
 app.use('/product',product);
 app.use('/review', review);
 app.use('/contact',contact);
+
 
 app.get('/getall', (req, res) => {
     res.send('Database connected');

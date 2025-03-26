@@ -1,21 +1,22 @@
 const { Schema, model, Types } = require('../connection');
 
 const myschema = Schema({
-    name: { type: String, require: true },
-    image: { type: [String], require: true },
-    material: { type: String, require: true },
+    name: { type: String },
+    image: { type: [String]},
+    material: { type: String},
     seller: { type: Types.ObjectId, ref: 'seller', require: true },
-    price: { type: Number, require: true },
-    offer: { type: Number, require: true },
-    description: { type: String, require: true },
-    category: { type: String, require: true },
-    quantity: { type: Number, require: true },
-    color: { type: String, require: true },
-    size: { type: String, require: true },
-    brand: { type: String, require: true },
-    retunepolicy: { type: String, require: true },
-    warranty: { type: String, require: true },
-    feature: { type: String, require: true }
+    user: { type: Types.ObjectId, ref: 'user', require: true },
+    price: { type: Number},
+    offer: { type: Number},
+    description: { type: String},
+    category: { type: String},
+    quantity: { type: Number },
+    color: { type: String},
+    size: { type: String },
+    brand: { type: String},
+    retunepolicy: { type: String },
+    warranty: { type: String },
+    feature: { type: String}
 
 
 

@@ -44,12 +44,13 @@ const ReviewRating = () => {
     // Send the new review to the backend
     axios
       .post(`${process.env.NEXT_PUBLIC_API_URL}/review/reviews`, newReview ,{
-        headers: {
-          'x-auth-token': token
-        }}
+        // headers: {
+        //   'x-auth-token': token
+        // }}
+      }
       )
       .then((response) => {
-        setReviews([...reviews, newReview]); // Add the new review to the state
+        setReviews([reviews, newReview]); // Add the new review to the state
         setRating(1); // Reset the rating to 1
         setReview(""); // Reset the review text
         toast.success("Review submitted successfully!");

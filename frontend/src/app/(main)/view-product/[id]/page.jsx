@@ -5,12 +5,35 @@ import { useParams, useRouter } from 'next/navigation';
 
 import React, { useState, useEffect } from 'react'
 import ReviewRating from '../../reviewProduct/page';
+import toast from 'react-hot-toast';
 
 const viewProduct = () => {
-  const router = useRouter();
+const router = useRouter();
 const { id } = useParams();
 
   const [product, setProduct] = useState(null);
+
+ 
+  const token = localStorage.getItem('token');
+  const addtocartdata= () => {
+    axios.post(`${process.env.NEXT_PUBLIC_API_URL}/product/addtocart`, {
+       headers: { 'x-auth-token': token }
+    })
+      .then((result) => {
+        console.log("API Response:", result.data);
+        localStorage.setItem('user-token', result.data?.token);
+        
+        toast.success("Product added to cart successfully");
+      })
+      .catch((err) => console.log("Error fetching profile data:", err));
+      toast.error("Product not added to cart");
+  };
+
+  useEffect(() => {
+    if (token) addtocartdata();
+  }, [token]);
+
+ 
 
   useEffect(() => {
     if (id) {
@@ -98,7 +121,7 @@ const { id } = useParams();
         <div className="mb-4 text-green-600">{product.stock}</div>
         {/* Add to Cart / Buy Now Button */}
         <div className="flex space-x-2 mb-4">
-          <button className="bg-blue-500 text-white px-4 py-2 rounded w-full md:w-auto">
+          <button onClick={addtocartdata} className="bg-blue-500 text-white px-4 py-2 rounded w-full md:w-auto">
             Add to Cart
           </button>
           <button className="bg-green-500 text-white px-4 py-2 rounded w-full md:w-auto">
