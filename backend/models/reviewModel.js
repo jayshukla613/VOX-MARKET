@@ -7,6 +7,4 @@ const reviewSchema = Schema({
   review: {type: String,required: true,minlength: 10, }
 });
 
-const Review = model("Review", reviewSchema);
-
-
+module.exports = model("Review", reviewSchema);

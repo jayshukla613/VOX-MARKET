@@ -128,6 +128,10 @@ const pageDetails = [
     pageName: 'cheakout',
     pagePath: '/user/cheakout'
   },
+  {
+    pageName: 'category',
+    pagePath: '/category'
+  }
 ]
 
 const speech = new SpeechSynthesisUtterance();
@@ -352,7 +356,10 @@ export const VoiceProvider = ({ children }) => {
       triggerModal('Navigating...', `Navigating to ${pageName} page...`);
       router.push(page.pagePath);
     } else {
-      console.log('Page not found!');
+      
+      voiceResponse(`mind your own bussiness`);
+      console.log('Page not found');
+      
     }
   }
 
