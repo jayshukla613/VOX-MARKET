@@ -17,7 +17,7 @@ const viewProduct = () => {
   const { addItemToCart } = useCartContext();
 
 
-  const token = localStorage.getItem('token');
+  const token = localStorage.getItem('user-token');
   const addtocartdata = () => {
     axios.post(`${process.env.NEXT_PUBLIC_API_URL}/product/addtocart`, {
       headers: { 'x-auth-token': token }

@@ -356,17 +356,10 @@ export const VoiceProvider = ({ children }) => {
       triggerModal('Navigating...', `Navigating to ${pageName} page...`);
       router.push(page.pagePath);
     } else {
-<<<<<<< HEAD
       
       voiceResponse(`mind your own bussiness`);
       console.log('Page not found');
       
-=======
-      console.log('Page not found!');
-      voiceResponse(`Sorry, I could not find any page named  Please try again.`);
-      
-
->>>>>>> b042c3ed66702fb1d9666923ed3b4ead8fd3a8f6
     }
   }
 
