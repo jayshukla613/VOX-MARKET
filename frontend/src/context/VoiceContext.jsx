@@ -69,7 +69,7 @@ const pageDetails = [
   },
   {
     pageName: 'login',
-    pagePath: '/login'
+    pagePath: '/user-login'
   },
   {
     pageName: 'contact',
