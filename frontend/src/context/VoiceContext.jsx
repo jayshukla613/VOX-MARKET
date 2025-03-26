@@ -59,6 +59,7 @@ const InstructionModal = ({ setShowModal }) => {
 }
 
 const pageDetails = [
+<<<<<<< HEAD
   {
     pageName: 'home',
     pagePath: '/'
@@ -127,6 +128,76 @@ const pageDetails = [
     pageName: 'cheakout',
     pagePath: '/user/cheakout'
   },
+=======
+    {
+        pageName: 'home',
+        pagePath: '/'
+    },
+    {
+        pageName: 'signup',
+        pagePath: '/signup'
+    },
+    {
+        pageName: 'login',
+        pagePath: '/user-login'
+    },
+    {
+        pageName: 'contact',
+        pagePath: '/contact'
+    },
+    {
+        pageName: 'about',
+        pagePath: '/about'
+    },
+    {
+        pageName: 'resetPassword',
+        pagePath: '/resetPassword'
+    },
+    {
+        pageName: 'productView',
+        pagePath: '/productView'
+    },
+    {
+        pageName: 'sellerdashboard',
+        pagePath: '/seller/sellerdashboard'
+    },
+    {
+        pageName: 'addProduct',
+        pagePath: '/seller/addProduct'
+    },
+    {
+        pageName: 'manageProduct',
+        pagePath: '/seller/manageProduct'
+    },
+    {
+        pageName: 'sellersignup',
+        pagePath: '/seller/sellersignup'
+    },
+    {
+        pageName: 'admindashboard',
+        pagePath: '/admin/admindashboard'
+    },
+    {
+        pageName: 'manageuser',
+        pagePath: '/admin/manageuser'
+    },
+    {
+        pageName: 'adminprofile',
+        pagePath: '/admin/adminprofile'
+    },
+    {
+        pageName: 'profile',
+        pagePath: '/user/profile'
+    },
+    {
+        pageName: 'MyCart',
+        pagePath: '/admin/adminprofile'
+    },
+    {
+        pageName: 'cheakout',
+        pagePath: '/user/cheakout'
+    },
+>>>>>>> ad698e2982761e9db57147e3bc6ba24e7355e681
 ]
 
 const speech = new SpeechSynthesisUtterance();
@@ -414,12 +485,198 @@ export const VoiceProvider = ({ children }) => {
       triggerModal('Scrolling Up', '', true, <IconArrowUp size={50} />);
     }
 
+<<<<<<< HEAD
     if (finalTranscript.includes('scroll down')) {
       window.scrollBy(0, window.innerHeight / 2);
       // setShowModal(true);
       triggerModal('Scrolling Down');
       resetTranscript();
       triggerModal('Scrolling Down', '', true, <IconArrowDown size={50} />);
+=======
+    const commands = [
+        {
+            command: 'Open :pageName page',
+            callback: (pageName) => {
+                console.log('Opening page: ', pageName);
+                voicePageNavigator(pageName)
+            }
+        },
+        {
+            command: 'I want to create an account',
+            callback: (pageName) => {
+                console.log('Opening page: ', pageName);
+                voicePageNavigator('signup')
+            }
+        },
+        {
+            command: 'I want to login',
+            callback: (login) => {
+                console.log('Opening page: ', login);
+                voicePageNavigator('login')
+            }
+        },
+        {
+            command: 'I want to buy something',
+            callback: (pageName) => {
+                console.log('Opening page: ', pageName);
+                voicePageNavigator('productView')
+            }
+        },
+        {
+            command: 'I want to contact you',
+            callback: (pageName) => {
+                console.log('Opening page: ', pageName);
+                voicePageNavigator('contact')
+            }
+        },
+        {
+            command: 'open manage product page',
+            callback: (pageName) => {
+                console.log('Opening page: ', pageName);
+                voicePageNavigator('manageProduct')
+            }
+        },
+        {
+            command: 'open login page',
+            callback: (pageName) => {
+                console.log('Opening page: ', pageName);
+                voicePageNavigator('login')
+            }
+        },
+        {
+            command: 'open cheak out page',
+            callback: (pageName) => {
+                console.log('Opening page: ', pageName);
+                voicePageNavigator('cheakout')
+            }
+        },
+
+        {
+            command: 'open contact page',
+            callback: (pageName) => {
+                console.log('Opening page: ', pageName);
+                voicePageNavigator('contact')
+            }
+        },
+        {
+            command: 'open reset password page',
+            callback: (pageName) => {
+                console.log('Opening page: ', pageName);
+                voicePageNavigator('resetPassword')
+            }
+        },
+        {
+            command: 'open signup page',
+            callback: (pageName) => {
+                console.log('Opening page: ', pageName);
+                voicePageNavigator('signup')
+            }
+        },
+        {
+            command: 'open admin dashboard',
+            callback: (pageName) => {
+                console.log('Opening page: ', pageName);
+                voicePageNavigator('admindashboard')
+            }
+        },
+        {
+            command: 'open manage user',
+            callback: (pageName) => {
+                console.log('Opening page: ', pageName);
+                voicePageNavigator('manageuser')
+            }
+        },
+        {
+            command: 'open admin profile',
+            callback: (pageName) => {
+                console.log('Opening page: ', pageName);
+                voicePageNavigator('adminprofile')
+            }
+        },
+        {
+            command: 'open add product',
+            callback: (pageName) => {
+                console.log('Opening page: ', pageName);
+                voicePageNavigator('addProduct')
+            }
+        },
+        {
+            command: 'open manage product',
+            callback: (pageName) => {
+                console.log('Opening page: ', pageName);
+                voicePageNavigator('manageProduct')
+            }
+        },
+        {
+            command: 'open seller dashboard',
+            callback: (pageName) => {
+                console.log('Opening page: ', pageName);
+                voicePageNavigator('sellerdashboard')
+            }
+        },
+        {
+            command: 'open seller sign up',
+            callback: (pageName) => {
+                console.log('Opening page: ', pageName);
+                voicePageNavigator('sellersignup')
+            }
+        },
+        {
+            command: 'open user profile',
+            callback: (pageName) => {
+                console.log('Opening page: ', pageName);
+                voicePageNavigator('profile')
+            }
+        },
+        {
+            command: 'open cart page',
+            callback: (pageName) => {
+                console.log('Opening page: ', pageName);
+                voicePageNavigator('MyCart')
+            }
+        },
+        {
+            command: 'show me products',
+            callback: (pageName) => {
+                router.push('/productView');
+                voiceResponse('Showing all products');
+            }
+        },
+        {
+            command: 'move page :direction',
+            callback: (direction) => {
+                console.log('Moving in direction: ', direction);
+                if (direction === 'up') {
+                    window.scrollBy(0, -window.innerHeight);
+                } else if (direction === 'down') {
+                    window.scrollBy(0, window.innerHeight);
+                }
+            }
+        },
+        {
+            command: 'scroll :direction',
+            callback: (direction) => {
+                console.log('Scrolling in direction: ', direction);
+                if (direction === 'up') {
+                    window.scrollBy(0, -window.innerHeight);
+                } else if (direction === 'down') {
+                    window.scrollBy(0, window.innerHeight);
+                }
+            }
+        }
+    ]
+
+    const {
+        transcript,
+        listening,
+        resetTranscript,
+        browserSupportsSpeechRecognition,
+        finalTranscript
+    } = useSpeechRecognition({ commands, continuous: true });
+
+    if (!browserSupportsSpeechRecognition) {
+        console.log('Your browser does not support speech recognition software! Please try again with a different browser.');
+>>>>>>> ad698e2982761e9db57147e3bc6ba24e7355e681
     }
 
     if (finalTranscript.includes('move to bottom')) {
