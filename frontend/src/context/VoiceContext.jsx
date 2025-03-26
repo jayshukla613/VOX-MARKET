@@ -6,6 +6,7 @@ import { IconArrowDown, IconArrowDownBar, IconArrowUp, IconArrowUpBar, IconMicro
 import { useRouter } from 'next/navigation';
 import { FaMicrophone } from "react-icons/fa6";
 import { AnimatePresence, motion } from 'framer-motion';
+import usersignup from '@/app/(main)/user-signup/page';
 
 const InfoModal = ({ icon, title, description, showModal, setShowModal, centered = false, duration = 2000 }) => {
 
@@ -65,11 +66,11 @@ const pageDetails = [
   },
   {
     pageName: 'signup',
-    pagePath: '/signup'
+    pagePath: '/user-signup'
   },
   {
     pageName: 'login',
-    pagePath: '/login'
+    pagePath: '/user-login'
   },
   {
     pageName: 'contact',
@@ -85,7 +86,7 @@ const pageDetails = [
   },
   {
     pageName: 'productView',
-    pagePath: '/productView'
+    pagePath: '/view-product'
   },
   {
     pageName: 'sellerdashboard',
@@ -93,11 +94,11 @@ const pageDetails = [
   },
   {
     pageName: 'addProduct',
-    pagePath: '/seller/addProduct'
+    pagePath: '/seller/add-product'
   },
   {
     pageName: 'manageProduct',
-    pagePath: '/seller/manageProduct'
+    pagePath: '/seller/manage-product'
   },
   {
     pageName: 'sellersignup',

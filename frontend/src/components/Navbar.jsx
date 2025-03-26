@@ -5,11 +5,14 @@ import { useRouter } from "next/navigation";
 import { ChevronDown, ShoppingCart, Smartphone, Monitor, Headphones, Gamepad, User } from "lucide-react";
 import { IconUserCircle } from "@tabler/icons-react";
 import {  Dropdown,  DropdownTrigger,  DropdownMenu,  DropdownSection,  DropdownItem} from "@heroui/dropdown";
+import useCartContext from "@/context/CartContext";
 
 const Navbar = () => {
   const router = useRouter();
   const [open, setOpen] = useState(false);
   const dropdownRef = useRef(null);
+
+  const {cartItems} = useCartContext();
 
   const toggleDropdown = () => setOpen(!open);
 
@@ -73,6 +76,10 @@ const Navbar = () => {
               }}
             >
               Sign up
+            </button>
+            <button>
+              Cart 
+              {cartItems.length}
             </button>
           
             <Dropdown placement="bottom-start">
