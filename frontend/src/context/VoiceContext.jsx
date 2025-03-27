@@ -353,7 +353,7 @@ export const VoiceProvider = ({ children }) => {
       router.push(page.pagePath);
     } else {
       
-      voiceResponse(`mind your own bussiness`);
+      voiceResponse(`sorry u r on searching wrong page `);
       console.log('Page not found');
       
     }
