@@ -17,10 +17,5 @@ const myschema = Schema({
     retunepolicy: { type: String },
     warranty: { type: String },
     feature: { type: String}
-
-
-
-
-
 })
 module.exports = model('product', myschema);
