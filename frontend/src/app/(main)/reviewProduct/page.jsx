@@ -44,10 +44,9 @@ const ReviewRating = () => {
     // Send the new review to the backend
     axios
       .post(`${process.env.NEXT_PUBLIC_API_URL}/review/reviews`, newReview ,{
-        // headers: {
-        //   'x-auth-token': token
-        // }}
-      }
+        headers: {
+          'x-auth-token': token
+        }}
       )
       .then((response) => {
         setReviews([reviews, newReview]); // Add the new review to the state

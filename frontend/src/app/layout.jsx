@@ -5,6 +5,7 @@ import Footer from "@/components/Footer";
 import { Toaster } from "react-hot-toast";
 import Dropdownmenu from "@/components/Dropdownmenu";
 import { VoiceProvider } from "@/context/VoiceContext";
+import { CartProvider } from "@/context/CartContext";
 
 
 
@@ -32,15 +33,17 @@ export default function RootLayout({ children }) {
       >
         {/* <Dropdownmenu/> */}
 
+        <CartProvider>
 
-        <Navbar>
-          <Dropdownmenu /></Navbar>
+          <Navbar>
+            <Dropdownmenu /></Navbar>
 
-        <Toaster position="top-right" />
-        {children}
+          <Toaster position="top-right" />
+          {children}
 
 
-        <Footer />
+          <Footer />
+        </CartProvider>
 
       </body>
     </html>
