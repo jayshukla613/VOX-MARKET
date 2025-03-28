@@ -49,7 +49,7 @@ const ReviewRating = () => {
         }}
       )
       .then((response) => {
-        setReviews([reviews, newReview]); // Add the new review to the state
+         setReviews([reviews, newReview]); // Add the new review to the state
         setRating(1); // Reset the rating to 1
         setReview(""); // Reset the review text
         toast.success("Review submitted successfully!");
@@ -101,6 +101,7 @@ const ReviewRating = () => {
                 starSpacing="5px"
               />
               <p className="mt-1">{r.review}</p>
+              <p className="text-gray-500 text-sm mt-1">By: {r.user}</p>
             </div>
           ))
         ) : (

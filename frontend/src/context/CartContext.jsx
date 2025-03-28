@@ -1,21 +1,20 @@
 'use client';
-const { createContext, useContext, useState, useEffect } = require("react");
+import { createContext, useContext, useState, useEffect } from 'react';
 
 const CartContext = createContext();
 
 export const CartProvider = ({ children }) => {
     const [cartItems, setCartItems] = useState(() => {
-        // Initialize cartItems from localStorage if available
         const storedCart = localStorage.getItem("cartItems");
         return storedCart ? JSON.parse(storedCart) : [];
     });
+    
 
-    // Sync cartItems with localStorage whenever it changes
+
     useEffect(() => {
         localStorage.setItem("cartItems", JSON.stringify(cartItems));
     }, [cartItems]);
 
-    // Function to add an item to the cart
     const addItemToCart = (item) => {
         setCartItems((prevItems) => {
             const existingItem = prevItems.find((cartItem) => cartItem._id === item._id);
@@ -30,8 +29,7 @@ export const CartProvider = ({ children }) => {
         });
     };
 
-    // Function to remove an item from the cart
-    const removeItemFromCart = (itemId) => {
+    const removeItem = (itemId) => {
         setCartItems((prevItems) =>
             prevItems
                 .map((cartItem) =>
@@ -43,7 +41,6 @@ export const CartProvider = ({ children }) => {
         );
     };
 
-    // Function to calculate the total amount
     const calculateTotalAmount = () => {
         return cartItems.reduce(
             (total, cartItem) => total + cartItem.price * cartItem.quantity,
@@ -53,7 +50,7 @@ export const CartProvider = ({ children }) => {
 
     return (
         <CartContext.Provider
-            value={{ cartItems, addItemToCart, removeItemFromCart, calculateTotalAmount }}
+            value={{ cartItems, addItemToCart, removeItem, calculateTotalAmount }}
         >
             {children}
         </CartContext.Provider>

@@ -128,13 +128,6 @@ const pageDetails = [
     pageName: 'cheakout',
     pagePath: '/user/cheakout'
   },
-<<<<<<< HEAD
-=======
-  {
-    pageName: 'category',
-    pagePath: '/category'
-  }
->>>>>>> 7111b981d1ede34fe21500fbe7d98d749b00a5ed
 ]
 
 const speech = new SpeechSynthesisUtterance();
@@ -169,7 +162,7 @@ export const VoiceProvider = ({ children }) => {
 
   const commands = [
     {
-      command: 'Open :pageName page',
+      command: 'Open :home page',
       callback: (pageName) => {
         console.log('Opening page: ', pageName);
         voicePageNavigator(pageName)
