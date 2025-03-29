@@ -32,11 +32,7 @@ const Sidebaruser = () => {
                 cart
               </button>
             </li>
-            <li>
-              <button className="w-full text-left bg-gray-200 p-2 rounded-lg hover:bg-yellow-500">
-                Password Manager
-              </button>
-            </li>
+            
             <li>
               <button className="w-full text-left bg-gray-200 p-2 rounded-lg hover:bg-yellow-500" 
               onClick={()=>{

@@ -17,25 +17,6 @@ const viewProduct = () => {
   const { addItemToCart } = useCartContext();
 
 
-  const token = localStorage.getItem('user-token');
-  const addtocartdata = () => {
-    axios.post(`${process.env.NEXT_PUBLIC_API_URL}/product/addtocart`, {
-      headers: { 'x-auth-token': token }
-    })
-      .then((result) => {
-        console.log("API Response:", result.data);
-        localStorage.setItem('user-token', result.data?.token);
-
-        toast.success("Product added to cart successfully");
-      })
-      .catch((err) => console.log("Error fetching profile data:", err));
-    toast.error("Product not added to cart");
-  };
-
-  useEffect(() => {
-    if (token) addtocartdata();
-  }, [token]);
-
 
 
   useEffect(() => {
@@ -124,7 +105,7 @@ const viewProduct = () => {
             <div className="mb-4 text-green-600">{product.stock}</div>
             {/* Add to Cart / Buy Now Button */}
             <div className="flex space-x-2 mb-4">
-              <button onClick={() => { addItemToCart(product) }} className="bg-blue-500 text-white px-4 py-2 rounded w-full md:w-auto">
+              <button type='submit' onClick={() => addItemToCart(product)} className="bg-blue-500 text-white px-4 py-2 rounded w-full md:w-auto">
                 Add to Cart
               </button>
               <button className="bg-green-500 text-white px-4 py-2 rounded w-full md:w-auto">

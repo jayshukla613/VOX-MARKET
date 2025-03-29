@@ -38,7 +38,7 @@ const ReviewRating = () => {
 
     const newReview = {
       rating,
-      review,
+      review
     };
 
     // Send the new review to the backend
