@@ -146,7 +146,7 @@ const viewProduct = () => {
 
             Customer Ratings & Reviews
           </h2>
-          <ReviewRating />
+          <ReviewRating productId={id} />
           <Link className="text-blue-500" href="">
             Read more reviews
           </Link>

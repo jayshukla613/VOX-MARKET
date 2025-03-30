@@ -40,7 +40,7 @@ const Category = () => {
     <div>
       
       <div className='flex gap-8 justify-evenly bg-gray-500  p-2  text-white text-lg w-full flex-wrap'>
-        <Link href="" onClick={() => { setSelectedCategory('electronics'); }}>Electronics</Link>
+        <Link href={'/browse/electronic'}>Electronics</Link>
         <Link href="" onClick={() => { setSelectedCategory('fashion'); }}>Fashion</Link>
         <Link href="" onClick={() => { setSelectedCategory('home'); }}>Home</Link>
         <Link href="" onClick={() => { setSelectedCategory('books'); }}>Books</Link>
@@ -51,7 +51,7 @@ const Category = () => {
         <Link href="" onClick={() => { setSelectedCategory('automotive'); }}>Automotive</Link>
         <Link href="" onClick={() => { setSelectedCategory('garden'); }}>Garden</Link>
         <Link href="" onClick={() => { setSelectedCategory('office'); }}>Office</Link>
-        <Link href="" onClick={() => { setSelectedCategory('mens shirt'); }}>Men's Shirt</Link>
+        <Link href={'/browse/mens shirt'}>Men's Shirt</Link>
 
       </div>
       {loading ? (

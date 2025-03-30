@@ -29,4 +29,14 @@ router.get('/reviews', verifytoken,  async (req, res) => {
           });
 });
 
+router.get('/getbyproduct/:id',  async (req, res) => {
+    Model.find({ product: req.params.id })
+          .then((result) => {
+              res.status(200).json(result);
+          }).catch((err) => {
+              console.log(err);
+              res.status(500).json(err);
+          });
+});
+
 module.exports = router;

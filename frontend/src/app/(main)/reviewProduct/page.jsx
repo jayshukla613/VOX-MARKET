@@ -5,7 +5,7 @@ import React, { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import StarRatings from "react-star-ratings";
 
-const ReviewRating = () => {
+const ReviewRating = ({productId}) => {
   const [rating, setRating] = useState(1); // Default rating value
   const [review, setReview] = useState(""); // Review text
   const [reviews, setReviews] = useState([]); // List of reviews
@@ -15,10 +15,7 @@ const ReviewRating = () => {
   // Fetch reviews when the component mounts
   useEffect(() => {
     axios
-      .get(`${process.env.NEXT_PUBLIC_API_URL}/review/reviews`, {
-        headers: { 'x-auth-token': token }
-  
-      })
+      .get(`${process.env.NEXT_PUBLIC_API_URL}/review/getbyproduct/${productId}`)
       .then((response) => {
         setReviews(response.data); // Set reviews in state
       })
@@ -37,19 +34,21 @@ const ReviewRating = () => {
     e.preventDefault();
 
     const newReview = {
+      product: productId,
       rating,
       review
     };
 
     // Send the new review to the backend
     axios
-      .post(`${process.env.NEXT_PUBLIC_API_URL}/review/reviews`, newReview ,{
+      .post(`${process.env.NEXT_PUBLIC_API_URL}/review/reviews`, newReview, {
         headers: {
           'x-auth-token': token
-        }}
+        }
+      }
       )
       .then((response) => {
-         setReviews([reviews, newReview]); // Add the new review to the state
+        setReviews([reviews, newReview]); // Add the new review to the state
         setRating(1); // Reset the rating to 1
         setReview(""); // Reset the review text
         toast.success("Review submitted successfully!");
@@ -60,33 +59,33 @@ const ReviewRating = () => {
       });
   };
 
-   return (
+  return (
     <div className="   max-w-md">
       <form onSubmit={handleSubmit}>
-      <div className="rounded-lg p-4 ">
-        <h2 className="text-xl font-semibold mb-4">Leave a Review</h2>
-        <StarRatings
-          rating={rating}
-          starRatedColor="#ffd700"
+        <div className="rounded-lg p-4 ">
+          <h2 className="text-xl font-semibold mb-4">Leave a Review</h2>
+          <StarRatings
+            rating={rating}
+            starRatedColor="#ffd700"
 
-         
-          
-          changeRating={onStarClick}
-          numberOfStars={5}
-          starDimension="30px"
-          starSpacing="5px"
-        />
-        <textarea
-          className="w-full border rounded p-2 mt-2"
-          placeholder="Write your review..."
-          value={review}
-          onChange={(e) => setReview(e.target.value)}
-          name="review"
-        />
-        <button type="submit" className="mt-2 w-full bg-blue-500 text-white py-2 max-w-md rounded" >
-          Submit
-        </button>
-      </div>
+
+
+            changeRating={onStarClick}
+            numberOfStars={5}
+            starDimension="30px"
+            starSpacing="5px"
+          />
+          <textarea
+            className="w-full border rounded p-2 mt-2"
+            placeholder="Write your review..."
+            value={review}
+            onChange={(e) => setReview(e.target.value)}
+            name="review"
+          />
+          <button type="submit" className="mt-2 w-full bg-blue-500 text-white py-2 max-w-md rounded" >
+            Submit
+          </button>
+        </div>
       </form>
       <div className="mt-4">
         <h3 className="text-lg font-medium">Reviews</h3>
