@@ -1,78 +1,198 @@
-'use client';
-import React from 'react';
+'use client'
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+import { BrowserRouter as Router, Route, Routes, Link, useParams, useNavigate } from 'react-router-dom';
 
-const AdminProfile = () => {
-  // Example data for admin profile (can be dynamic based on your app's state or props)
-  const adminData = {
-    name: "John Doe",
-    username: "johndoe123",
-    email: "johndoe@example.com",
-    phoneNumber: "+1 234 567 890",
-    role: "System Administrator",
-    skills: ["Networking", "Cloud Computing", "Linux", "Security Management"],
-    certifications: ["CompTIA A+", "Cisco CCNA"],
-    profilePicture: "https://via.placeholder.com/150", // Example image URL
-    lastLogin: "2025-03-01 14:30",
-    totalLogins: 120,
-    accessLevel: "Admin",
-    modules: ["User Management", "Server Monitoring", "Security Management"],
+// Sidebar Component
+const Sidebar = () => (
+  <div className="w-64 h-full bg-blue-900 text-white p-4 fixed left-0 top-0 shadow-lg flex flex-col z-50 md:block hidden">
+    <h2 className="text-2xl font-bold text-center text-white mb-8">Admin Dashboard</h2>
+    <ul className="space-y-4">
+      <li>
+        <Link
+          to="/dashboard"
+          className="block text-lg hover:bg-blue-700 px-4 py-2 rounded-lg transition duration-200"
+        >
+          Dashboard
+        </Link>
+      </li>
+      <li>
+        <Link
+          to="/users"
+          className="block text-lg hover:bg-blue-700 px-4 py-2 rounded-lg transition duration-200"
+        >
+          Manage Users
+        </Link>
+      </li>
+      <li>
+        <Link
+          to="/sellers"
+          className="block text-lg hover:bg-blue-700 px-4 py-2 rounded-lg transition duration-200"
+        >
+          Manage Sellers
+        </Link>
+      </li>
+    </ul>
+  </div>
+);
+
+// Dashboard Page
+const Dashboard = () => (
+  <div className="ml-64 p-8">
+    <h1 className="text-3xl font-semibold">Admin Dashboard</h1>
+    <p className="mt-4 text-lg">Welcome to the admin dashboard!</p>
+  </div>
+);
+
+// Users Management Page
+const Users = () => {
+  const [users, setUsers] = useState([]);
+
+  useEffect(() => {
+    const fetchUsers = async () => {
+      try {
+        const response = await axios.get('http://localhost:5000/api/users');
+        setUsers(response.data);
+      } catch (error) {
+        console.error('There was an error fetching users!', error);
+      }
+    };
+    fetchUsers();
+  }, []);
+
+  return (
+    <div className="ml-64 p-8">
+      <h2 className="text-3xl font-semibold">Manage Users</h2>
+      <ul className="mt-4 space-y-2">
+        {users.map((user) => (
+          <li key={user._id} className="border-b pb-2">
+            <span className="font-semibold">{user.name}</span> - {user.email} - {user.role}
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+};
+
+// Sellers Management Page
+const Sellers = () => {
+  const [sellers, setSellers] = useState([]);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const fetchSellers = async () => {
+      try {
+        const response = await axios.get('http://localhost:5000/api/sellers');
+        setSellers(response.data);
+      } catch (error) {
+        console.error('There was an error fetching sellers!', error);
+      }
+    };
+    fetchSellers();
+  }, []);
+
+  const handleDelete = async (sellerId) => {
+    try {
+      await axios.delete(`http://localhost:5000/api/sellers/${sellerId}`);
+      setSellers(sellers.filter((seller) => seller._id !== sellerId));
+      alert('Seller deleted successfully');
+    } catch (error) {
+      console.error('There was an error deleting the seller!', error);
+      alert('Error deleting seller');
+    }
   };
 
   return (
-    <div className="max-w-3xl mx-auto p-6 bg-white border border-gray-300 rounded-lg shadow-lg">
-      <div className="flex items-center mb-6">
-        <img
-          src={adminData.profilePicture}
-          alt={`${adminData.name}'s Profile`}
-          className="w-24 h-24 rounded-full mr-6"
-        />
-        <div>
-          <h2 className="text-2xl font-bold text-gray-800">{adminData.name}</h2>
-          <p className="text-sm text-gray-600">{adminData.role}</p>
-          <p className="text-sm text-gray-600">@{adminData.username}</p>
-          <p className="text-sm text-gray-600">Email: {adminData.email}</p>
-          <p className="text-sm text-gray-600">Phone: {adminData.phoneNumber}</p>
-        </div>
-      </div>
+    <div className="ml-64 p-8">
+      <h2 className="text-3xl font-semibold">Manage Sellers</h2>
+      <ul className="mt-4 space-y-2">
+        {sellers.map((seller) => (
+          <li key={seller._id} className="border-b pb-2">
+            <div className="flex justify-between items-center">
+              <div>
+                <span className="font-semibold">{seller.name}</span> - {seller.shopName}
+              </div>
+              <div className="space-x-2">
+                <Link
+                  to={`/sellers/${seller._id}`}
+                  className="text-blue-500 hover:underline"
+                >
+                  View Details
+                </Link>
+                <button
+                  onClick={() => handleDelete(seller._id)}
+                  className="text-red-500 hover:underline"
+                >
+                  Delete
+                </button>
+              </div>
+            </div>
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+};
 
-      <div className="space-y-6">
-        <div>
-          <h3 className="text-xl font-semibold text-gray-800">Skills & Expertise</h3>
-          <ul className="list-disc pl-5 space-y-1 text-gray-700">
-            {adminData.skills.map((skill, index) => (
-              <li key={index}>{skill}</li>
-            ))}
-          </ul>
-        </div>
+// Seller Detail Page
+const SellerDetail = () => {
+  const { id } = useParams();
+  const [seller, setSeller] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
-        <div>
-          <h3 className="text-xl font-semibold text-gray-800">Certifications</h3>
-          <ul className="list-disc pl-5 space-y-1 text-gray-700">
-            {adminData.certifications.map((cert, index) => (
-              <li key={index}>{cert}</li>
-            ))}
-          </ul>
-        </div>
+  useEffect(() => {
+    const fetchSellerDetails = async () => {
+      try {
+        const response = await axios.get(`http://localhost:5000/api/sellers/${id}`);
+        setSeller(response.data);
+        setLoading(false);
+      } catch (error) {
+        setError('There was an error fetching the seller details!');
+        setLoading(false);
+      }
+    };
+    fetchSellerDetails();
+  }, [id]);
 
-        <div>
-          <h3 className="text-xl font-semibold text-gray-800">Admin Activity</h3>
-          <p className="text-gray-700">Last Login: {adminData.lastLogin}</p>
-          <p className="text-gray-700">Total Logins: {adminData.totalLogins}</p>
-        </div>
+  if (loading) {
+    return <div className="ml-64 p-8">Loading seller details...</div>;
+  }
 
-        <div>
-          <h3 className="text-xl font-semibold text-gray-800">Access & Permissions</h3>
-          <p className="text-gray-700">Access Level: {adminData.accessLevel}</p>
-          <p className="text-gray-700">Modules Accessed:</p>
-          <ul className="list-disc pl-5 space-y-1 text-gray-700">
-            {adminData.modules.map((module, index) => (
-              <li key={index}>{module}</li>
-            ))}
-          </ul>
-        </div>
+  if (error) {
+    return <div className="ml-64 p-8 text-red-500">{error}</div>;
+  }
+
+  return (
+    <div className="ml-64 p-8">
+      <h2 className="text-3xl font-semibold">Seller Details</h2>
+      <div className="mt-4">
+        <h3 className="text-xl font-semibold">{seller.name}</h3>
+        <p><strong>Shop Name:</strong> {seller.shopName}</p>
+        <p><strong>Email:</strong> {seller.email}</p>
+        <p><strong>Phone:</strong> {seller.phone}</p>
+        <p><strong>Address:</strong> {seller.address}</p>
       </div>
     </div>
   );
 };
 
-export default AdminProfile;
+// Main App Component
+const App = () => (
+  <Router>
+    <div className="flex">
+      <Sidebar />
+      <div className="flex-1 ml-64 p-8">
+        <Routes>
+          <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/users" element={<Users />} />
+          <Route path="/sellers" element={<Sellers />} />
+          <Route path="/sellers/:id" element={<SellerDetail />} />
+          <Route path="/" element={<Dashboard />} />
+        </Routes>
+      </div>
+    </div>
+  </Router>
+);
+
+export default App;

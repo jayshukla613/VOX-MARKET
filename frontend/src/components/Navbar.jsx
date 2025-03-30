@@ -101,7 +101,7 @@ const Navbar = () => {
           <DropdownItem key="seller" className="h-10 gap-2" >
            <Link href="/seller-login">Seller Account</Link> </DropdownItem>
           <DropdownItem key="admin" className="h-10 gap-2" >
-           <Link href="/admin/admindashboard">Admin Account</Link> </DropdownItem>
+           <Link href="/admin/profile">Admin Account</Link> </DropdownItem>
           
           
         </DropdownMenu>
