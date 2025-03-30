@@ -4,15 +4,23 @@ import { useState, useRef, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { ChevronDown, ShoppingCart, Smartphone, Monitor, Headphones, Gamepad, User } from "lucide-react";
 import { IconUserCircle } from "@tabler/icons-react";
-import {  Dropdown,  DropdownTrigger,  DropdownMenu,  DropdownSection,  DropdownItem} from "@heroui/dropdown";
+import { Dropdown, DropdownTrigger, DropdownMenu, DropdownSection, DropdownItem } from "@heroui/dropdown";
 import useCartContext from "@/context/CartContext";
+import axios from "axios";
+import toast from "react-hot-toast";
 
-const Navbar = () => {
+
+const Navbar = (product) => {
   const router = useRouter();
+
+  const [search, setSearch] = useState("");
+  const [products, setProducts] = useState([]);
+  const [loading, setLoading] = useState(false);
   const [open, setOpen] = useState(false);
   const dropdownRef = useRef(null);
 
-  const {cartItems} = useCartContext();
+  const { cartItems } = useCartContext();
+
 
   const toggleDropdown = () => setOpen(!open);
 
@@ -26,6 +34,40 @@ const Navbar = () => {
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
+
+  const handleSearch = async () => {
+    if (!search) return;
+
+    setLoading(true);
+
+    try {
+      const response = await axios.get(`http://localhost:5000/product/getbysearch/${search}`);
+
+      if (response.status === 200) {
+        setProducts(response.data);
+        toast.success("Products fetched successfully!");
+        console.log("Products fetched successfully:", response.data);
+      } else {
+        console.error("Error fetching products:", response.data.error);
+      }
+    } catch (error) {
+      console.error("Error:", error);
+    }
+
+    setLoading(false);
+  };
+
+  const handleInputChange = (e) => {
+    setSearch(e.target.value);
+  }
+ 
+
+
+
+
+
+
+
 
   return (
     <div>
@@ -50,17 +92,38 @@ const Navbar = () => {
             </li>
             <li>
               <Link href="/category" className="hover:text-gray-300">
-               Category
+                Category
               </Link>
             </li>
-           
+
           </ul>
           <div className="flex items-center space-x-4">
-            <input
-              type="text"
-              placeholder="Search..."
-              className="px-2 py-1 rounded text-black"
-            />
+            
+          <input
+        type="text"
+        value={search}
+        onChange={handleInputChange}
+        placeholder="Search for products"
+        className="text-gray-800 px-4 py-2 rounded border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
+      />
+      <button 
+      onClick={(e) => {
+       
+        e.preventDefault();
+        router.push(`/searchpage/${search}`);
+        if (search) {handleSearch();}
+        else {toast.error("Please enter a search term");}
+        setSearch("");
+        }}
+
+        
+      
+
+disabled={loading}>
+        {loading ? "Searching..." : "Search"}
+
+      </button> 
+
             <button
               className="bg-black text-white px-8 font-bold py-2 rounded"
               onClick={() => {
@@ -78,26 +141,11 @@ const Navbar = () => {
               Sign up
             </button>
             <button>
-              Cart 
+              Cart
               {cartItems.length}
             </button>
-          
-            <Dropdown placement="bottom-start">
-        <DropdownTrigger>
-          <User
-            as="button"
-           size={32}
-            className=""
-            description="@tonyreichert"
-            name="Tony Reichert"
-          />
-        </DropdownTrigger>
-        <DropdownMenu className="bg-white italic font-semibold p-4" aria-label="User Actions" variant="flat">
-          <DropdownItem key="user" className="h-10 gap-2 " >
-           <Link href="/user-login">User Account</Link> </DropdownItem>
-          <DropdownItem key="seller registration" className="h-10 gap-2 " >
-           <Link href="/seller/seller-introducepage">Seller Registration </Link> </DropdownItem>
 
+<<<<<<< HEAD
           <DropdownItem key="seller" className="h-10 gap-2" >
            <Link href="/seller-login">Seller Account</Link> </DropdownItem>
           <DropdownItem key="admin" className="h-10 gap-2" >
@@ -107,6 +155,33 @@ const Navbar = () => {
         </DropdownMenu>
       </Dropdown>
             </div >
+=======
+            <Dropdown placement="bottom-start">
+              <DropdownTrigger>
+                <User
+                  as="button"
+                  size={32}
+                  className=""
+                  description="@tonyreichert"
+                  name="Tony Reichert"
+                />
+              </DropdownTrigger>
+              <DropdownMenu className="bg-white italic font-semibold p-4" aria-label="User Actions" variant="flat">
+                <DropdownItem key="user" className="h-10 gap-2 " >
+                  <Link href="/user-login">User Account</Link> </DropdownItem>
+                <DropdownItem key="seller registration" className="h-10 gap-2 " >
+                  <Link href="/seller/seller-introducepage">Seller Registration </Link> </DropdownItem>
+
+                <DropdownItem key="seller" className="h-10 gap-2" >
+                  <Link href="/seller-login">Seller Account</Link> </DropdownItem>
+                <DropdownItem key="admin" className="h-10 gap-2" >
+                  <Link href="/admin/admindashboard">Admin Account</Link> </DropdownItem>
+
+
+              </DropdownMenu>
+            </Dropdown>
+          </div >
+>>>>>>> 2ec3fa8a7e0eb2d0ed9af8fb3d88c61b497a998b
         </div>
       </nav>
     </div>

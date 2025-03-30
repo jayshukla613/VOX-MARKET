@@ -39,8 +39,51 @@ product.get('/getall', (req, res) => {
         });
 });
 
+product.get('/getbycategory/:category', (req, res) => {
+    Model.find({ category: req.params.category })
+        .then((result) => {
+            res.status(200).json(result);
+        }).catch((err) => {
+            console.log(err);
+            res.status(500).json(err);
+        });
+});
+product.get('/getbysearch/:search', (req, res) => {
+    Model.find({ $or: [{ name: { $regex: req.params.search, $options
+: 'i' } }, { category: { $regex: req.params.search, $options: 'i' } }] })
+        .then((result) => {
+            res.status(200).json(result);
+        }).catch((err) => {
+            console.log(err);
+            res.status(500).json(err);
+        }
+    );
+});
+
+product.get('/getbycategory/:category', (req, res) => {
+    Model.find({ category: req.params.category })
+
+    
+        .then((result) => {
+            res.status(200).json(result);
+        }).catch((err) => {
+            console.log(err);
+            res.status(500).json(err);
+        });
+});
+   
+
 product.get('/getbyseller', verifytoken, (req, res) => {
     Model.find({ seller: req.user._id })
+        .then((result) => {
+            res.status(200).json(result);
+        }).catch((err) => {
+            console.log(err);
+            res.status(500).json(err);
+        });
+});
+product.get('/getbyuser', verifytoken, (req, res) => {
+    Model.find({ user: req.user._id })
         .then((result) => {
             res.status(200).json(result);
         }).catch((err) => {

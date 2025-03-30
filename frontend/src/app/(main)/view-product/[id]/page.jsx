@@ -8,6 +8,8 @@ import ReviewRating from '../../reviewProduct/page';
 import toast from 'react-hot-toast';
 import useCartContext from '@/context/CartContext';
 
+
+
 const viewProduct = () => {
   const router = useRouter();
   const { id } = useParams();
@@ -17,7 +19,7 @@ const viewProduct = () => {
   const { addItemToCart } = useCartContext();
 
 
-
+ 
 
   useEffect(() => {
     if (id) {
@@ -95,11 +97,6 @@ const viewProduct = () => {
             </div>
             <div className="mb-4">
               <label className="block mb-2">Color: {product.color} </label>
-              {/* <div className="flex space-x-2">
-            <div className="w-8 h-8 bg-red-500 rounded-full"></div>
-            <div className="w-8 h-8 bg-blue-500 rounded-full"></div>
-            <div className="w-8 h-8 bg-green-500 rounded-full"></div>
-          </div> */}
             </div>
             {/* Availability/Stock Status */}
             <div className="mb-4 text-green-600">{product.stock}</div>
@@ -108,7 +105,10 @@ const viewProduct = () => {
               <button type='submit' onClick={() => addItemToCart(product)} className="bg-blue-500 text-white px-4 py-2 rounded w-full md:w-auto">
                 Add to Cart
               </button>
-              <button className="bg-green-500 text-white px-4 py-2 rounded w-full md:w-auto">
+              <button
+                
+                className="bg-green-500 text-white px-4 py-2 rounded w-full md:w-auto"
+              >
                 Buy Now
               </button>
             </div>
@@ -146,15 +146,7 @@ const viewProduct = () => {
 
             Customer Ratings & Reviews
           </h2>
-          <ReviewRating />
-          {/* <div className="mb-2">
-        <p className="font-bold">John Doe</p>
-        <p>Great product! Highly recommend.</p>
-      </div> */}
-          {/* <div className="mb-2">
-        <p className="font-bold">Jane Smith</p>
-        <p>Good value for money. Will buy again.</p>
-      </div> */}
+          <ReviewRating productId={id} />
           <Link className="text-blue-500" href="">
             Read more reviews
           </Link>
@@ -215,33 +207,7 @@ const viewProduct = () => {
           </p>
 
         </div>
-
-        {/* Wishlist Option */}
-        {/* <div className="mb-4">
-      <button className="bg-gray-200 text-gray-700 px-4 py-2 rounded w-full md:w-auto">
-        Add to Wishlist
-      </button>
-    </div> */}
-        {/* Questions & Answers */}
-        {/* <div className="mb-4">
-      <h2 className="text-2xl font-bold mb-2">Questions &amp; Answers</h2>
-      <div className="mb-2">
-        <p className="font-bold">Customer Question 1</p>
-        <p>Answer to customer question 1.</p>
       </div>
-      <div className="mb-2">
-        <p className="font-bold">Customer Question 2</p>
-        <p>Answer to customer question 2.</p>
-      </div>
-      <a className="text-blue-500" href="#">
-        Ask a question
-      </a>
-    </div> */}
-
-
-
-      </div>
-
     </>
   )
 }
