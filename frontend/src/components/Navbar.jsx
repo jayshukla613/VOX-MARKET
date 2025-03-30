@@ -145,43 +145,15 @@ disabled={loading}>
               {cartItems.length}
             </button>
 
-<<<<<<< HEAD
           <DropdownItem key="seller" className="h-10 gap-2" >
            <Link href="/seller-login">Seller Account</Link> </DropdownItem>
           <DropdownItem key="admin" className="h-10 gap-2" >
            <Link href="/admin/profile">Admin Account</Link> </DropdownItem>
           
           
-        </DropdownMenu>
-      </Dropdown>
+        {/* </DropdownMenu> */}
+      {/* </Dropdown> */}
             </div >
-=======
-            <Dropdown placement="bottom-start">
-              <DropdownTrigger>
-                <User
-                  as="button"
-                  size={32}
-                  className=""
-                  description="@tonyreichert"
-                  name="Tony Reichert"
-                />
-              </DropdownTrigger>
-              <DropdownMenu className="bg-white italic font-semibold p-4" aria-label="User Actions" variant="flat">
-                <DropdownItem key="user" className="h-10 gap-2 " >
-                  <Link href="/user-login">User Account</Link> </DropdownItem>
-                <DropdownItem key="seller registration" className="h-10 gap-2 " >
-                  <Link href="/seller/seller-introducepage">Seller Registration </Link> </DropdownItem>
-
-                <DropdownItem key="seller" className="h-10 gap-2" >
-                  <Link href="/seller-login">Seller Account</Link> </DropdownItem>
-                <DropdownItem key="admin" className="h-10 gap-2" >
-                  <Link href="/admin/admindashboard">Admin Account</Link> </DropdownItem>
-
-
-              </DropdownMenu>
-            </Dropdown>
-          </div >
->>>>>>> 2ec3fa8a7e0eb2d0ed9af8fb3d88c61b497a998b
         </div>
       </nav>
     </div>
