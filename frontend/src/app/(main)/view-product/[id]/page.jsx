@@ -3,7 +3,7 @@ import axios from 'axios';
 import Link from 'next/link';
 import { useParams, useRouter } from 'next/navigation';
 
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, use } from 'react'
 import ReviewRating from '../../reviewProduct/page';
 import toast from 'react-hot-toast';
 import useCartContext from '@/context/CartContext';
@@ -19,7 +19,7 @@ const viewProduct = () => {
   const { addItemToCart } = useCartContext();
 
 
- 
+
 
   useEffect(() => {
     if (id) {
@@ -102,10 +102,12 @@ const viewProduct = () => {
             <div className="mb-4 text-green-600">{product.stock}</div>
             {/* Add to Cart / Buy Now Button */}
             <div className="flex space-x-2 mb-4">
-              <button type='submit' onClick={() => addItemToCart(product)} className="bg-blue-500 text-white px-4 py-2 rounded w-full md:w-auto">
+              <button type='submit' onClick={() => addItemToCart} className="bg-blue-500 text-white px-4 py-2 rounded w-full md:w-auto">
                 Add to Cart
               </button>
               <button
+                onClick={() => {
+                  router.push(`/buyProduct/${product._id}`);}}
                 
                 className="bg-green-500 text-white px-4 py-2 rounded w-full md:w-auto"
               >

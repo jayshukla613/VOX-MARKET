@@ -1,35 +1,38 @@
 'use client';
 
-import { useState } from 'react';
+import { use, useState } from 'react';
 import { useRouter } from 'next/navigation';
-import useBuyContext from '@/context/BuyContext';
+import axios from 'axios';
+import toast from 'react-hot-toast';
+import { useEffect } from 'react';
 
 const BuyProductPage = () => {
-    const { buyNowProduct } = useBuyContext();
     const router = useRouter();
+    const [product, setproduct] = useState([])
 
-    const [quantity, setQuantity] = useState(1);
+   
 
-    if (!buyNowProduct) {
-        return (
-            <div className="container mx-auto p-4">
-                <h1 className="text-2xl font-bold mb-4">No Product Selected</h1>
-                <p>Please go back and select a product to buy.</p>
-                <button
-                    onClick={() => router.push('/')}
-                    className="bg-blue-500 text-white px-4 py-2 rounded mt-4"
-                >
-                    Go Back
-                </button>
-            </div>
-        );
-    }
+    const fetchbuyProduct = async () => {
+        const response=await axios.get(`http://localhost:5000/buyproduct/buy/${product._id}`)
+        .then((result) => {
+            console.log(result.data);
+            setproduct(result.data);
+            toast.success("Product fetched successfully");
 
-    const handleConfirmPurchase = () => {
-        // Handle purchase logic here (e.g., API call to create an order)
-        alert(`Purchase confirmed for ${buyNowProduct.name} (Quantity: ${quantity})`);
-        router.push('/thank-you'); // Redirect to a thank-you page
-    };
+           
+            
+        }).catch((err) => {
+            console.log(err);
+            toast.error("Failed to fetch product");
+            
+            });
+        };
+
+        useEffect(() => {
+            fetchbuyProduct();
+        }
+        , []);
+
 
     return (
         <div className="container mx-auto p-4">
@@ -38,31 +41,25 @@ const BuyProductPage = () => {
                 {/* Product Image */}
                 <div className="flex-1">
                     <img
-                        src={buyNowProduct.image}
-                        alt={buyNowProduct.name}
+                        src={product.image}
+                        alt={product.name}
                         className="w-full h-auto mb-4"
                     />
                 </div>
 
                 {/* Product Details */}
                 <div className="flex-1 md:ml-4">
-                    <h2 className="text-2xl font-bold mb-2">{buyNowProduct.name}</h2>
-                    <p className="text-gray-600 mb-2">{buyNowProduct.description}</p>
+                    <h2 className="text-2xl font-bold mb-2">{product.name}</h2>
+                    <p className="text-gray-600 mb-2">{product.description}</p>
                     <p className="text-red-600 text-xl font-bold mb-2">
-                        Price: ${buyNowProduct.price}
+                        Price: ${product.price}
                     </p>
                     <div className="mb-4">
                         <label className="block mb-2 font-bold">Quantity:</label>
-                        <input
-                            type="number"
-                            value={quantity}
-                            onChange={(e) => setQuantity(e.target.value)}
-                            min="1"
-                            className="border rounded p-2 w-full"
-                        />
+                       
                     </div>
                     <button
-                        onClick={handleConfirmPurchase}
+                        
                         className="bg-green-500 text-white px-4 py-2 rounded w-full"
                     >
                         Confirm Purchase
