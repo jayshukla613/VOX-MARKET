@@ -145,6 +145,17 @@ disabled={loading}>
               {cartItems.length}
             </button>
 
+<<<<<<< HEAD
+          <DropdownItem key="seller" className="h-10 gap-2" >
+           <Link href="/seller-login">Seller Account</Link> </DropdownItem>
+          <DropdownItem key="admin" className="h-10 gap-2" >
+           <Link href="/admin/profile">Admin Account</Link> </DropdownItem>
+          
+          
+        </DropdownMenu>
+      </Dropdown>
+            </div >
+=======
             <Dropdown placement="bottom-start">
               <DropdownTrigger>
                 <User
@@ -170,6 +181,7 @@ disabled={loading}>
               </DropdownMenu>
             </Dropdown>
           </div >
+>>>>>>> 2ec3fa8a7e0eb2d0ed9af8fb3d88c61b497a998b
         </div>
       </nav>
     </div>
