@@ -4,7 +4,7 @@ const verifytoken = require('../middlewares/verifytoken');
 const router = express.Router();
 
 // Create a new order
-router.post("/create", verifytoken, async (req, res) => {
+router.post("/buyproduct",  async (req, res) => {
     try {
         const order = new Model(req.body);
         await order.save();
@@ -25,7 +25,7 @@ router.get("/user-orders", verifytoken, async (req, res) => {
 });
 
 // Get a specific order by ID
-router.get("/:id", verifytoken, async (req, res) => {
+router.get("buy/:id",  async (req, res) => {
     try {
         const order = await Model.findById(req.params.id);
         if (!order) {
