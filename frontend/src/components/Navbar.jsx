@@ -35,7 +35,27 @@ const Navbar = (product) => {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
- 
+  const handleSearch = async () => {
+    if (!search) return;
+
+    setLoading(true);
+
+    try {
+      const response = await axios.get(`http://localhost:5000/product/getbysearch/${search}`);
+
+      if (response.status === 200) {
+        setProducts(response.data);
+        toast.success("Products fetched successfully!");
+        console.log("Products fetched successfully:", response.data);
+      } else {
+        console.error("Error fetching products:", response.data.error);
+      }
+    } catch (error) {
+      console.error("Error:", error);
+    }
+
+    setLoading(false);
+  };
 
   const handleInputChange = (e) => {
     setSearch(e.target.value);
@@ -82,8 +102,6 @@ const Navbar = (product) => {
           <input
         type="text"
         value={search}
-        onFocus={() => setOpen(true)}
-        
         onChange={handleInputChange}
         placeholder="Search for products"
         className="text-gray-800 px-4 py-2 rounded border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
@@ -91,9 +109,11 @@ const Navbar = (product) => {
       <button 
       onClick={(e) => {
        
-        
+        e.preventDefault();
         router.push(`/searchpage/${search}`);
-        
+        if (search) {handleSearch();}
+        else {toast.error("Please enter a search term");}
+        setSearch("");
         }}
 
         

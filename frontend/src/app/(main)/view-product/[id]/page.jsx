@@ -7,7 +7,8 @@ import React, { useState, useEffect } from 'react'
 import ReviewRating from '../../reviewProduct/page';
 import toast from 'react-hot-toast';
 import useCartContext from '@/context/CartContext';
-import useBuyContext from '@/context/BuyContext';
+
+
 
 const viewProduct = () => {
   const router = useRouter();
@@ -16,12 +17,9 @@ const viewProduct = () => {
   const [product, setProduct] = useState(null);
 
   const { addItemToCart } = useCartContext();
-  const { handleBuyNow } = useBuyContext();
 
-  function buyNow(product) {
-    handleBuyNow(product); // Set the product in BuyContext
-    router.push('/checkout'); // Redirect to the checkout page
-  }
+
+ 
 
   useEffect(() => {
     if (id) {
@@ -108,7 +106,7 @@ const viewProduct = () => {
                 Add to Cart
               </button>
               <button
-                onClick={() => buyNow(product)}
+                
                 className="bg-green-500 text-white px-4 py-2 rounded w-full md:w-auto"
               >
                 Buy Now
