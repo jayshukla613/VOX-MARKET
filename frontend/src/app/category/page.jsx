@@ -41,8 +41,8 @@ const Category = () => {
       
       <div className='flex gap-8 justify-evenly bg-gray-500  p-2  text-white text-lg w-full flex-wrap'>
         <Link href={'/browse/electronic'}>Electronics</Link>
-        <Link href="" onClick={() => { setSelectedCategory('fashion'); }}>Fashion</Link>
-        <Link href="" onClick={() => { setSelectedCategory('home'); }}>Home</Link>
+        <Link href="" >Fashion</Link>
+        <Link href="" >Home</Link>
         <Link href="" onClick={() => { setSelectedCategory('books'); }}>Books</Link>
         <Link href="" onClick={() => { setSelectedCategory('sports'); }}>Sports</Link>
         <Link href="" onClick={() => { setSelectedCategory('health'); }}>Health</Link>
