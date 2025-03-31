@@ -5,6 +5,7 @@ import axios from 'axios';
 import Link from 'next/link';
 import toast from 'react-hot-toast';
 
+
 const Category = () => {
   const [category, setCategory] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState('');
@@ -42,7 +43,7 @@ const Category = () => {
       <div className='flex gap-8 justify-evenly bg-gray-500  p-2  text-white text-lg w-full flex-wrap'>
         <Link href={'/browse/electronic'}>Electronics</Link>
         <Link href="" >Fashion</Link>
-        <Link href="" >Home</Link>
+        <Link href={'browse'} >Home</Link>
         <Link href="" onClick={() => { setSelectedCategory('books'); }}>Books</Link>
         <Link href="" onClick={() => { setSelectedCategory('sports'); }}>Sports</Link>
         <Link href="" onClick={() => { setSelectedCategory('health'); }}>Health</Link>
@@ -54,19 +55,7 @@ const Category = () => {
         <Link href={'/browse/mens shirt'}>Men's Shirt</Link>
 
       </div>
-      {loading ? (
-        <div>Loading...</div>
-      ) : (
-        <div>
-          {category.filter(item => item.category === selectedCategory).map((item) => (
-            <div key={item._id}>
-              <h2>{item.name}</h2>
-              <p>{item.description}</p>
-              <p>{item.price}</p>
-            </div>
-          ))}
-        </div>
-      )}
+      <browse/>
     </div>
   )
 }
