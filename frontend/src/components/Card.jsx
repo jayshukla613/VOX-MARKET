@@ -45,7 +45,8 @@ const Card = ({ product }) => {
         onClick={()=>{
           // when user click on view button then it will redirect to view-product/id page and show all details of product 
 
-          router.push(`/view-product/${product._id}`)
+          router.push(`/view-product/${product._id}?name=${encodeURIComponent(product.name)}`);
+
 
         }}>
           View
