@@ -4,7 +4,7 @@ import { useState, useRef, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { ChevronDown, ShoppingCart, Smartphone, Monitor, Headphones, Gamepad, User } from "lucide-react";
 import { IconUserCircle } from "@tabler/icons-react";
-import { Dropdown, DropdownTrigger, DropdownMenu, DropdownSection, DropdownItem } from "@heroui/dropdown";
+import { Dropdown, DropdownTrigger, DropdownMenu, DropdownSection, DropdownItem} from "@heroui/dropdown";
 import useCartContext from "@/context/CartContext";
 import axios from "axios";
 import toast from "react-hot-toast";
@@ -147,10 +147,10 @@ disabled={loading}>
             <Link href="/user/cart">
               <ShoppingCart size={24} className="text-white" />
             </Link>
-
-
-
-          <DropdownItem key="seller" className="h-10 gap-2" >
+            <Dropdown>
+              <IconUserCircle></IconUserCircle>
+              <DropdownSection>
+              <DropdownItem key="seller" className="h-10 gap-2" >
            <Link href="/seller-login">Seller Account</Link> </DropdownItem>
           <DropdownItem key="admin" className="h-10 gap-2" >
            <Link href="/admin/profile">Admin Account</Link> </DropdownItem>
@@ -158,17 +158,13 @@ disabled={loading}>
            <Link href="/user/profile">User Account</Link> </DropdownItem> 
           <DropdownItem key="cart" className="h-10 gap-2" >
            <Link href="/cart">Cart</Link> </DropdownItem>
+           </DropdownSection>
+           </Dropdown>
 
           
           
-<<<<<<< HEAD
       
           </div>
-=======
-        {/* </DropdownMenu> */}
-      {/* </Dropdown> */}
-            </div >
->>>>>>> 70b4717eee1cef991ddc6abe49387010c0c2242f
         </div>
       </nav>
     </div>
