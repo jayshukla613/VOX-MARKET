@@ -165,23 +165,23 @@ const Navbar = (product) => {
               </DropdownTrigger>
 
               {/* The menu that will display when the dropdown is triggered */}
-              <DropdownMenu>
+              <DropdownMenu className="bg-gray-100 text-black p-4 rounded shadow-lg">
                 <DropdownSection>
-                  <DropdownItem key="seller" className="h-10 gap-2">
+                  <DropdownItem key="seller" className="h-10 gap-2 hover:bg-gray-200 hover:scale-105">
                     <Link href="/seller-login">
                       Seller Account
                     </Link>
                   </DropdownItem>
 
-                  <DropdownItem key="seller-intro" className="h-10 gap-2">
+                  <DropdownItem key="seller-intro" className="h-10 gap-2 hover:bg-gray-200 hover:scale-105">
                     <Link href="/seller/seller-introducepage">Seller Introduction</Link>
                   </DropdownItem>
 
-                  <DropdownItem key="admin" className="h-10 gap-2">
+                  <DropdownItem key="admin" className="h-10 gap-2 hover:bg-gray-200  hover:scale-105">
                     <Link href="/admin/admindashboard">Admin Account</Link>
                   </DropdownItem>
 
-                  <DropdownItem key="user" className="h-10 gap-2">
+                  <DropdownItem key="user" className="h-10 gap-2 hover:bg-gray-200  hover:scale-105">
                     <Link href="/user-login">User Account</Link>
                   </DropdownItem>
 

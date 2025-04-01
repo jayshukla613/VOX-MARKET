@@ -147,7 +147,15 @@ const ViewProduct = () => {
               </button>
               <button
                 onClick={() => {
-                  router.push(`/buyproduct/${product._id}`);
+                  router.push({
+                    pathname: `/buyproductpage/payment/${product._id}`,
+                    query: {
+                      name: product.name,
+                      price: product.price,
+                      image: product.image,
+                      quantity: 1, // Default quantity
+                    },
+                  });
                 }}
                 className="bg-green-500 text-white px-4 py-2 rounded w-full md:w-auto"
               >
