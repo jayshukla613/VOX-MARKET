@@ -68,7 +68,7 @@ export default function DisplaySellers() {
                   </span>
                 </td>
                 <td className="p-3">
-                <button onClick={fetchSellerDetails}>View Seller</button>
+                <button >View Seller</button>
                 </td>
               </tr>
             ))}
