@@ -10,7 +10,7 @@ const Sidebar = () => (
     <ul className="space-y-4">
       <li>
         <Link
-          to="/dashboard"
+          to="/admindashboard"
           className="block text-lg hover:bg-blue-700 px-4 py-2 rounded-lg transition duration-200"
         >
           Dashboard
@@ -18,7 +18,7 @@ const Sidebar = () => (
       </li>
       <li>
         <Link
-          to="/users"
+          to="/admin/manage-user"
           className="block text-lg hover:bg-blue-700 px-4 py-2 rounded-lg transition duration-200"
         >
           Manage Users
@@ -26,7 +26,7 @@ const Sidebar = () => (
       </li>
       <li>
         <Link
-          to="/sellers"
+          to="/admin/manage-seller"
           className="block text-lg hover:bg-blue-700 px-4 py-2 rounded-lg transition duration-200"
         >
           Manage Sellers
