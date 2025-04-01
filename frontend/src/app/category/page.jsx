@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import Link from 'next/link';
 import toast from 'react-hot-toast';
+import ProductBrowser from '../(main)/browse/[[...slug]]/page';
 
 
 const Category = () => {
@@ -55,7 +56,8 @@ const Category = () => {
         <Link href={'/browse/mens shirt'}>Men's Shirt</Link>
 
       </div>
-      <browse/>
+      <ProductBrowser/>
+      
     </div>
   )
 }

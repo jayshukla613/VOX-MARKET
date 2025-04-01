@@ -14,6 +14,7 @@ const Card = ({ product }) => {
   if (!product) {
     return null; // or return a placeholder component
   }
+  
 
   return (
     <div className=" rounded shadow-lg bg-white  h-[10%] w-[25%]">

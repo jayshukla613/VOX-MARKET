@@ -13,7 +13,7 @@ const ViewProduct = () => {
   const { id, productname } = useParams();
 
   const [product, setProduct] = useState(null);
-  const [category, setCategory] = useState(null);
+  const [relatedProducts, setRelatedProducts] = useState([]); // State for related products
 
   const { addItemToCart } = useCartContext();
 
@@ -35,20 +35,21 @@ const ViewProduct = () => {
   }, [id]);
 
   useEffect(() => {
+    console.log('Product Name:', productname); // Debugging
     if (productname) {
-      const fetchShowData = async () => {
+      const fetchRelatedProducts = async () => {
         try {
           const res = await axios.get(`http://localhost:5000/product/getbysearch/${productname}`);
           const data = res.data;
-          setCategory(data);
-          toast.success('success the product details.');
+          console.log('Related Products:', data); // Debugging
+          setRelatedProducts(data); // Set related products
         } catch (error) {
-          console.error('Error fetching category data:', error);
-          toast.error('Failed to load category data.');
+          console.error('Error fetching related products:', error);
+          toast.error('Failed to load related products.');
         }
       };
 
-      fetchShowData();
+      fetchRelatedProducts();
     }
   }, [productname]);
 
@@ -178,7 +179,35 @@ const ViewProduct = () => {
           </Link>
         </div>
         {/* Related Products */}
-        {category && <h1>{category.name}</h1>}
+        <div className="mb-4">
+          <h2 className="text-2xl font-bold mb-2">Related Products</h2>
+          <div className="mb-4">
+          <h2 className="text-2xl font-bold mb-2">Related Products</h2>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            {relatedProducts.length > 0 ? (
+              relatedProducts.map((relatedProduct) => (
+                <div key={relatedProduct._id} className="border p-4 rounded shadow">
+                  <img
+                    alt={relatedProduct.name}
+                    className="w-full h-40 object-cover mb-2"
+                    src={relatedProduct.image}
+                  />
+                  <h3 className="text-lg font-bold">{relatedProduct.name}</h3>
+                  <p className="text-red-600 font-bold">Price: {relatedProduct.price}</p>
+                  <button
+                    onClick={() => router.push(`/view-product/${relatedProduct._id}`)}
+                    className="bg-blue-500 text-white px-4 py-2 rounded mt-2"
+                  >
+                    View Product
+                  </button>
+                </div>
+              ))
+            ) : (
+              <p>No related products found.</p>
+            )}
+          </div>
+        </div>
+        </div>
         {/* Product Tags and Categories */}
         <div className="mb-4">
           <h2 className="text-2xl font-bold mb-2">Product Tags and Categories</h2>

@@ -1,4 +1,5 @@
 'use client'
+
 import { IconStarFilled } from "@tabler/icons-react";
 import axios from "axios";
 import { useParams, useRouter } from "next/navigation";
@@ -35,8 +36,9 @@ const ProductBrowser = () => {
   }, []);
   return (
     <div className="  mx-auto">
-      <h1 className="text-center text-3xl text-green-400 p-4 ">Product Browser</h1>
+      
       <div className=" rounded shadow-lg bg-white  h-[10%] w-full">
+        
         <ul className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-8">
           {products.map((product, index) => (
             <li key={index}>
