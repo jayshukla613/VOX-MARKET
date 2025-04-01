@@ -4,7 +4,7 @@ import Ordercard from '@/components/Ordercard';
 import React from 'react';
 
 const Cart = () => {
-  const { cartItems, removeItem, calculateTotalAmount } = useCartContext();
+  const { cartItems, removeItemFromCart, calculateTotalAmount } = useCartContext();
 
   return (
     <div>
@@ -14,7 +14,7 @@ const Cart = () => {
       ) : (
         <div>
           {cartItems.map((item) => (
-            <Ordercard key={item._id} item={item} removeItem={removeItem} />
+            <Ordercard key={item._id} item={item} removeItem={removeItemFromCart} />
           ))}
           <div className="mt-4">
             <h2 className="text-xl">Total: Rs.{calculateTotalAmount().toFixed(2)}</h2>

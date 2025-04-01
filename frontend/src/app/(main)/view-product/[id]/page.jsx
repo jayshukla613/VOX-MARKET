@@ -23,6 +23,9 @@ const ViewProduct = () => {
         try {
           const res = await axios.get(`http://localhost:5000/product/getbyid/${id}`);
           const data = res.data;
+          console.log(res.data);
+          if(res.data?.category)
+            fetchRelatedProducts(res.data?.category);
           setProduct(data);
         } catch (error) {
           console.error('Error fetching product:', error);
@@ -34,24 +37,28 @@ const ViewProduct = () => {
     }
   }, [id]);
 
-  useEffect(() => {
-    console.log('Product Name:', productname); // Debugging
-    if (productname) {
-      const fetchRelatedProducts = async () => {
-        try {
-          const res = await axios.get(`http://localhost:5000/product/getbysearch/${productname}`);
-          const data = res.data;
-          console.log('Related Products:', data); // Debugging
-          setRelatedProducts(data); // Set related products
-        } catch (error) {
-          console.error('Error fetching related products:', error);
-          toast.error('Failed to load related products.');
-        }
-      };
 
-      fetchRelatedProducts();
+  const fetchRelatedProducts = async (category) => {
+    try {
+      const res = await axios.get(`http://localhost:5000/product/getbycategory/${category}`);
+      const data = res.data;
+      console.log('Related Products:', data); // Debugging
+      setRelatedProducts(data); // Set related products
+    } catch (error) {
+      console.error('Error fetching related products:', error);
+      toast.error('Failed to load related products.');
     }
-  }, [productname]);
+
+  }
+
+  // useEffect(() => {
+  //   console.log('Product Name:', productname); // Debugging
+  //   if (productname) {
+  //     };
+
+  //     fetchRelatedProducts();
+  //   }
+  // }, [productname]);
 
   // Show a loading message if the product is null
   if (!product) return <div>Loading product details...</div>;
@@ -182,31 +189,31 @@ const ViewProduct = () => {
         <div className="mb-4">
           <h2 className="text-2xl font-bold mb-2">Related Products</h2>
           <div className="mb-4">
-          <h2 className="text-2xl font-bold mb-2">Related Products</h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            {relatedProducts.length > 0 ? (
-              relatedProducts.map((relatedProduct) => (
-                <div key={relatedProduct._id} className="border p-4 rounded shadow">
-                  <img
-                    alt={relatedProduct.name}
-                    className="w-full h-40 object-cover mb-2"
-                    src={relatedProduct.image}
-                  />
-                  <h3 className="text-lg font-bold">{relatedProduct.name}</h3>
-                  <p className="text-red-600 font-bold">Price: {relatedProduct.price}</p>
-                  <button
-                    onClick={() => router.push(`/view-product/${relatedProduct._id}`)}
-                    className="bg-blue-500 text-white px-4 py-2 rounded mt-2"
-                  >
-                    View Product
-                  </button>
-                </div>
-              ))
-            ) : (
-              <p>No related products found.</p>
-            )}
+            <h2 className="text-2xl font-bold mb-2">Related Products</h2>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              {relatedProducts.length > 0 ? (
+                relatedProducts.map((relatedProduct) => (
+                  <div key={relatedProduct._id} className="border p-4 rounded shadow">
+                    <img
+                      alt={relatedProduct.name}
+                      className="w-full h-40 object-cover mb-2"
+                      src={relatedProduct.image}
+                    />
+                    <h3 className="text-lg font-bold">{relatedProduct.name}</h3>
+                    <p className="text-red-600 font-bold">Price: {relatedProduct.price}</p>
+                    <button
+                      onClick={() => router.push(`/view-product/${relatedProduct._id}`)}
+                      className="bg-blue-500 text-white px-4 py-2 rounded mt-2"
+                    >
+                      View Product
+                    </button>
+                  </div>
+                ))
+              ) : (
+                <p>No related products found.</p>
+              )}
+            </div>
           </div>
-        </div>
         </div>
         {/* Product Tags and Categories */}
         <div className="mb-4">
