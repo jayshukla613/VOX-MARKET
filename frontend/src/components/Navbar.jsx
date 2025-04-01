@@ -73,7 +73,7 @@ const Navbar = (product) => {
 
   return (
     <div>
-      <nav className="bg-blue-800 text-white p-4">
+      <nav className="bg-stone-800 text-white p-4">
         <div className="mx-auto flex justify-between items-center">
           <div className="text-2xl font-bold">Vox Market</div>
           <ul className="flex space-x-4">
