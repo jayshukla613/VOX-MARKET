@@ -38,6 +38,19 @@ seller.get('/getall', (req,res)=>{
         });
 });
  
+seller.get("/seller/:id", async (req, res) => {
+    try {
+        const seller = await Seller.findById(req.params.id);
+        if (!seller) {
+            return res.status(404).json({ message: "Seller not found" });
+        }
+        res.json(seller);
+    } catch (error) {
+        res.status(500).json({ message: "Server error" });
+    }
+});
+
+
  seller.post('/authenticate',(req,res)=>{
     Model.findOne(req.body)
     .then((result) => {

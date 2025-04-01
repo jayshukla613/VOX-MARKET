@@ -4,10 +4,11 @@ import { useState, useRef, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { ChevronDown, ShoppingCart, Smartphone, Monitor, Headphones, Gamepad, User } from "lucide-react";
 import { IconUser, IconUserCircle } from "@tabler/icons-react";
-import { Dropdown, DropdownTrigger, DropdownMenu, DropdownSection, DropdownItem} from "@heroui/dropdown";
+import { Dropdown, DropdownTrigger, DropdownMenu, DropdownSection, DropdownItem } from "@heroui/dropdown";
 import useCartContext from "@/context/CartContext";
 import axios from "axios";
 import toast from "react-hot-toast";
+import useAppContext from "@/context/AppContext";
 
 
 const Navbar = (product) => {
@@ -20,6 +21,7 @@ const Navbar = (product) => {
   const dropdownRef = useRef(null);
 
   const { cartItems } = useCartContext();
+  const { userLoggedIn, logout } = useAppContext();
 
 
   const toggleDropdown = () => setOpen(!open);
@@ -60,7 +62,7 @@ const Navbar = (product) => {
   const handleInputChange = (e) => {
     setSearch(e.target.value);
   }
- 
+
 
 
 
@@ -98,48 +100,57 @@ const Navbar = (product) => {
 
           </ul>
           <div className="flex items-center space-x-4">
-            
-          <input
-        type="text"
-        value={search}
-        onChange={handleInputChange}
-        placeholder="Search for products"
-        className="text-gray-800 px-4 py-2 rounded border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
-      />
-      <button 
-      onClick={(e) => {
-       
-        e.preventDefault();
-        router.push(`/searchpage/${search}`);
-        if (search) {handleSearch();}
-        else {toast.error("Please enter a search term");}
-        setSearch("");
-        }}
 
-        
-      
-
-disabled={loading}>
-        {loading ? "Searching..." : "Search"}
-
-      </button> 
-
+            <input
+              type="text"
+              value={search}
+              onChange={handleInputChange}
+              placeholder="Search for products"
+              className="text-gray-800 px-4 py-2 rounded border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            />
             <button
-              className="bg-black text-white px-8 font-bold py-2 rounded"
-              onClick={() => {
-                router.push("/user-login");
+              onClick={(e) => {
+
+                e.preventDefault();
+                router.push(`/searchpage/${search}`);
+                if (search) { handleSearch(); }
+                else { toast.error("Please enter a search term"); }
+                setSearch("");
               }}
-            >
-              Login
+
+
+
+
+              disabled={loading}>
+              {loading ? "Searching..." : "Search"}
+
             </button>
-            <button
-              className="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded"
-              onClick={() => {
-                router.push("/user-signup");
-              }}
-            >
-              Sign up
-            </button>
+            {
+              userLoggedIn ? (
+                <button onClick={logout} className="border p-2">Logout</button>
+              ) : (
+                <>
+                  <button
+                    className="bg-black text-white px-8 font-bold py-2 rounded"
+                    onClick={() => {
+                      router.push("/user-login");
+                    }}
+                  >
+                    Login
+                  </button>
+                  <button
+                    className="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded"
+                    onClick={() => {
+                      router.push("/user-signup");
+                    }}
+                  >
+                    Sign up
+                  </button>
+
+                </>
+
+              )
+            }
             <button>
               Cart
               {cartItems.length}
@@ -148,40 +159,40 @@ disabled={loading}>
               <ShoppingCart size={24} className="text-white" />
             </Link>
             <Dropdown>
-      {/* The Trigger component for the dropdown */}
-      <DropdownTrigger>
-        <IconUserCircle />
-      </DropdownTrigger>
-      
-      {/* The menu that will display when the dropdown is triggered */}
-      <DropdownMenu>
-        <DropdownSection>
-          <DropdownItem key="seller" className="h-10 gap-2">
-            <Link href="/seller-login">
-               Seller Account
-            </Link>
-          </DropdownItem>
+              {/* The Trigger component for the dropdown */}
+              <DropdownTrigger>
+                <IconUserCircle />
+              </DropdownTrigger>
 
-          <DropdownItem key="seller-intro" className="h-10 gap-2">
-            <Link href="/seller/seller-introducepage">Seller Introduction</Link>
-          </DropdownItem>
+              {/* The menu that will display when the dropdown is triggered */}
+              <DropdownMenu>
+                <DropdownSection>
+                  <DropdownItem key="seller" className="h-10 gap-2">
+                    <Link href="/seller-login">
+                      Seller Account
+                    </Link>
+                  </DropdownItem>
 
-          <DropdownItem key="admin" className="h-10 gap-2">
-            <Link href="/admin/admindashboard">Admin Account</Link>
-          </DropdownItem>
+                  <DropdownItem key="seller-intro" className="h-10 gap-2">
+                    <Link href="/seller/seller-introducepage">Seller Introduction</Link>
+                  </DropdownItem>
 
-          <DropdownItem key="user" className="h-10 gap-2">
-            <Link href="/user-login">User Account</Link>
-          </DropdownItem>
+                  <DropdownItem key="admin" className="h-10 gap-2">
+                    <Link href="/admin/admindashboard">Admin Account</Link>
+                  </DropdownItem>
 
-          
-        </DropdownSection>
-      </DropdownMenu>
-    </Dropdown>
+                  <DropdownItem key="user" className="h-10 gap-2">
+                    <Link href="/user-login">User Account</Link>
+                  </DropdownItem>
 
-          
-          
-      
+
+                </DropdownSection>
+              </DropdownMenu>
+            </Dropdown>
+
+
+
+
           </div>
         </div>
       </nav>
