@@ -3,10 +3,10 @@ const Model = require('../models/productModel');
 const verifytoken = require('../middlewares/verifytoken');
 const product = express.Router();
 
-app.get('/users', async (req, res) => {
-    const users = await User.find();
-    res.json(users);
-});
+// app.get('/users', async (req, res) => {
+//     const users = await users.find();
+//     res.json(users);
+// });
 
 app.post('/users', async (req, res) => {
     const newUser = new User(req.body);
