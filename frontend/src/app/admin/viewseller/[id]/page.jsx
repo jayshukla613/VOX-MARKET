@@ -67,6 +67,10 @@ const viewsellerdeatils = () => {
         <h3 className="text-xl font-semibold text-gray-700">Address : {SellerDetails.address}</h3>
        
       </div>
+      <div className="mb-4">
+       <h3 className="text-xl font-semibold text-gray-700">Account created : {new Date(SellerDetails.createdAt).toLocaleDateString()}</h3>
+      
+     </div>
     </div>
   </div>
                 </>

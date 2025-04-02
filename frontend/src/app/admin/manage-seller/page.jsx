@@ -76,7 +76,6 @@ export default function DisplaySellers() {
                   </span>
                 </td>
                 <td className="p-3">
-<<<<<<< HEAD
                   <button className="bg-red-200 text-red-800 px-2 py-1  rounded-lg" onClick={() => {
                     router.push(`/admin/viewseller/${seller._id}`)
                   }}>view </button>
@@ -89,9 +88,6 @@ export default function DisplaySellers() {
                    
                     
                   }}>delete </button>
-=======
-                <button >View Seller</button>
->>>>>>> 26d619d985d2e4de446f7edf58ea6eb65b11c701
                 </td>
                 
               </tr>
