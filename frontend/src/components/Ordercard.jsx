@@ -1,9 +1,9 @@
 'use client'
 import useCartContext from '@/context/CartContext'
-import { IconPlus, IconTagPlus, IconTrashFilled } from '@tabler/icons-react'
+import { IconMinus, IconPlus,IconTrashFilled } from '@tabler/icons-react'
 import React from 'react'
 
-const Ordercard = ({ item, removeItem }) => {
+const Ordercard = ({ item, removeItem ,addItemToCart}) => {
 
   return (
     <div>
@@ -25,12 +25,12 @@ const Ordercard = ({ item, removeItem }) => {
         </div>
         <div className="flex items-center mt-4 sm:mt-0">
           <div className="flex items-center border rounded-lg">
-            <button className="px-2 py-1 text-gray-600 hover:text-gray-800">
-              <i className="fas fa-minus"></i>
+            <button className="px-2 py-1 text-gray-600 hover:text-gray-800" onClick={() => removeItem(item._id)}>
+              <IconMinus/>
             </button>
-            <span className="px-4 py-1">{item.stock} </span>
+            <span className="px-4 py-1">{item.quantity}</span>
 
-            <button className="px-2 py-1 text-gray-600 hover:text-gray-800">
+            <button className="px-2 py-1 text-gray-600 hover:text-gray-800" onClick={() => addItemToCart(item)}>
               <IconPlus size={24} />
             </button>
           </div>

@@ -73,7 +73,7 @@ const Navbar = (product) => {
 
   return (
     <div>
-      <nav className="bg-blue-800 text-white p-4">
+      <nav className="bg-stone-800 text-white p-4">
         <div className="mx-auto flex justify-between items-center">
           <div className="text-2xl font-bold">Vox Market</div>
           <ul className="flex space-x-4">
@@ -165,23 +165,28 @@ const Navbar = (product) => {
               </DropdownTrigger>
 
               {/* The menu that will display when the dropdown is triggered */}
-              <DropdownMenu>
+              <DropdownMenu className="bg-gray-100 text-black p-4 rounded shadow-lg">
                 <DropdownSection>
-                  <DropdownItem key="seller" className="h-10 gap-2">
+                  <DropdownItem key="seller" className="h-10 gap-2 hover:bg-gray-200 hover:scale-105">
                     <Link href="/seller-login">
                       Seller Account
                     </Link>
                   </DropdownItem>
 
+<<<<<<< HEAD
                   <DropdownItem key="seller-intro" className="h-10 gap-2">
                     <Link href="/seller/seller-introducepage">Seller Registration</Link>
+=======
+                  <DropdownItem key="seller-intro" className="h-10 gap-2 hover:bg-gray-200 hover:scale-105">
+                    <Link href="/seller/seller-introducepage">Seller Introduction</Link>
+>>>>>>> 26d619d985d2e4de446f7edf58ea6eb65b11c701
                   </DropdownItem>
 
-                  <DropdownItem key="admin" className="h-10 gap-2">
+                  <DropdownItem key="admin" className="h-10 gap-2 hover:bg-gray-200  hover:scale-105">
                     <Link href="/admin/admindashboard">Admin Account</Link>
                   </DropdownItem>
 
-                  <DropdownItem key="user" className="h-10 gap-2">
+                  <DropdownItem key="user" className="h-10 gap-2 hover:bg-gray-200  hover:scale-105">
                     <Link href="/user-login">User Account</Link>
                   </DropdownItem>
 
