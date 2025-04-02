@@ -10,7 +10,7 @@ import useCartContext from '@/context/CartContext';
 
 const ViewProduct = () => {
   const router = useRouter();
-  const { id, productname } = useParams();
+  const { id} = useParams();
 
   const [product, setProduct] = useState(null);
   const [relatedProducts, setRelatedProducts] = useState([]); // State for related products

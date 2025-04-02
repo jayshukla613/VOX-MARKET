@@ -27,6 +27,17 @@ seller.get('/getall', (req,res)=>{
          res.status(500).json(err);
     });
  });
+
+ seller.get('/getdetails/:id',(req,res)=>{
+    Model.findById(req.params.id)
+    .then((result) => {
+        res.status(200).json(result);
+        }).catch((err) => {
+            console.log(err);
+            res.status(500).json(err);
+        })
+
+ })
  
  seller.get('/getdetails', verifytoken, (req, res) => {
     Model.findById(req.user._id)
@@ -110,5 +121,16 @@ seller.put("/update/:id", async (req, res) => {
     res.status(500).json({ message: "Failed to update seller!", error: error.message });
   }
 });
+
+seller.delete("/sellerdelete/:id",(req,res)=>{
+    Model.findByIdAndDelete(req.params.id)
+    .then((result) => {
+        res.status(200).json(result);
+    }).catch((err) => {
+        console.log(err);
+        res.status(500).json(err);
+    });
+
+})
 
  module.exports= seller;

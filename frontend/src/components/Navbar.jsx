@@ -127,7 +127,7 @@ const Navbar = (product) => {
             </button>
             {
               userLoggedIn ? (
-                <button onClick={logout} className="border p-2">Logout</button>
+                <button onClick={logout} className="rounded-lg px-4 py-2 text-white bg-black">Logout</button>
               ) : (
                 <>
                   <button
@@ -174,7 +174,7 @@ const Navbar = (product) => {
                   </DropdownItem>
 
                   <DropdownItem key="seller-intro" className="h-10 gap-2">
-                    <Link href="/seller/seller-introducepage">Seller Introduction</Link>
+                    <Link href="/seller/seller-introducepage">Seller Registration</Link>
                   </DropdownItem>
 
                   <DropdownItem key="admin" className="h-10 gap-2">

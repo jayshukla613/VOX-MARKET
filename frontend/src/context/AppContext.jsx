@@ -21,10 +21,27 @@ export const AppProvider = ({ children }) => {
         router.replace("/user-login");
     }
 
+    const [sellerLoggedIn, setsellerLoggedIn] = useState(() => {
+        const token = localStorage.getItem("seller-token");
+        return token ? true : false;
+    });
+
+    const sellerlogout = () => {
+        localStorage.removeItem("seller-token");
+        setsellerLoggedIn(false);
+        router.replace("/seller-login");
+    }
+
+  
+
     return <AppContext.Provider value={{
         userLoggedIn,
         setUserLoggedIn,
-        logout
+        logout,
+        sellerLoggedIn,
+        setsellerLoggedIn,
+        sellerlogout    
+        
     }}>{children}</AppContext.Provider>;
 }
 

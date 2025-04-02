@@ -4,6 +4,7 @@ import { IconStarFilled } from "@tabler/icons-react";
 import axios from "axios";
 import { useParams, useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
+import Categorynavigation from "@/Components/Categorynavigation";
 
 const ProductBrowser = () => {
   const router = useRouter();
@@ -36,6 +37,7 @@ const ProductBrowser = () => {
   }, []);
   return (
     <div className="  mx-auto">
+      <Categorynavigation/>
       
       <div className=" rounded shadow-lg bg-white  h-[10%] w-full">
         

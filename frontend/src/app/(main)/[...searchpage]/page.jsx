@@ -18,10 +18,10 @@ const searchpage = () => {
         .then((result) => {
           setProduct(result.data)
           console.log(result.data)
-          toast.success('Product fetched successfully')
+          
         }).catch((err) => {
           console.log(err)
-          toast.error('Error fetching products')
+     
         });
     }
     fetchProducts();

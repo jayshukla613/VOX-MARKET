@@ -14,23 +14,32 @@ export default function DisplaySellers() {
     try {
       const result = await axios.get("http://localhost:5000/seller/getall");
       setSellers(result.data); // Set the fetched sellers in state
-      toast.success("Sellers fetched successfully!");
+      
     } catch (err) {
       console.error(err);
       toast.error("Failed to fetch sellers!");
     }
   };
 
+
   // Fetch sellers on component mount
   useEffect(() => {
     fetchSellers();
+
   }, []);
 
-  // Function to handle "View" button click
-  const getSellerDetails = (id) => {
+  const deleteseller = async (id) => {
+    axios.delete(`http://localhost:5000/seller/sellerdelete/${id}`)
+      .then((result) => {
+        console.log(result.data)
+        toast.success('delete')
 
-    
-  };
+      }).catch((err) => {
+        console.log(err)
+        
+
+      });
+  }
 
   return (
     <div className="container mx-auto p-6">
@@ -46,7 +55,7 @@ export default function DisplaySellers() {
               <th className="p-3 border-b">Products</th>
               <th className="p-3 border-b">Revenue</th>
               <th className="p-3 border-b">Status</th>
-              <th className="p-3 border-b">Actions</th>
+              <th className="p-3 border-b cols-span-2">Actions</th>
             </tr>
           </thead>
           <tbody>
@@ -58,18 +67,29 @@ export default function DisplaySellers() {
                 <td className="p-3">{seller.revenue || 0}</td>
                 <td className="p-3">
                   <span
-                    className={`px-2 py-1 text-sm rounded ${
-                      seller.status === "Active"
+                    className={`px-2 py-1 text-sm rounded ${seller.status === "Active"
                         ? "bg-green-200 text-green-800"
                         : "bg-red-200 text-red-800"
-                    }`}
+                      }`}
                   >
                     {seller.status || "Inactive"}
                   </span>
                 </td>
                 <td className="p-3">
-                <button onClick={fetchSellerDetails}>View Seller</button>
+                  <button className="bg-red-200 text-red-800 px-2 py-1  rounded-lg" onClick={() => {
+                    router.push(`/admin/viewseller/${seller._id}`)
+                  }}>view </button>
+
+                  <button className="bg-red-200 text-red-800 ml-3 px-2 py-1  rounded-lg" onClick={() => {
+                    var result = confirm("Are you sure  to Delete this seller Account?");
+                    if (result) {
+                      deleteseller(seller._id) 
+                    }
+                   
+                    
+                  }}>delete </button>
                 </td>
+                
               </tr>
             ))}
           </tbody>
