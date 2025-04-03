@@ -21,13 +21,7 @@ const UserManagement = () => {
     }, []);
 
 
-    const updateUser = () => {
-        axios.put(`http://localhost:5000/users/${editingUser._id}`, form).then(res => {
-            setUsers(users.map(user => user._id === editingUser._id ? res.data : user));
-            setEditingUser(null);
-            setForm({ name: '', email: '', role: '', status: 'Active' });
-        });
-    };
+   
 
     const deleteUser = (id) => {
         axios.delete(`http://localhost:5000/users/${id}`).then(() => {
@@ -87,7 +81,7 @@ const UserManagement = () => {
                                         : "bg-red-200 text-red-800"
                                         }`}
                                 >
-                                    {user.status || "Inactive"}
+                                    {user.status|| "Inactive"}
                                 </span>
                             </td>
                             <td className="p-2 text-center">
