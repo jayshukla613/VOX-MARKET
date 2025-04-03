@@ -11,9 +11,13 @@ const UserManagement = () => {
     const [form, setForm] = useState({ name: '', email: '', role: '', status: 'Active' });
     const [editingUser, setEditingUser] = useState(null);
 
+    
+
+
+
 
     useEffect(() => {
-        axios.get('http://localhost:5000/users').then(res => setUsers(res.data));
+        axios.get('http://localhost:5000/users/').then(res => setUsers(res.data));
     }, []);
 
 
