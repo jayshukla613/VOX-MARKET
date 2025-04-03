@@ -15,17 +15,9 @@ const UserManagement = () => {
     const [form, setForm] = useState({ name: '', email: '', role: '', status: 'Active' });
     const [editingUser, setEditingUser] = useState(null);
 
-
-
-
-
-
     useEffect(() => {
         axios.get('http://localhost:5000/users/').then(res => setUsers(res.data));
     }, []);
-
-
-
 
     const deleteUser = (id) => {
         axios.delete(`http://localhost:5000/users/${id}`).then(() => {
@@ -33,31 +25,38 @@ const UserManagement = () => {
         });
     };
 
-   const removeuser=() =>   {
-    if (typeof window !== 'undefined') {
-        localStorage.removeItem('user-token');
-        toast.success('user remove successfully');
-    }
-   };
+    const removeuser = (id) => {
+        if (typeof window !== 'undefined') {
+            console.log('Attempting to remove user token for userId:', id); // Log the userId
+            axios.post(`http://localhost:5000/user/remove-token`, { userId: id })
+                .then(() => {
+                    localStorage.removeItem('user-token');
+                    toast.success('User token removed successfully');
+                })
+                .catch((err) => {
+                    console.error('Error removing user token:', {
+                        message: err.message,
+                        status: err.response?.status,
+                        data: err.response?.data,
+                    });
+                    toast.error('Failed to remove user token');
+                });
+        }
+    };
 
     const userdata = (e) => {
         axios.get(`http://localhost:5000/user/getall`)
             .then((result) => {
                 setUsers(result.data);
-
-
             }).catch((err) => {
                 console.log(err);
                 toast.error("Failed to fetch user data!");
             });
-
     }
 
     useEffect(() => {
         userdata();
-
     }, []);
-
 
     return (
         <div className="max-w-5xl mx-auto p-6 bg-gray-100 rounded-lg shadow-lg">
@@ -79,7 +78,6 @@ const UserManagement = () => {
                             <td className="p-2 text-center">{user.name}</td>
                             <td className="p-2 text-center">{user.email}</td>
                             <td className="p-2 text-center">{user.role}</td>
-
                             <td className="p-3">
                                 <span
                                     className={`px-2 py-1 text-sm rounded ${user.status === "Active"
@@ -93,10 +91,7 @@ const UserManagement = () => {
                             <td className="p-2 text-center">
                                 <button className="bg-yellow-500 text-white px-3 py-1 rounded hover:bg-yellow-600 mr-2" onClick={() => router.push(`/admin/viewuser/${user._id}`)}>View</button>
                                 <button className="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600" onClick={() => deleteUser(user._id)}>Delete</button>
-
-                                <button className="bg-red-500 text-white px-3 ml-2 py-1 rounded hover:bg-red-600" onClick={removeuser}>Remove</button>
-
-                                
+                                <button className="bg-red-500 text-white px-3 ml-2 py-1 rounded hover:bg-red-600" onClick={() => removeuser(user._id)}>Remove</button>
                             </td>
                         </tr>
                     ))}

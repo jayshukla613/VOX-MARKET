@@ -85,6 +85,16 @@ router.put('/updatedetails/:id', (req, res) => {
         res.status(500).json(err);
     });
   });
+  router.post('/remove-token', async (req, res) => {
+      const { userId } = req.body;
+      try {
+          await User.findByIdAndUpdate(userId, { token: null }); // Assuming 'token' is the field storing the user token
+          res.status(200).json({ message: 'User token removed successfully' });
+      } catch (error) {
+          console.error(error);
+          res.status(500).json({ message: 'Failed to remove user token' });
+      }
+  });
   
 router.get('/getall', (req, res) => {
     Model.find()
