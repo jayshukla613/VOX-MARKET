@@ -1,15 +1,21 @@
 'use client';
 
-import { useState } from "react";
+import axios from "axios";
+import { useParams } from "next/navigation";
+import { useEffect, useState } from "react";
 
-export default function CheckoutPage({ product }) {
+export default function CheckoutPage({  }) {
+    const [product, setproduct] = useState([]);
+    const {id}=useParams()
+
+
   const [shippingDetails, setShippingDetails] = useState({
     name: "",
     email: "",
     address: "",
     city: "",
     state: "",
-    zip: "",
+    zip: ""
   });
 
   const [paymentMethod, setPaymentMethod] = useState("creditCard");
@@ -26,6 +32,21 @@ export default function CheckoutPage({ product }) {
     // Handle checkout logic here (e.g., send data to the server)
     alert("Order placed successfully!");
   };
+
+
+  const fetchProduct=async(id)=>{
+    axios.get(`http://localhost:5000/product/getbyid/${id}`)
+    .then((response) => {
+        console.log(response.data);
+        setproduct(data)
+        })
+        .catch((error) => {
+            console.error(error);
+            });
+            }
+            useEffect(() => {
+                fetchProduct();
+                }, [id]);
 
   return (
     <div className="container mx-auto p-6">
