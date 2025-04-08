@@ -148,7 +148,7 @@ const ViewProduct = () => {
               <button
                 onClick={() => {
                   router.push({
-                    // pathname: `/buyproductpage/payment/${product._id}`,
+                     pathname: `/buyproductpage/checkout/${product._id}`,
                     query: {
                       name: product.name,
                       price: product.price,
