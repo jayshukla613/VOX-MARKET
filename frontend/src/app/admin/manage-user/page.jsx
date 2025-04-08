@@ -25,24 +25,7 @@ const UserManagement = () => {
         });
     };
 
-    const removeuser = (id) => {
-        if (typeof window !== 'undefined') {
-            console.log('Attempting to remove user token for userId:', id); // Log the userId
-            axios.post(`http://localhost:5000/user/remove-token`, { userId: id })
-                .then(() => {
-                    localStorage.removeItem('user-token');
-                    toast.success('User token removed successfully');
-                })
-                .catch((err) => {
-                    console.error('Error removing user token:', {
-                        message: err.message,
-                        status: err.response?.status,
-                        data: err.response?.data,
-                    });
-                    toast.error('Failed to remove user token');
-                });
-        }
-    };
+   
 
     const userdata = (e) => {
         axios.get(`http://localhost:5000/user/getall`)
