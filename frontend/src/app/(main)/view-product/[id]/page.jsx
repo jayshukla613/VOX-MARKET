@@ -10,7 +10,7 @@ import useCartContext from '@/context/CartContext';
 
 const ViewProduct = () => {
   const router = useRouter();
-  const { id} = useParams();
+  const { id } = useParams();
 
   const [product, setProduct] = useState(null);
   const [relatedProducts, setRelatedProducts] = useState([]); // State for related products
@@ -24,8 +24,7 @@ const ViewProduct = () => {
           const res = await axios.get(`http://localhost:5000/product/getbyid/${id}`);
           const data = res.data;
           console.log(res.data);
-          if(res.data?.category)
-            fetchRelatedProducts(res.data?.category);
+          if (res.data?.category) fetchRelatedProducts(res.data?.category);
           setProduct(data);
         } catch (error) {
           console.error('Error fetching product:', error);
@@ -37,7 +36,6 @@ const ViewProduct = () => {
     }
   }, [id]);
 
-
   const fetchRelatedProducts = async (category) => {
     try {
       const res = await axios.get(`http://localhost:5000/product/getbycategory/${category}`);
@@ -48,17 +46,13 @@ const ViewProduct = () => {
       console.error('Error fetching related products:', error);
       toast.error('Failed to load related products.');
     }
+  };
 
-  }
-
-  // useEffect(() => {
-  //   console.log('Product Name:', productname); // Debugging
-  //   if (productname) {
-  //     };
-
-  //     fetchRelatedProducts();
-  //   }
-  // }, [productname]);
+  // Function to handle "Buy Now" button click
+  const handleBuyNow = (product) => {
+    addItemToCart(product); // Add the product to the cart
+    router.push(`/user/cart`); // Redirect to the cart page
+  };
 
   // Show a loading message if the product is null
   if (!product) return <div>Loading product details...</div>;
@@ -146,17 +140,7 @@ const ViewProduct = () => {
                 Add to Cart
               </button>
               <button
-                onClick={() => {
-                  router.push({
-                     pathname: `/buyproductpage/checkout/${product._id}`,
-                    query: {
-                      name: product.name,
-                      price: product.price,
-                      image: product.image,
-                      quantity: 1, // Default quantity
-                    },
-                  });
-                }}
+                onClick={() => handleBuyNow(product)}
                 className="bg-green-500 text-white px-4 py-2 rounded w-full md:w-auto"
               >
                 Buy Now
