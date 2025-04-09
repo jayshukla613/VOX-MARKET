@@ -25,7 +25,17 @@ const UserManagement = () => {
         });
     };
 
-   
+    const blockUser = (id) => {
+        axios
+            .put(`${process.env.NEXT_PUBLIC_API_URL}/user/update`, { id, blocked: true })
+            .then(() => {
+                setUsers(users.map(user => user._id === id ? { ...user, blocked: true } : user));
+                toast.success("User blocked successfully!");
+            })
+            .catch(() => {
+                toast.error("Failed to block user!");
+            });
+    };
 
     const userdata = (e) => {
         axios.get(`http://localhost:5000/user/getall`)
@@ -75,6 +85,7 @@ const UserManagement = () => {
                                 <button className="bg-yellow-500 text-white px-3 py-1 rounded hover:bg-yellow-600 mr-2" onClick={() => router.push(`/admin/viewuser/${user._id}`)}>View</button>
                                 <button className="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600" onClick={() => deleteUser(user._id)}>Delete</button>
                                 <button className="bg-red-500 text-white px-3 ml-2 py-1 rounded hover:bg-red-600" onClick={() => removeuser(user._id)}>Remove</button>
+                                <button className="bg-blue-500 text-white px-3 ml-2 py-1 rounded hover:bg-blue-600" onClick={() => blockUser(user._id)}>Block</button>
                             </td>
                         </tr>
                     ))}

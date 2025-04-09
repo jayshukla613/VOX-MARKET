@@ -135,22 +135,13 @@ const ViewProduct = () => {
               <button
                 type="submit"
                 onClick={() => addItemToCart(product)}
+                
                 className="bg-blue-500 text-white px-4 py-2 rounded w-full md:w-auto"
               >
                 Add to Cart
               </button>
               <button
-<<<<<<< HEAD
-                onClick={() => handleBuyNow(product)}
-=======
-                onClick={() => {
-<<<<<<< HEAD
-                router.push(`/buyproductpage/checkout/${product._id}`);
-=======
-                  router.push(`/buyproductpage/checkout/${product._id}`);
->>>>>>> 9884694f37d23d595e171fcc1940b6df0c9d7b28
-                }}
->>>>>>> 947708a1c335c02b421f99446f3df54e357ff78c
+                onClick={() => router.push(`/buyproductpage/checkout/${product._id}`)}
                 className="bg-green-500 text-white px-4 py-2 rounded w-full md:w-auto"
               >
                 Buy Now
