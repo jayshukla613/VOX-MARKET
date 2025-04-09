@@ -1,8 +1,17 @@
 'use client';
 
-import { useState } from "react";
+import React, { useEffect } from "react";
+import { useParams } from "next/navigation";
+import Link from "next/link";
+import axios from "axios";
+import { use, useState } from "react";
 
-export default function CheckoutPage({ product }) {
+export default function CheckoutPage({ }) {
+
+  const [product, setProduct] = useState({});
+
+  const {id} = useParams();
+ 
   const [shippingDetails, setShippingDetails] = useState({
     name: "",
     email: "",
@@ -10,7 +19,26 @@ export default function CheckoutPage({ product }) {
     city: "",
     state: "",
     zip: "",
-  });
+    });
+  const fetchProduct = async (id) => {
+    axios.get(`http://localhost:5000/product/getbyid/${product._id}`)
+      .then((res) => {
+        const data = res.data;
+        console.log(res.data);
+        setProduct(data);
+      })
+
+      .catch((error) => { 
+        console.error('Error fetching product:', error);
+        alert('Failed to load product details.');
+      });
+  };
+
+  useEffect((id) => {
+    if (product._id) {
+      fetchProduct();
+    }
+  }, [product._id]);
 
   const [paymentMethod, setPaymentMethod] = useState("creditCard");
 

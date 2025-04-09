@@ -12,7 +12,7 @@ const ViewProduct = () => {
   const router = useRouter();
   const { id} = useParams();
 
-  const [product, setProduct] = useState(null);
+  const [product, setProduct] = useState([]);
   const [relatedProducts, setRelatedProducts] = useState([]); // State for related products
 
   const { addItemToCart } = useCartContext();
@@ -147,15 +147,7 @@ const ViewProduct = () => {
               </button>
               <button
                 onClick={() => {
-                  router.push({
-                    pathname: `/buyproductpage/payment/${product._id}`,
-                    query: {
-                      name: product.name,
-                      price: product.price,
-                      image: product.image,
-                      quantity: 1, // Default quantity
-                    },
-                  });
+                router.push(`/buyproductpage/checkout/${product._id}`);
                 }}
                 className="bg-green-500 text-white px-4 py-2 rounded w-full md:w-auto"
               >
