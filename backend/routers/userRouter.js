@@ -57,6 +57,9 @@ router.post('/authenticate', (req, res) => {
     Model.findOne(req.body)
         .then((result) => {
             if (result) {
+                if (result.blocked) {
+                    return res.status(405).json({ message: 'user blocked' })
+                }
                 //generate tokan
                 const { _id, name, email } = result;
                 const payload = { _id, name, email }
@@ -89,15 +92,15 @@ router.post('/authenticate', (req, res) => {
 
 router.put('/updatedetails/:id', (req, res) => {
     Model.findByIdAndUpdate(req.params.id, req.body, { new: true })
-    .then((result) => {
-        res.status(200).json(result);
-    }).catch((err) => {
-        console.log(err);
-        res.status(500).json(err);
-    });
-  });
-  
-  
+        .then((result) => {
+            res.status(200).json(result);
+        }).catch((err) => {
+            console.log(err);
+            res.status(500).json(err);
+        });
+});
+
+
 router.get('/getall', (req, res) => {
     Model.find()
         .then((result) => {
@@ -127,8 +130,6 @@ router.delete('/deletebyid/:id', (req, res) => {
             console.log(err);
             res.status(500).json(err);
         })
-    })
+})
 
-
-
-            module.exports = router;
+module.exports = router;

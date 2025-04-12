@@ -61,6 +61,8 @@ const ReviewRating = ({productId}) => {
 
   return (
     <div className="   max-w-md">
+      {
+        token ? (
       <form onSubmit={handleSubmit}>
         <div className="rounded-lg p-4 ">
           <h2 className="text-xl font-semibold mb-4">Leave a Review</h2>
@@ -87,6 +89,11 @@ const ReviewRating = ({productId}) => {
           </button>
         </div>
       </form>
+
+        ): (
+          <h1>Login to give review</h1>
+        )
+      }
       <div className="mt-4">
         <h3 className="text-lg font-medium">Reviews</h3>
         {reviews.length > 0 ? (
