@@ -42,9 +42,12 @@ export default function CheckoutPage({ }) {
             const data = {
                 items: cartItems,
                 address: values
-
             }
-          const res = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/order/add`, )
+          axios.post(`${process.env.NEXT_PUBLIC_API_URL}/order/add`, data, {
+            headers: {
+              'x-auth-token': localStorage.getItem('user-token')
+            }
+          } )
           .then((result) => {
             console.log(result.data)
             toast.success("Product added to cart successfully!");
@@ -82,21 +85,6 @@ export default function CheckoutPage({ }) {
         // Handle checkout logic here (e.g., send data to the server)
         alert("Order placed successfully!");
     };
-
-
-    const fetchProduct = async (id) => {
-        axios.get(`http://localhost:5000/product/getbyid/${id}`)
-            .then((response) => {
-                console.log(response.data);
-                setproduct(data)
-            })
-            .catch((error) => {
-                console.error(error);
-            });
-    }
-    useEffect(() => {
-        fetchProduct();
-    }, [id]);
 
     return (
         <div className="container mx-auto p-6">
