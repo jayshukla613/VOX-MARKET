@@ -121,4 +121,10 @@ router.delete('/deletebyid/:id', (req, res) => {
         })
 })
 
+<<<<<<< HEAD
 module.exports = router;
+=======
+
+
+            module.exports = router;
+>>>>>>> b6cdb2001837d77a266c09d780bca0a58b601aa8

@@ -4,7 +4,8 @@ const verifytoken = require('../middlewares/verifytoken');
 const router = express.Router();
 
 // Create a new order
-router.post("/buyproduct",  async (req, res) => {
+router.post("/add",  async (req, res) => {
+  
     try {
         const order = new Model(req.body);
         await order.save();

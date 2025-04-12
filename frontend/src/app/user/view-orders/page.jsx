@@ -169,7 +169,7 @@ const ViewOrder = () => {
     </div>
     {/* Detailed Order View Modal */}
     <div
-      className="fixed inset-0 bg-gray-800 bg-opacity-75 flex items-center justify-center hidden"
+      className="fixed inset-0 bg-gray-800 bg-opacity-75  items-center justify-center "
       id="order-details-modal"
     >
       <div className="bg-white rounded-lg shadow-lg p-6 w-full max-w-3xl">
