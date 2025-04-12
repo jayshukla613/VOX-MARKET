@@ -15,7 +15,7 @@ const ViewProduct = () => {
   const router = useRouter();
   const { id } = useParams();
 
-  const [product, setProduct] = useState(null);
+  const [product, setProduct] = useState([]);
   const [relatedProducts, setRelatedProducts] = useState([]); // State for related products
 
   const { addItemToCart } = useCartContext();
@@ -174,12 +174,17 @@ const ViewProduct = () => {
                 type="submit"
                 // onClick={() => addToCart()}
                 onClick={() => addItemToCart(product)}
+                
                 className="bg-blue-500 text-white px-4 py-2 rounded w-full md:w-auto"
               >
                 Add to Cart
               </button>
               <button
+<<<<<<< HEAD
                 onClick={() => handleBuyNow(product)}
+=======
+                onClick={() => router.push(`/buyproductpage/checkout/${product._id}`)}
+>>>>>>> 5952d32be11254cbd53412f71119d8d33f9d87b4
                 className="bg-green-500 text-white px-4 py-2 rounded w-full md:w-auto"
               >
                 Buy Now

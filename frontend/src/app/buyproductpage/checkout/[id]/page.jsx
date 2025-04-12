@@ -1,5 +1,19 @@
 'use client';
 
+<<<<<<< HEAD
+import React, { useEffect } from "react";
+import { useParams } from "next/navigation";
+import Link from "next/link";
+import axios from "axios";
+import { use, useState } from "react";
+
+export default function CheckoutPage({ }) {
+
+  const [product, setProduct] = useState({});
+
+  const {id} = useParams();
+ 
+=======
 import axios from "axios";
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -9,14 +23,39 @@ export default function CheckoutPage({  }) {
     const {id}=useParams()
 
 
+>>>>>>> 9884694f37d23d595e171fcc1940b6df0c9d7b28
   const [shippingDetails, setShippingDetails] = useState({
     name: "",
     email: "",
     address: "",
     city: "",
     state: "",
+<<<<<<< HEAD
+    zip: "",
+    });
+  const fetchProduct = async (id) => {
+    axios.get(`http://localhost:5000/product/getbyid/${product._id}`)
+      .then((res) => {
+        const data = res.data;
+        console.log(res.data);
+        setProduct(data);
+      })
+
+      .catch((error) => { 
+        console.error('Error fetching product:', error);
+        alert('Failed to load product details.');
+      });
+  };
+
+  useEffect((id) => {
+    if (product._id) {
+      fetchProduct();
+    }
+  }, [product._id]);
+=======
     zip: ""
   });
+>>>>>>> 9884694f37d23d595e171fcc1940b6df0c9d7b28
 
   const [paymentMethod, setPaymentMethod] = useState("creditCard");
 
