@@ -60,7 +60,7 @@ const UserManagement = () => {
                         <tr key={user._id} className="border-t">
                             <td className="p-2 text-center">{user.name}</td>
                             <td className="p-2 text-center">{user.email}</td>
-                            <td className="p-2 text-center">{user.role}</td>
+                            <td className="p-2 text-center">{user.role} Buyer </td>
                             <td className="p-3">
                                 <span
                                     className={`px-2 py-1 text-sm rounded ${user.status === "Active"
@@ -73,8 +73,8 @@ const UserManagement = () => {
                             </td>
                             <td className="p-2 text-center">
                                 <button className="bg-yellow-500 text-white px-3 py-1 rounded hover:bg-yellow-600 mr-2" onClick={() => router.push(`/admin/viewuser/${user._id}`)}>View</button>
-                                <button className="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600" onClick={() => deleteUser(user._id)}>Delete</button>
-                                <button className="bg-red-500 text-white px-3 ml-2 py-1 rounded hover:bg-red-600" onClick={() => removeuser(user._id)}>Remove</button>
+                               
+                                <button className="bg-red-500 text-white px-3 ml-2 py-1 rounded hover:bg-red-600" >Remove</button>
                             </td>
                         </tr>
                     ))}

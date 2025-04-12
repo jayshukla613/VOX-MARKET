@@ -43,6 +43,10 @@ export const CartProvider = ({ children }) => {
         );
     };
 
+    const deleteItemFromCart = (itemId) => {
+        setCartItems((prevItems) => prevItems.filter((cartItem) => cartItem._id !== itemId));
+    };
+
     // Function to calculate the total amount
     const calculateTotalAmount = () => {
         return cartItems.reduce(
@@ -53,7 +57,7 @@ export const CartProvider = ({ children }) => {
 
     return (
         <CartContext.Provider
-            value={{ cartItems, addItemToCart, removeItemFromCart, calculateTotalAmount }}
+            value={{ cartItems, deleteItemFromCart, addItemToCart, removeItemFromCart, calculateTotalAmount }}
         >
             {children}
         </CartContext.Provider>

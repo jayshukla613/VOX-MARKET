@@ -3,12 +3,15 @@ import axios from 'axios';
 import Link from 'next/link';
 import { useParams, useRouter } from 'next/navigation';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, use } from 'react';
 import ReviewRating from '../../reviewProduct/page';
 import toast from 'react-hot-toast';
 import useCartContext from '@/context/CartContext';
 
 const ViewProduct = () => {
+  const token = localStorage.getItem('user-token');
+
+  
   const router = useRouter();
   const { id } = useParams();
 
@@ -35,6 +38,41 @@ const ViewProduct = () => {
       fetchProduct();
     }
   }, [id]);
+
+
+  const addToCart = () => {
+    axios.post(`http://localhost:5000/cart/addtocart`, 
+      {
+        productId: id,
+        name: product.name,
+        image: product.image,
+        price: product.price,
+        offer: product.offer,
+        description: product.description
+
+
+      },
+      {
+      headers: { 'x-auth-token': token }
+    })
+    .then((result) => {
+      console.log(result.data);
+      toast.success("Product added to cart successfully!");
+      router.push("/user/cart");
+
+      
+    }).catch((err) => {
+      console.log(err);
+      toast.error("Failed to add product to cart!");
+
+      
+    });
+  };
+
+  
+
+
+
 
   const fetchRelatedProducts = async (category) => {
     try {
@@ -134,19 +172,14 @@ const ViewProduct = () => {
             <div className="flex space-x-2 mb-4">
               <button
                 type="submit"
+                // onClick={() => addToCart()}
                 onClick={() => addItemToCart(product)}
                 className="bg-blue-500 text-white px-4 py-2 rounded w-full md:w-auto"
               >
                 Add to Cart
               </button>
               <button
-<<<<<<< HEAD
                 onClick={() => handleBuyNow(product)}
-=======
-                onClick={() => {
-                  router.push(`/buyproductpage/checkout/${product._id}`);
-                }}
->>>>>>> 947708a1c335c02b421f99446f3df54e357ff78c
                 className="bg-green-500 text-white px-4 py-2 rounded w-full md:w-auto"
               >
                 Buy Now

@@ -8,7 +8,7 @@ const seller = require('./routers/sellerRouter');
 const product = require('./routers/productRouter');
 const contact=require('./routers/contactRouter');
 const cart=require('./routers/cartRouter');
-const buyproduct=require('./routers/orderRouter');
+const orders=require('./routers/orderRouter');
 
 
 const app = express();
@@ -27,7 +27,7 @@ app.use('/product',product);
 app.use('/review', review);
 app.use('/contact',contact);
 app.use('/cart',cart);
-app.use('/buyproduct',buyproduct);
+app.use('/order',orders);
 
 
 app.get('/getall', (req, res) => {

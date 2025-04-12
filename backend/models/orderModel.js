@@ -1,8 +1,7 @@
-const {Schema, model, Types} = require('../connection');
+const { Schema, model, Types } = require('../connection');
 const orderSchema = Schema({
     user: { type: Types.ObjectId, ref: 'user', require: true },
-    product: { type: Types.ObjectId, ref: 'product', require: true },
-    quantity: { type: Number, require: true },
+    items: { type: Array },
     address: { type: String, require: true },
     status: { type: String, default: 'pending' },
     paymentMethod: { type: String, default: 'cod' },
