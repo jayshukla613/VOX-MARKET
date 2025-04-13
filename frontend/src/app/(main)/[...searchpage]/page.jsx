@@ -1,6 +1,7 @@
 'use client'
 import { IconStarFilled } from '@tabler/icons-react'
 import axios from 'axios'
+import { useRouter } from 'next/navigation'
 
 import React from 'react'
 import { useEffect, useState } from 'react'
@@ -9,6 +10,7 @@ import toast from 'react-hot-toast'
 const searchpage = () => {
   const [Product, setProduct] = useState([]);
   const [loading, setLoading] = useState(false);
+  const router = useRouter();
 
   useEffect(() => {
     const fetchProducts = async () => {

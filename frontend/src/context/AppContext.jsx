@@ -19,6 +19,7 @@ export const AppProvider = ({ children }) => {
         localStorage.removeItem("user-token");
         setUserLoggedIn(false);
         router.replace("/user-login");
+        localStorage.removeItem("cartItems");
     }
 
     const [sellerLoggedIn, setsellerLoggedIn] = useState(() => {

@@ -6,10 +6,25 @@ import { useRouter } from 'next/navigation';
 import React from 'react';
 import toast from 'react-hot-toast';
 import axios from 'axios';
+const ISSERVER = typeof window === 'undefined';
 
-
-const userlogin = () => {
+const Userlogin = () => {
   const router=useRouter();
+
+  const fetchCart = (token) => {
+      axios.get(`${process.env.NEXT_PUBLIC_API_URL}/cart/getbyuser`, {
+          headers: {
+              'x-auth-token': token
+          }
+      })
+      .then((result) => {
+          console.log(result.data);
+          localStorage.setItem('cartItems', JSON.stringify(result.data.cartItems));
+      }).catch((err) => {
+          console.log(err);
+      });
+  }
+
   const login = useFormik({
     initialValues:{
 
@@ -24,12 +39,9 @@ const userlogin = () => {
       .then((result) => {
         toast.success('login succesfull')
         console.log(result.data?.token);
-        localStorage.setItem('user-token', result.data?.token);
+        !ISSERVER && localStorage.setItem('user-token', result.data?.token);
+        fetchCart(result.data?.token);
         router.push('/user/profile');
-        
-        
-
-        
       }).catch((err) => {
         console.log(err);
         toast.error('login failed')
@@ -105,4 +117,4 @@ const userlogin = () => {
   )
 }
 
-export default userlogin;
+export default Userlogin;

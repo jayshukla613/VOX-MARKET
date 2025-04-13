@@ -1,5 +1,6 @@
 const express = require('express');
 const Model = require('../models/userModel');
+const CartModel = require('../models/cartModel');
 const router = express.Router();
 const jwt = require('jsonwebtoken');
 const verifytoken = require('../middlewares/verifytoken');
@@ -12,6 +13,16 @@ router.post('/add', (req, res) => {
     new Model(req.body).save()
         .then((result) => {
             res.status(200).json(result);
+
+            // create new cart for the user
+            const cart = new CartModel({ user: result._id });
+            cart.save()
+                .then(() => {
+                    console.log('Cart created for user:', result._id);
+                })
+                .catch((err) => {
+                    console.error('Error creating cart:', err);
+                });
 
         }).catch((err) => {
             console.log(err);
