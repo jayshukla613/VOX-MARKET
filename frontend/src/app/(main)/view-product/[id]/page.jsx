@@ -10,11 +10,6 @@ import useCartContext from '@/context/CartContext';
 
 const ViewProduct = () => {
   const token = localStorage.getItem('user-token');
-<<<<<<< HEAD
-=======
-
-  
->>>>>>> b6cdb2001837d77a266c09d780bca0a58b601aa8
   const router = useRouter();
   const { id } = useParams();
 
@@ -182,20 +177,12 @@ const ViewProduct = () => {
               >
                 Add to Cart
               </button>
-              <button
-<<<<<<< HEAD
-                onClick={() => router.push(`/buyproductpage/checkout/${product._id}`)}
-=======
-<<<<<<< HEAD
-                onClick={() => handleBuyNow(product)}
-=======
-                onClick={() => router.push(`/buyproductpage/checkout/${product._id}`)}
->>>>>>> 5952d32be11254cbd53412f71119d8d33f9d87b4
->>>>>>> b6cdb2001837d77a266c09d780bca0a58b601aa8
-                className="bg-green-500 text-white px-4 py-2 rounded w-full md:w-auto"
-              >
-                Buy Now
-              </button>
+<button
+  onClick={() => handleBuyNow(product)}
+  className="bg-green-500 text-white px-4 py-2 rounded w-full md:w-auto"
+>
+  Buy Now
+</button>
             </div>
 
             {/* Return Policy */}
