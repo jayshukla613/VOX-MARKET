@@ -177,29 +177,12 @@ const ViewProduct = () => {
               >
                 Add to Cart
               </button>
-<<<<<<< HEAD
 <button
   onClick={() => handleBuyNow(product)}
   className="bg-green-500 text-white px-4 py-2 rounded w-full md:w-auto"
 >
   Buy Now
 </button>
-=======
-              <button
-
-                 onClick={() => handleBuyNow(product)}
-
-                 onClick={() => router.push(`/buyproductpage/checkout/${product._id}`)}
-
-                 onClick={() => handleBuyNow(product)}
-
-
-                className="bg-green-500 text-white px-4 py-2 rounded w-full md:w-auto">
-              
-                Buy Now
-                
-              </button>
->>>>>>> 5854b272e0d1d6dd5dea1586735ca40f813ad3d7
             </div>
 
             {/* Return Policy */}
