@@ -68,7 +68,7 @@ export const CartProvider = ({ children }) => {
     };
 
     // Function to calculate the total amount
-    const calculateTotalAmoun = () => {
+    const calculateTotalAmount = () => {
         return cartItems.reduce(
             (total, cartItem) => total + cartItem.price * cartItem.quantity,
             0
@@ -77,7 +77,7 @@ export const CartProvider = ({ children }) => {
 
     return (
         <CartContext.Provider
-            value={{ cartItems, deleteItemFromCart, addItemToCart, removeItemFromCart, calculateTotalAmoun }}
+            value={{ cartItems, deleteItemFromCart, addItemToCart, removeItemFromCart, calculateTotalAmount }}
         >
             {children}
         </CartContext.Provider>

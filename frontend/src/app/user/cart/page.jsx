@@ -7,6 +7,7 @@ import Link from 'next/link';
 const Cart = () => {
   const { cartItems, removeItemFromCart, calculateTotalAmount, addItemToCart } = useCartContext();
 
+  
   return (
     <div>
       <h2 className="text-2xl text-center p-4 font-bold text-gray-800 mb-6">Shopping Cart</h2>
