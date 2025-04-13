@@ -91,7 +91,12 @@ const ReviewRating = ({productId}) => {
       </form>
 
         ): (
-          <h1>Login to give review</h1>
+
+        
+        <p className="text-gray-500">Please login to leave a review.</p>
+        // Display a message if the user is not logged in
+
+        
         )
       }
       <div className="mt-4">

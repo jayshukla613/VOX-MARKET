@@ -9,7 +9,9 @@ const Herosection = () => {
     <img
       alt="A stylish outfit displayed on a mannequin in a modern, well-lit store"
       className="absolute inset-0 w-full h-full object-cover "
-      src="https://media.istockphoto.com/id/1440135925/photo/doctor-walking-the-streets-waiting-for-call.jpg?s=2048x2048&w=is&k=20&c=1nRuaiNmw7BAi3YdWiV4uSQ3O0h4ySAdbUt0Cl9Hl1o="
+      src="https://i.pinimg.com/736x/37/84/08/37840842216139312fe81b7f6a87879a.jpg"
+      
+      // Apply a dark overlay effect
     />
     <div className="container mx-auto px-6 py-16 relative z-10 flex flex-col lg:flex-row items-start">
       <div className="lg:w-1/3  p-8 rounded-lg  font-sans  text-left">

@@ -9,7 +9,11 @@ import toast from 'react-hot-toast';
 import useCartContext from '@/context/CartContext';
 
 const ViewProduct = () => {
+<<<<<<< HEAD
+  // Removed duplicate declaration of token
+=======
   const token = localStorage.getItem('user-token');
+>>>>>>> 577e4f23ea30cf56ac453bac3d81f60b757b5587
   const router = useRouter();
   const { id } = useParams();
 
@@ -17,6 +21,10 @@ const ViewProduct = () => {
   const [relatedProducts, setRelatedProducts] = useState([]); // State for related products
 
   const { addItemToCart } = useCartContext();
+
+  const token = localStorage.getItem('user-token');
+  const userId = localStorage.getItem('userId');
+
 
   useEffect(() => {
     if (id) {
@@ -86,8 +94,16 @@ const ViewProduct = () => {
 
   // Function to handle "Buy Now" button click
   const handleBuyNow = (product) => {
-    addItemToCart(product); // Add the product to the cart
-    router.push(`/user/cart`); // Redirect to the cart page
+    if(token== null) {
+      toast.error('Please login to buy the product!');
+      router.push('/user-signup');
+      return;
+    }
+    else{
+      addItemToCart(product); // Add the product to the cart
+      router.push(`/user/cart`);
+    }
+ 
   };
 
   // Show a loading message if the product is null
@@ -97,7 +113,7 @@ const ViewProduct = () => {
     <>
       <div className="container mx-auto p-4">
         {/* Product Title */}
-        <h1 className="text-3xl font-bold mb-4">{product.name}</h1>
+       
         {/* Product Images */}
         <div className="flex flex-col md:flex-row mb-4">
           <div className="flex-1">
@@ -148,21 +164,43 @@ const ViewProduct = () => {
             </div>
           </div>
           <div className="flex-1 md:ml-4">
+
+          <h1 className="text-3xl font-bold mb-4">{product.name}</h1>
             {/* Price */}
+            <div className="mb-4">
+        
+          
+          <p>Categories: {product.category}</p>
+          </div>
             <div className="text-2xl font-bold text-red-600 mb-2">Price: {product.price}</div>
             <div className="text-gray-500 line-through mb-2">Was: {product.offer}</div>
 
             {/* Product Variants */}
             <div className="mb-4">
               <label className="block mb-2">Size: {product.size}</label>
-              <select className="border rounded p-2 w-full">
-                <option>Small</option>
-                <option>Medium</option>
-                <option>Large</option>
-              </select>
+             
             </div>
             <div className="mb-4">
-              <label className="block mb-2">Color: {product.color}</label>
+              <label className="block mb-2 text-lg">Color: {product.color} 
+                
+                <span
+                  className="font-bold"
+                  style={{
+                    backgroundColor: product.color,
+                    width: '20px',
+                    height: '20px',
+                    display: 'inline-block',
+                    borderRadius: '',
+                    marginLeft: '10px',
+                    
+                  }}
+                ></span>
+                
+
+               </label>
+
+
+              
             </div>
             {/* Availability/Stock Status */}
             <div className="mb-4 text-green-600">{product.stock}</div>
@@ -183,6 +221,31 @@ const ViewProduct = () => {
 >
   Buy Now
 </button>
+<<<<<<< HEAD
+=======
+=======
+              <button
+<<<<<<< HEAD
+                onClick={() => handleBuyNow(product)}
+                className="bg-green-500 text-white px-4 py-2 rounded w-full md:w-auto"
+              >
+=======
+
+                 onClick={() => handleBuyNow(product)}
+
+                 onClick={() => router.push(`/buyproductpage/checkout/${product._id}`)}
+
+                 onClick={() => handleBuyNow(product)}
+
+
+                className="bg-green-500 text-white px-4 py-2 rounded w-full md:w-auto">
+              
+>>>>>>> 577e4f23ea30cf56ac453bac3d81f60b757b5587
+                Buy Now
+                
+              </button>
+>>>>>>> 5854b272e0d1d6dd5dea1586735ca40f813ad3d7
+>>>>>>> 0a802206ae8fd8bc001146863d18022c44385dc8
             </div>
 
             {/* Return Policy */}
@@ -198,7 +261,7 @@ const ViewProduct = () => {
             {/* Payment Options */}
             <div className="mb-4">
               <h2 className="font-bold mb-2">Payment Options</h2>
-              <p>We accept Visa, MasterCard, PayPal, and more.</p>
+              <p>💳 Credit/Debit Card (Visa, MasterCard, AMEX), 🏦 Net Banking, 🪙 UPI (Google Pay, PhonePe, Paytm, etc.),  🧾 Cash on Delivery (COD), 🌐 PayPal (for international customers)</p>
             </div>
           </div>
         </div>
@@ -211,15 +274,13 @@ const ViewProduct = () => {
         <div className="mb-4">
           <h2 className="text-2xl font-bold">Customer Ratings & Reviews</h2>
           <ReviewRating productId={id} />
-          <Link className="text-blue-500" href="">
-            Read more reviews
-          </Link>
+          
         </div>
         {/* Related Products */}
         <div className="mb-4">
           <h2 className="text-2xl font-bold mb-2">Related Products</h2>
           <div className="mb-4">
-            <h2 className="text-2xl font-bold mb-2">Related Products</h2>
+           
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               {relatedProducts.length > 0 ? (
                 relatedProducts.map((relatedProduct) => (
@@ -246,13 +307,7 @@ const ViewProduct = () => {
           </div>
         </div>
         {/* Product Tags and Categories */}
-        <div className="mb-4">
-          <h2 className="text-2xl font-bold mb-2">Product Tags and Categories</h2>
-          <p>
-            Categories:
-            <span className="text-blue-500">{product.category}</span>
-          </p>
-        </div>
+        
       </div>
     </>
   );

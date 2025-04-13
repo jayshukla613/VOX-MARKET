@@ -10,11 +10,11 @@ const Cart = () => {
   
   return (
     <div>
-      <h2 className="text-2xl text-center p-4 font-bold text-gray-800 mb-6">Shopping Cart</h2>
+      <h2 className="text-2xl text-center p-4 font-bold text-gray-800 ">Shopping Cart</h2>
       {cartItems.length === 0 ? (
         <p>Your cart is empty.</p>
       ) : (
-        <div className='grid grid-cols-1 md:grid-cols-2  gap-4 '>
+        <div className='  '>
           <div className=''>
             <Ordercard />
           {/* {cartItems.map((item) => (
@@ -23,7 +23,7 @@ const Cart = () => {
           <div>
           <div className="mt-4">
 
-            <div className="     w-full  lg:w-1/2">
+            <div className="    p-4 w-full  lg:w-1/2">
               <div className="bg-white shadow rounded-lg p-6">
                 <h3 className="text-lg font-semibold text-gray-800 mb-4">
                   Order Summary

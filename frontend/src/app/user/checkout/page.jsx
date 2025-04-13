@@ -112,11 +112,71 @@ export default function CheckoutPage() {
         ))}
       </div>
 
+<<<<<<< HEAD
+    const handleInputChange = (e) => {
+        const { name, value } = e.target;
+        setShippingDetails((prevDetails) => ({
+            ...prevDetails,
+            [name]: value,
+        }));
+    };
+
+    const handleCheckout = () => {
+        // Handle checkout logic here (e.g., send data to the server)
+        alert("Order placed successfully!");
+    };
+
+
+    const fetchProduct = async (id) => {
+        axios.get(`http://localhost:5000/product/getbyid/${id}`)
+            .then((response) => {
+                console.log(response.data);
+                setproduct(data)
+            })
+            .catch((error) => {
+                console.error(error);
+            });
+    }
+    useEffect(() => {
+        fetchProduct();
+    }, [id]);
+
+    return (
+        <div className="container mx-auto p-6">
+            <h1 className="text-3xl font-bold mb-6">Checkout</h1>
+
+            {/* Product Summary */}
+ {
+      cartItems.map((item) => (
+        <div key={item.id} className="bg-white rounded-lg shadow-md p-6 mb-4">
+            <div className="flex items-center mb-4">
+              <img src={item.image} alt={item.name} className="w-20 h-20 object-cover rounded mr-4" />
+              <div className="flex-1">  
+                  <h2 className="text-xl font-semibold">{item.name}</h2>
+                  <p className="text-gray-600">Category: {item.category}</p>
+                  <p className="text-gray-600">Price: ₹{item.price}</p>
+                  <p className="text-gray-600">Quantity: {item.quantity}</p>  
+              </div>
+            </div>
+        </div>
+      ))
+ }
+
+            {/* Shipping Details */}
+            <div className="mb-6">
+                <h2 className="text-2xl font-bold mb-4">Shipping Details</h2>
+                <div className=' flex justify-center '>
+      <form onSubmit={formikform.handleSubmit}>
+        <div className="mb-6">
+      
+          <div className="space-y-4">
+=======
       {/* Shipping Details */}
       <div className="mb-6">
         <h2 className="text-2xl font-bold mb-4">Shipping Details</h2>
         <div className='flex justify-center'>
           <form onSubmit={formikform.handleSubmit} className="w-full max-w-2xl space-y-4">
+>>>>>>> 577e4f23ea30cf56ac453bac3d81f60b757b5587
             <input
               type="text"
               name="name"
