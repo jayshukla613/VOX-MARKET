@@ -103,20 +103,21 @@ export default function CheckoutPage({ }) {
             <h1 className="text-3xl font-bold mb-6">Checkout</h1>
 
             {/* Product Summary */}
-            <div className="mb-6">
-                <h2 className="text-2xl font-bold mb-4">Order Summary</h2>
-                <div className="border p-4 rounded-lg shadow-md">
-                    <img
-                        src={product.image}
-                        alt={product.name}
-                        className="w-32 h-32 object-cover mb-4"
-                    />
-                    <p><strong>Product Name:</strong> {product.name}</p>
-                    <p><strong>Price:</strong> ${product.price}</p>
-                    <p><strong>Quantity:</strong> {product.quantity}</p>
-                    <p><strong>Total:</strong> ${product.price * product.quantity}</p>
-                </div>
+ {
+      cartItems.map((item) => (
+        <div key={item.id} className="bg-white rounded-lg shadow-md p-6 mb-4">
+            <div className="flex items-center mb-4">
+              <img src={item.image} alt={item.name} className="w-20 h-20 object-cover rounded mr-4" />
+              <div className="flex-1">  
+                  <h2 className="text-xl font-semibold">{item.name}</h2>
+                  <p className="text-gray-600">Category: {item.category}</p>
+                  <p className="text-gray-600">Price: ₹{item.price}</p>
+                  <p className="text-gray-600">Quantity: {item.quantity}</p>  
+              </div>
             </div>
+        </div>
+      ))
+ }
 
             {/* Shipping Details */}
             <div className="mb-6">

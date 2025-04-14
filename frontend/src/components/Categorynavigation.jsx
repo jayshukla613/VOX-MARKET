@@ -18,7 +18,7 @@ const categorynavigation = () => {
           const response = await axios.get(`http://localhost:5000/getbycategory/${encodeURIComponent(selectedCategory)}`);
   
           if (response.status === 200) {
-            setCategory(response.data);
+           setSelectedCategory(response.data);
             console.log(response.data);
             toast.success("Category fetched successfully");
           } else {
@@ -41,16 +41,16 @@ const categorynavigation = () => {
     <div>
        <div className='flex gap-8 justify-evenly bg-gray-500  p-2  text-white text-lg w-full flex-wrap'>
         <Link href={'/browse/electronic'}>Electronics</Link>
-        <Link href="" >Fashion</Link>
+        <Link href={'/browse/fashion'} >Fashion</Link>
         <Link href={'browse'} >Home</Link>
-        <Link href={''}>Books</Link>
-        <Link href="" >Sports</Link>
-        <Link href="" >Health</Link>
-        <Link href="" >Beauty</Link>
-        <Link href="" >Automotive</Link>
-        <Link href="" >Garden</Link>
-        <Link href="" >Office</Link>
-        <Link href={'/browse/mens shirt'}>Men's Shirt</Link>
+        <Link href={'/browse/book'}>Books</Link>
+        <Link href={'/browse/fashion'} >Sports</Link>
+        <Link href={'/browse/fashion'} >Health</Link>
+        <Link href={'/browse/beauty'} >Beauty</Link>
+        <Link href={'/browse/automotive'} >Automotive</Link>
+        <Link href={'/browse/garden'} >Garden</Link>
+        <Link href={'/browse/house'} >Office</Link>
+        <Link href={'/browse/fashion'}>Men's Shirt</Link>
 
       </div>
     </div>

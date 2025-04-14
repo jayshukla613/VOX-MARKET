@@ -10,7 +10,7 @@ const myschema = Schema({
     offer: { type: Number},
     description: { type: String},
     category: { type: String},
-    quantity: { type: Number },
+    
     color: { type: String},
     size: { type: String },
     brand: { type: String},
