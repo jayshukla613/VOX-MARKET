@@ -9,7 +9,11 @@ import toast from 'react-hot-toast';
 import useCartContext from '@/context/CartContext';
 
 const ViewProduct = () => {
+<<<<<<< HEAD
   // Removed duplicate declaration of token
+=======
+  const token = localStorage.getItem('user-token');
+>>>>>>> 577e4f23ea30cf56ac453bac3d81f60b757b5587
   const router = useRouter();
   const { id } = useParams();
 
@@ -211,12 +215,35 @@ const ViewProduct = () => {
               >
                 Add to Cart
               </button>
+<<<<<<< HEAD
+<button
+  onClick={() => handleBuyNow(product)}
+  className="bg-green-500 text-white px-4 py-2 rounded w-full md:w-auto"
+>
+  Buy Now
+</button>
+=======
               <button
+<<<<<<< HEAD
                 onClick={() => handleBuyNow(product)}
                 className="bg-green-500 text-white px-4 py-2 rounded w-full md:w-auto"
               >
+=======
+
+                 onClick={() => handleBuyNow(product)}
+
+                 onClick={() => router.push(`/buyproductpage/checkout/${product._id}`)}
+
+                 onClick={() => handleBuyNow(product)}
+
+
+                className="bg-green-500 text-white px-4 py-2 rounded w-full md:w-auto">
+              
+>>>>>>> 577e4f23ea30cf56ac453bac3d81f60b757b5587
                 Buy Now
+                
               </button>
+>>>>>>> 5854b272e0d1d6dd5dea1586735ca40f813ad3d7
             </div>
 
             {/* Return Policy */}

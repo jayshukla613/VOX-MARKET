@@ -40,6 +40,8 @@ const usersignup = () => {
 
   const router=useRouter();
 
+
+
   const signupform = useFormik({
     initialValues:{
       name:'',
@@ -55,7 +57,7 @@ const usersignup = () => {
         .then((result) => {
           toast.success('user data succesfully save');
           resetForm();
-          router.push('/user/profile')
+          router.push('/user-login')
           
         }).catch((err) => {
          console.log(err);

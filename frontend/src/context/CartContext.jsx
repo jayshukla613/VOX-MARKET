@@ -1,9 +1,28 @@
 'use client';
+
+import axios from "axios";
+
 const { createContext, useContext, useState, useEffect } = require("react");
 
 const CartContext = createContext();
 
 export const CartProvider = ({ children }) => {
+
+    const token = typeof window !== 'undefined' ? localStorage.getItem('user-token') : null;
+
+    const updateCart = () => {
+        if (token) {
+            axios.put(`${process.env.NEXT_PUBLIC_API_URL}/cart/update`, { cartItems }, {
+                headers: {
+                    'x-auth-token': token,
+                }})
+                .then((response) => {
+                    console.log('Cart updated successfully:', response.data);
+                })
+                .catch((error) => console.error('Error updating cart:', error));
+        }
+    }
+
     const [cartItems, setCartItems] = useState(() => {
         // Initialize cartItems from localStorage if available
         const storedCart = localStorage.getItem("cartItems");
@@ -12,6 +31,7 @@ export const CartProvider = ({ children }) => {
 
     // Sync cartItems with localStorage whenever it changes
     useEffect(() => {
+        updateCart();
         localStorage.setItem("cartItems", JSON.stringify(cartItems));
     }, [cartItems]);
 
