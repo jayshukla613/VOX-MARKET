@@ -9,7 +9,7 @@ import toast from 'react-hot-toast';
 import useCartContext from '@/context/CartContext';
 
 const ViewProduct = () => {
-const token = localStorage.getItem('user-token');
+// Removed duplicate declaration of token
   const router = useRouter();
   const { id } = useParams();
 
