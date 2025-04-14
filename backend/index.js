@@ -1,7 +1,7 @@
 const express = require('express');
 const cors = require('cors');
 
-
+const razorpayRouter = require('./routers/razorpayRouter');
 const review = require('./routers/reviewRouter');
 const user = require('./routers/userRouter');
 const seller = require('./routers/sellerRouter');
@@ -21,6 +21,7 @@ app.use(cors({
 app.use(express.json());
 
 
+app.use('/razorpay', razorpayRouter);
 app.use('/user', user);
 app.use('/seller', seller);
 app.use('/product',product);
