@@ -53,7 +53,7 @@ const usersignup = () => {
       },
       onSubmit:(value,{resetForm, setSubmitting}) => {
         console.log(value);
-        axios.post('http://localhost:5000/user/add',value)
+        axios.post(`${process.env.NEXT_PUBLIC_API_URL}/user/add`,value)
         .then((result) => {
           toast.success('user data succesfully save');
           resetForm();

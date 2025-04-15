@@ -79,6 +79,36 @@ export default function CheckoutPage() {
 
 
 
+  const handlePlaceOrder = async () => {
+    try {
+      const response = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/order/add`, {
+        ...formikform.values,
+        cartItems,
+        totalAmount: calculateTotalAmount(),
+      });
+      toast.success('Order placed successfully!');
+      router.push('/user/order');
+      console.log('Order response:', response.data);
+      
+    } catch (error) {
+      console.error('Error placing order:', error);
+      toast.error('Failed to place order!');
+    }
+  }
+  const handleSubmit = async () => {
+    
+    formikform.handleSubmit();
+    handlePlaceOrder();
+   
+
+
+
+
+
+  };
+
+
+
 
   return (
     <div>
@@ -252,7 +282,7 @@ export default function CheckoutPage() {
 
             </div>
           </div>
-          <button type="submit">complete</button>
+          
         </form>
       </div>
       {/* Order Summary */}
@@ -294,7 +324,12 @@ export default function CheckoutPage() {
               <p className="text-lg font-bold">RS...{calculateTotalAmount().toFixed(2)}</p>
             </div>
           </div>
-          <button className="w-full bg-blue-600 text-white py-2 rounded-md text-lg font-medium hover:bg-blue-700">
+          <button type="submit"  onClick={ ()=>{
+            handleSubmit();
+            formikform.resetForm();
+          
+
+          }} className="w-full bg-blue-600 text-white py-2 rounded-md text-lg font-medium hover:bg-blue-700">
             Place Order
           </button>
         </div>

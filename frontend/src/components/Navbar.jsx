@@ -178,7 +178,7 @@ const Navbar = (product) => {
                   </DropdownItem>
 
                   <DropdownItem key="admin" className="h-10 gap-2 hover:bg-gray-200  hover:scale-105">
-                    <Link href="/admin/admindashboard">Admin Account</Link>
+                    <Link href="/admin/profile">Admin Account</Link>
                   </DropdownItem>
 
                   <DropdownItem key="user" className="h-10 gap-2 hover:bg-gray-200  hover:scale-105">
