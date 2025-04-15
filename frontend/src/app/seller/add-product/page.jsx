@@ -12,7 +12,7 @@ const validationschema = Yup.object().shape({
   description: Yup.string().required('Description is required').min(20, 'Description should be at least 30 characters'),
   image: Yup.array().required('Image is required'),
   quantity: Yup.number().required('Quantity is required'),
-  brand: Yup.string().required('Brand is required'),
+  
   category: Yup.string().required('Category is required'), // Add validation for category
   color: Yup.string().required('Color is required'),
   size: Yup.string().required('Size is required'),
@@ -83,7 +83,7 @@ const Addproduct = () => {
       <Sellerdashboard />
       <div className='container mx-auto p-6'>
         <h1 className='text-3xl font-bold mb-6'>Add New Product</h1>
-        <form onSubmit={addform.handleSubmit} className='bg-white p-6 rounded-lg shadow-lg'>
+       <form onSubmit={addform.handleSubmit} className='bg-white p-6 rounded-lg shadow-lg'>
           <input type='text' name='name' placeholder='Product Name' value={addform.values.name} onChange={addform.handleChange} className='w-full p-2 mb-4 border' />
           
           <input type='number' name='price' placeholder='Price' value={addform.values.price} onChange={addform.handleChange} className='w-full p-2 mb-4 border' />
@@ -153,7 +153,7 @@ const Addproduct = () => {
             )}
           </div>
           <button type='submit' className='bg-blue-500 text-white px-4 py-2 rounded'>Submit</button>
-        </form>
+        </form> 
       </div>
     </div>
   );

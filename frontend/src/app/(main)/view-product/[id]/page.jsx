@@ -9,11 +9,7 @@ import toast from 'react-hot-toast';
 import useCartContext from '@/context/CartContext';
 
 const ViewProduct = () => {
-<<<<<<< HEAD
   // Removed duplicate declaration of token
-=======
-// Removed duplicate declaration of token
->>>>>>> e80b0aa7eb2c97ef2a793532ca3d616e5a1d73c0
   const router = useRouter();
   const { id } = useParams();
 
@@ -173,7 +169,7 @@ const ViewProduct = () => {
               <p>Categories: {product.category}</p>
             </div>
             <div className="text-2xl font-bold text-red-600 mb-2">Price: {product.price}</div>
-            <div className="text-gray-500 line-through mb-2">Was: {product.offer}</div>
+            <div className="text-blue-500 line-through mb-2 text-2xl Font-bold">Was:  RS.{product.price+product.price*0.3}</div>
 
             {/* Product Variants */}
             <div className="mb-4">
@@ -215,7 +211,6 @@ const ViewProduct = () => {
               >
                 Add to Cart
               </button>
-<<<<<<< HEAD
 
               <button
                 onClick={() => handleBuyNow(product)}
@@ -224,33 +219,15 @@ const ViewProduct = () => {
                 Buy Now
               </button>
 
-              <button
-                onClick={() => handleBuyNow(product)}
-                className="bg-green-500 text-white px-4 py-2 rounded w-full md:w-auto"
-              >
-                Buy Now
-
-              </button>
 
             </div>
 
             {/* Return Policy */}
             <div className="mb-4">
-=======
-<button
-  onClick={() => handleBuyNow(product)}
-  className="bg-green-500 text-white px-4 py-2 rounded w-full md:w-auto"
->
-  Buy Now
-</button>
->>>>>>> e80b0aa7eb2c97ef2a793532ca3d616e5a1d73c0
-              <h2 className="font-bold mb-2">Return Policy: {product.retunepolicy}</h2>
-              <p>
-                30-day return policy.
-                <Link className="text-blue-500" href="">
-                  Read more
-                </Link>
-              </p>
+              <h2 className="font-bold mb-2">Return Policy</h2>
+              <p>🛡️ 30-Day Return Policy: If you're not satisfied with your purchase, you can return it within 30 days for a full refund or exchange.</p>
+              <p>Returns accepted within 30 days of delivery. Items must be in original condition.</p>
+
             </div>
             {/* Payment Options */}
             <div className="mb-4">
