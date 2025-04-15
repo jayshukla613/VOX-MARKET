@@ -218,13 +218,13 @@ const ViewProduct = () => {
   Buy Now
 </button>
 
-              <button
+              {/* <button
                 onClick={() => handleBuyNow(product)}
                 className="bg-green-500 text-white px-4 py-2 rounded w-full md:w-auto"
               >
                 Buy Now
                 
-              </button>
+              </button> */}
             </div>
 
             {/* Return Policy */}
