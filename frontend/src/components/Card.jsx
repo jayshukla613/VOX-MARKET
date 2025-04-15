@@ -17,48 +17,47 @@ const Card = ({ product }) => {
   
 
   return (
-    <div className=" rounded shadow-lg bg-white  h-[10%] w-[25%]">
-      <img
-        alt={product.name} // Use product name for alt text
-        className=""
-        width={600}
-        height={300}
+    
+<>
+<div className="max-w-sm rounded overflow-hidden shadow-lg bg-white">
+    <img
+      alt="A detailed image of the product showing its features and design"
+      className="w-full"
+      src={product.image}
+    />
+    <div className="px-6 py-4">
+      <div className="font-bold text-xl mb-2">{product.name}</div>
+      <p className="text-gray-700 text-base">
+        This is a brief description of the product highlighting its key features
+        and benefits.
+      </p>
+    </div>
+    <div className="px-6 pt-4 pb-2">
+      <span className="inline-block bg-green-500 text-white rounded-full px-4 py-2 text-lg font-semibold">
+        RS {product.price}
+      </span>
+      <div className="mt-4">
+        <button onClick={()=>{
         
-        src={product.image} // Use product image URL
-      />
-      <div className="px-6 py-4">
-        <div className="font-bold text-xl mb-2 mr-1">{product.name}</div>
-       
-        <p className="text-gray-700 text-base">${product.price}</p>
-        <p className="text-black font-semibold mb-4">{product.discount} off 20%</p>
-        <div className="flex items-center mt-2">
-          <span className="text-yellow-500 flex">
-            {/* Assuming you have a rating property in your product */}
-            {Array.from({ length: product.rating }).map((_, index) => (
-              <IconStarFilled key={index} />
-            ))}
-          </span>
-         
-        </div>
-      </div>
-      <div className="px-6 pt-4 pb-2 flex justify-between">
-        <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-        onClick={()=>{
-          // when user click on view button then it will redirect to view-product/id page and show all details of product 
 
           router.push(`/view-product/${product._id}?name=${encodeURIComponent(product.name)}`);
 
 
-        }}>
-          View
-        </button>
-        <button
-        
-          className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">
-          Buy
+        }} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded w-full">
+          <i className="fas fa-cart-plus"></i>
+          
+            View Product
+          
         </button>
       </div>
     </div>
+  </div>
+
+
+
+</>
+
+
   );
 };
 

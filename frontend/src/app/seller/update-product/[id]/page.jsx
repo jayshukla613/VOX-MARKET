@@ -4,160 +4,142 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useRouter, useParams } from 'next/navigation';
 import toast from 'react-hot-toast';
+import { Formik } from 'formik';
 
 const UpdateProduct = () => {
-  const router = useRouter();
-  const { id } = useParams(); // Get the product ID from the URL
-  const [product, setProduct] = useState(null); // State to store product details
-  const [formData, setFormData] = useState({
-    name: '',
-    price: '',
-    offer: '',
-    description: '',
-    image: '',
-    stock: '',
-  });
+    const { id } = useParams();
+    const router = useRouter();
+    const [productdata, setProductData] = useState(null);
 
-  // Fetch the product details on component mount
-  useEffect(() => {
-    const fetchProduct = async () => {
-      try {
-        const res = await axios.get(`http://localhost:5000/product/getbyid/${id}`);
-        setProduct(res.data);
-        setFormData({
-          name: res.data.name,
-          price: res.data.price,
-          offer: res.data.offer,
-          description: res.data.description,
-          image: res.data.image,
-          stock: res.data.stock,
-        });
-      } catch (error) {
-        console.error('Error fetching product:', error);
-        toast.error('Failed to load product details.');
-      }
+    const fetchProductData = async (id) => {
+        try {
+            const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/product/getbyid/${id}`);
+            setProductData(response.data);
+            console.log('Product data:', response.data);
+        } catch (error) {
+            console.error('Error fetching product data:', error);
+            toast.error('Failed to fetch product data!');
+
+        }
     };
 
-    if (id) {
-      fetchProduct();
-    }
-  }, [id]);
+    useEffect(() => {
+        if (id) {
+            fetchProductData(id);
+        }
+    }, [id]);
 
-  // Handle input changes
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
-  };
+    const formSubmit = async (values, { setSubmitting }) => {
+        try {
+            const response = await axios.put(`${process.env.NEXT_PUBLIC_API_URL}/product/update/${id}`);
+            toast.success('Product updated successfully!');
+            router.back();
 
-  // Handle form submission
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+        } catch (error) {
+            console.error('Error updating product:', error);
+            toast.error('Failed to update product!');
+            setSubmitting(false);
+        }
+    };
 
-    try {
-      const res = await axios.put(`http://localhost:5000/product/update/${id}`, formData);
-      toast.success('Product updated successfully!');
-      router.push('/seller/products'); // Redirect to the seller's product list
-    } catch (error) {
-      console.error('Error updating product:', error);
-      toast.error('Failed to update product.');
-    }
-  };
-
-  if (!product) {
-    return <div>Loading product details...</div>;
-  }
-
-  return (
-    <div className="container mx-auto p-6">
-      <h1 className="text-2xl font-bold mb-4">Update Product</h1>
-      <form onSubmit={handleSubmit} className="space-y-4">
-        {/* Product Name */}
+    return (
         <div>
-          <label className="block font-bold mb-2">Product Name</label>
-          <input
-            type="text"
-            name="name"
-            value={formData.name}
-            onChange={handleInputChange}
-            className="p-2 border rounded w-full"
-            required
-          />
+            {productdata === null ? (
+                <h1>Loading...</h1>
+            ) : (
+                <Formik initialValues={productdata} onSubmit={formSubmit}>
+                    {(addform) => (
+                        <form onSubmit={addform.handleSubmit} className='bg-white p-6 rounded-lg shadow-lg'>
+                            <input
+                                type='text'
+                                name='name'
+                                placeholder='Product Name'
+                                value={addform.values.name}
+                                onChange={addform.handleChange}
+                                className='w-full p-2 mb-4 border'
+                            />
+                            <input
+                                type='number'
+                                name='price'
+                                placeholder='Price'
+                                value={addform.values.price}
+                                onChange={addform.handleChange}
+                                className='w-full p-2 mb-4 border'
+                            />
+                            {
+                                addform.errors.price && <p className='text-red-500'>{addform.errors.price}</p>
+                            }
+                            <textarea name='description' placeholder='Description' value={addform.values.description} onChange={addform.handleChange} className='w-full p-2 mb-4 border'></textarea>
+                            {
+                                addform.errors.description && <p className='text-red-500'>{addform.errors.description}</p>
+                            }
+                            <input type='file' name='image' onChange={handleFileUplaod} multiple className='w-full p-2 mb-4 border' />
+                            {
+                                addform.errors.image && <p className='text-red-500'>{addform.errors.image}</p>
+                            }
+                            <input type='number' name='quantity' placeholder='Quantity' value={addform.values.quantity} onChange={addform.handleChange} className='w-full p-2 mb-4 border' />
+                            {
+                                addform.errors.quantity && <p className='text-red-500'>{addform.errors.quantity}</p>
+                            }
+                            <input type='text' name='brand' placeholder='Brand' value={addform.values.brand} onChange={addform.handleChange} className='w-full p-2 mb-4 border' />
+                            {
+                                addform.errors.brand && <p className='text-red-500'>{addform.errors.brand}</p>
+                            }
+                            <input type='text' name='color' placeholder='Color' value={addform.values.color} onChange={addform.handleChange} className='w-full p-2 mb-4 border' />
+                            {
+                                addform.errors.color && <p className='text-red-500'>{addform.errors.color}</p>
+                            }
+                            <input type='text' name='size' placeholder='Size' value={addform.values.size} onChange={addform.handleChange} className='w-full p-2 mb-4 border' />
+                            {
+                                addform.errors.size && <p className='text-red-500'>{addform.errors.size}</p>
+                            }
+                            <textarea name='returnpolicy' placeholder='Return Policy' value={addform.values.returnpolicy} onChange={addform.handleChange} className='w-full p-2 mb-4 border'></textarea>
+                            {
+                                addform.errors.returnpolicy && <p className='text-red-500'>{addform.errors.returnpolicy}</p>
+                            }
+                            <textarea name='feature' placeholder='Features' value={addform.values.feature} onChange={addform.handleChange} className='w-full p-2 mb-4 border'></textarea>
+                            {
+                                addform.errors.feature && <p className='text-red-500'>{addform.errors.feature}</p>
+                            }
+                            <div className="mb-4">
+                                <label htmlFor="category" className="block text-gray-700">
+                                    Category
+                                </label>
+                                <select
+                                    id="category"
+                                    name="category" // Bind the category field to Formik
+                                    value={addform.values.category}
+                                    onChange={addform.handleChange}
+                                    onBlur={addform.handleBlur} // Handle blur for validation
+                                    className={`w-full p-2 border border-gray-300 rounded mt-1 ${
+                                        addform.touched.category && addform.errors.category ? 'border-red-500' : ''
+                                    }`}
+                                >
+                                    <option value="">Select a category</option>
+                                    <option value="electronics">Electronics</option>
+                                    <option value="fashion">Fashion</option>
+                                    <option value="home">Home</option>
+                                    <option value="beauty">Beauty</option>
+                                    <option value="sports">Sports</option>
+                                    <option value="toys">Toys</option>
+                                    <option value="automotive">Automotive</option>
+                                    <option value="books">Books</option>
+                                    <option value="music">Music</option>
+                                    <option value="grocery">Grocery</option>
+                                </select>
+                                {addform.touched.category && addform.errors.category && (
+                                    <p className='text-red-500'>{addform.errors.category}</p>
+                                )}
+                            </div>
+                            <button type='submit' className='bg-blue-500 text-white px-4 py-2 rounded'>
+                                Submit
+                            </button>
+                        </form>
+                    )}
+                </Formik>
+            )}
         </div>
-
-        {/* Price */}
-        <div>
-          <label className="block font-bold mb-2">Price</label>
-          <input
-            type="number"
-            name="price"
-            value={formData.price}
-            onChange={handleInputChange}
-            className="p-2 border rounded w-full"
-            required
-          />
-        </div>
-
-        {/* Offer Price */}
-        <div>
-          <label className="block font-bold mb-2">Offer Price</label>
-          <input
-            type="number"
-            name="offer"
-            value={formData.offer}
-            onChange={handleInputChange}
-            className="p-2 border rounded w-full"
-          />
-        </div>
-
-        {/* Description */}
-        <div>
-          <label className="block font-bold mb-2">Description</label>
-          <textarea
-            name="description"
-            value={formData.description}
-            onChange={handleInputChange}
-            className="p-2 border rounded w-full"
-            rows="4"
-          ></textarea>
-        </div>
-
-        {/* Image URL */}
-        <div>
-          <label className="block font-bold mb-2">Image URL</label>
-          <input
-            type="text"
-            name="image"
-            value={formData.image}
-            onChange={handleInputChange}
-            className="p-2 border rounded w-full"
-          />
-        </div>
-
-        {/* Stock */}
-        <div>
-          <label className="block font-bold mb-2">Stock</label>
-          <input
-            type="number"
-            name="stock"
-            value={formData.stock}
-            onChange={handleInputChange}
-            className="p-2 border rounded w-full"
-          />
-        </div>
-
-        {/* Submit Button */}
-        <button
-          type="submit"
-          className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
-        >
-          Update Product
-        </button>
-      </form>
-    </div>
-  );
+    );
 };
 
 export default UpdateProduct;

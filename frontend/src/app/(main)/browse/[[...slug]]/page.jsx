@@ -55,8 +55,8 @@ const ProductBrowser = () => {
               />
               <div className="px-6 py-4">
                 <div className="font-bold text-xl mb-2 mr-1">{product.name}</div>
-                <p className="text-gray-700 mb-4 mr-2">{product.description}</p>
-                <p className="text-gray-700 text-base">${product.price}</p>
+              
+                <p className="text-gray-700 text-bold text-2xl">RS{product.price}</p>
                 <p className="text-green-500 font-semibold mb-4">{product.discount} OFF 20%</p>
                 <div className="flex items-center mt-2">
                   <span className="text-yellow-500 flex">

@@ -44,7 +44,7 @@ const Homepage = () => {
         {(() => {
           const num1 = Math.floor(Math.random() * 40 + 1);
           const num2 = num1 + 4;
-          return products.slice(num1, num2).map((product) => (
+          return products.slice(0, 3).map((product) => (
             <Card key={`${product._id}-${product.name}`} product={product} />
           ));
         })()}
@@ -54,7 +54,7 @@ const Homepage = () => {
         {(() => {
           const num1 = Math.floor(Math.random() * 40 + 1);
           const num2 = num1 + 4;
-          return products.slice(num1, num2).map((product) => (
+          return products.slice(4, 7).map((product) => (
             <Card key={`${product._id}-${product.name}`} product={product} />
           ));
         })()}
@@ -67,7 +67,7 @@ const Homepage = () => {
         {(() => {
           const num1 = Math.floor(Math.random() * 40 + 1);
           const num2 = num1 + 4;
-          return products.slice(num1, num2).map((product) => (
+          return products.slice(8, 11).map((product) => (
             <Card key={`${product._id}-${product.name}`} product={product} />
           ));
         })()}

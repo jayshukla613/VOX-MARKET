@@ -14,7 +14,7 @@ const myschema = Schema({
     color: { type: String},
     size: { type: String },
     brand: { type: String},
-    retunepolicy: { type: String },
+    returnpolicy: { type: String },
     warranty: { type: String },
     feature: { type: String}
 })

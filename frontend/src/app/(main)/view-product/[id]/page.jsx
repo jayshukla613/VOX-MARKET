@@ -43,7 +43,7 @@ const ViewProduct = () => {
 
 
   const addToCart = () => {
-    axios.post(`http://localhost:5000/cart/addtocart`, 
+    axios.post(`http://localhost:5000/cart/addtocart`,
       {
         productId: id,
         name: product.name,
@@ -55,23 +55,23 @@ const ViewProduct = () => {
 
       },
       {
-      headers: { 'x-auth-token': token }
-    })
-    .then((result) => {
-      console.log(result.data);
-      toast.success("Product added to cart successfully!");
-      router.push("/user/cart");
+        headers: { 'x-auth-token': token }
+      })
+      .then((result) => {
+        console.log(result.data);
+        toast.success("Product added to cart successfully!");
+        router.push("/user/cart");
 
-      
-    }).catch((err) => {
-      console.log(err);
-      toast.error("Failed to add product to cart!");
 
-      
-    });
+      }).catch((err) => {
+        console.log(err);
+        toast.error("Failed to add product to cart!");
+
+
+      });
   };
 
-  
+
 
 
 
@@ -90,16 +90,16 @@ const ViewProduct = () => {
 
   // Function to handle "Buy Now" button click
   const handleBuyNow = (product) => {
-    if(token== null) {
+    if (token == null) {
       toast.error('Please login to buy the product!');
       router.push('/user-signup');
       return;
     }
-    else{
+    else {
       addItemToCart(product); // Add the product to the cart
       router.push(`/user/cart`);
     }
- 
+
   };
 
   // Show a loading message if the product is null
@@ -109,7 +109,7 @@ const ViewProduct = () => {
     <>
       <div className="container mx-auto p-4">
         {/* Product Title */}
-       
+
         {/* Product Images */}
         <div className="flex flex-col md:flex-row mb-4">
           <div className="flex-1">
@@ -161,24 +161,24 @@ const ViewProduct = () => {
           </div>
           <div className="flex-1 md:ml-4">
 
-          <h1 className="text-3xl font-bold mb-4">{product.name}</h1>
+            <h1 className="text-3xl font-bold mb-4">{product.name}</h1>
             {/* Price */}
             <div className="mb-4">
-        
-          
-          <p>Categories: {product.category}</p>
-          </div>
+
+
+              <p>Categories: {product.category}</p>
+            </div>
             <div className="text-2xl font-bold text-red-600 mb-2">Price: {product.price}</div>
-            <div className="text-gray-500 line-through mb-2">Was: {product.offer}</div>
+            <div className="text-blue-500 line-through mb-2 text-2xl Font-bold">Was:  RS.{product.price+product.price*0.3}</div>
 
             {/* Product Variants */}
             <div className="mb-4">
               <label className="block mb-2">Size: {product.size}</label>
-             
+
             </div>
             <div className="mb-4">
-              <label className="block mb-2 text-lg">Color: {product.color} 
-                
+              <label className="block mb-2 text-lg">Color: {product.color}
+
                 <span
                   className="font-bold"
                   style={{
@@ -188,15 +188,15 @@ const ViewProduct = () => {
                     display: 'inline-block',
                     borderRadius: '',
                     marginLeft: '10px',
-                    
+
                   }}
                 ></span>
-                
-
-               </label>
 
 
-              
+              </label>
+
+
+
             </div>
             {/* Availability/Stock Status */}
             <div className="mb-4 text-green-600">{product.stock}</div>
@@ -206,11 +206,12 @@ const ViewProduct = () => {
                 type="submit"
                 // onClick={() => addToCart()}
                 onClick={() => addItemToCart(product)}
-                
+
                 className="bg-blue-500 text-white px-4 py-2 rounded w-full md:w-auto"
               >
                 Add to Cart
               </button>
+<<<<<<< HEAD
 <button
   onClick={() => handleBuyNow(product)}
   className="bg-green-500 text-white px-4 py-2 rounded w-full md:w-auto"
@@ -219,23 +220,30 @@ const ViewProduct = () => {
 </button>
 
               {/* <button
+=======
+
+              <button
+>>>>>>> 6a626ff7444da4e25110aa3f778291e783c78b99
                 onClick={() => handleBuyNow(product)}
                 className="bg-green-500 text-white px-4 py-2 rounded w-full md:w-auto"
               >
                 Buy Now
+<<<<<<< HEAD
                 
               </button> */}
+=======
+              </button>
+
+
+>>>>>>> 6a626ff7444da4e25110aa3f778291e783c78b99
             </div>
 
             {/* Return Policy */}
             <div className="mb-4">
-              <h2 className="font-bold mb-2">Return Policy: {product.retunepolicy}</h2>
-              <p>
-                30-day return policy.
-                <Link className="text-blue-500" href="">
-                  Read more
-                </Link>
-              </p>
+              <h2 className="font-bold mb-2">Return Policy</h2>
+              <p>🛡️ 30-Day Return Policy: If you're not satisfied with your purchase, you can return it within 30 days for a full refund or exchange.</p>
+              <p>Returns accepted within 30 days of delivery. Items must be in original condition.</p>
+
             </div>
             {/* Payment Options */}
             <div className="mb-4">
@@ -253,13 +261,13 @@ const ViewProduct = () => {
         <div className="mb-4">
           <h2 className="text-2xl font-bold">Customer Ratings & Reviews</h2>
           <ReviewRating productId={id} />
-          
+
         </div>
         {/* Related Products */}
         <div className="mb-4">
           <h2 className="text-2xl font-bold mb-2">Related Products</h2>
           <div className="mb-4">
-           
+
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               {relatedProducts.length > 0 ? (
                 relatedProducts.map((relatedProduct) => (
@@ -286,7 +294,7 @@ const ViewProduct = () => {
           </div>
         </div>
         {/* Product Tags and Categories */}
-        
+
       </div>
     </>
   );
