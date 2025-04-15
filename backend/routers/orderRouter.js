@@ -4,21 +4,29 @@ const verifytoken = require('../middlewares/verifytoken');
 const router = express.Router();
 
 // Create a new order
-router.post("/add", verifytoken, async (req, res) => {
+router.post("/add", async (req, res) => {
   try {
-    const orderData = {
-      ...req.body,
-      user: req.user.id, // ✅ Attach user ID from token
-    };
-
-    const order = new Model(orderData);
-    await order.save();
-
-    res.status(201).json({ message: "Order created successfully", order });
+    const { items, address, city, postalCode, name, country, cardNumber, expiry, cvc, totalPrice } = req.body;
+    const newOrder = new Model({
+      user: req.user.id,
+      items,
+      address,
+      city,
+      postalCode,
+      name,
+      country,
+      cardNumber,
+      expiry,
+      cvc,
+      totalPrice
+    });
+    await newOrder.save();
+    res.status(201).json(newOrder);
   } catch (error) {
     res.status(500).json({ error: "Failed to create order", details: error.message });
   }
-});
+}
+);  
 
 
 // Get all orders for a user
