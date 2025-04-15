@@ -125,8 +125,8 @@ const pageDetails = [
     pagePath: '/admin/adminprofile'
   },
   {
-    pageName: 'cheakout',
-    pagePath: '/user/cheakout'
+    pageName: 'checkout',
+    pagePath: '/user/checkout'
   },
 ]
 
@@ -186,7 +186,7 @@ export const VoiceProvider = ({ children }) => {
       command: 'I want to buy something',
       callback: (pageName) => {
         console.log('Opening page: ', pageName);
-        voicePageNavigator('productView')
+        voicePageNavigator('category')
       }
     },
     {
@@ -211,10 +211,10 @@ export const VoiceProvider = ({ children }) => {
       }
     },
     {
-      command: 'open cheak out page',
+      command: 'open check out page',
       callback: (pageName) => {
         console.log('Opening page: ', pageName);
-        voicePageNavigator('cheakout')
+        voicePageNavigator('checkout')
       }
     },
     
