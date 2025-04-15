@@ -9,7 +9,11 @@ import toast from 'react-hot-toast';
 import useCartContext from '@/context/CartContext';
 
 const ViewProduct = () => {
+<<<<<<< HEAD
   // Removed duplicate declaration of token
+=======
+// Removed duplicate declaration of token
+>>>>>>> e80b0aa7eb2c97ef2a793532ca3d616e5a1d73c0
   const router = useRouter();
   const { id } = useParams();
 
@@ -211,6 +215,7 @@ const ViewProduct = () => {
               >
                 Add to Cart
               </button>
+<<<<<<< HEAD
 
               <button
                 onClick={() => handleBuyNow(product)}
@@ -231,6 +236,14 @@ const ViewProduct = () => {
 
             {/* Return Policy */}
             <div className="mb-4">
+=======
+<button
+  onClick={() => handleBuyNow(product)}
+  className="bg-green-500 text-white px-4 py-2 rounded w-full md:w-auto"
+>
+  Buy Now
+</button>
+>>>>>>> e80b0aa7eb2c97ef2a793532ca3d616e5a1d73c0
               <h2 className="font-bold mb-2">Return Policy: {product.retunepolicy}</h2>
               <p>
                 30-day return policy.
