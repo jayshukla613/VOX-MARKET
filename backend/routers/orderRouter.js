@@ -4,11 +4,13 @@ const verifytoken = require('../middlewares/verifytoken');
 const router = express.Router();
 
 // Create a new order
-router.post("/add", async (req, res) => {
+router.post("/add", verifytoken, async (req, res) => {
+  console.log('add order');
+  
   try {
     const { items, address, city, postalCode, name, country, cardNumber, expiry, cvc, totalPrice } = req.body;
     const newOrder = new Model({
-      user: req.user.id,
+      user: req.user._id,
       items,
       address,
       city,
@@ -29,10 +31,21 @@ router.post("/add", async (req, res) => {
 );  
 
 
+router.get("/getall",  async (req, res) => {
+   Model.find()
+          .then((result) => {
+              res.status(200).json(result);
+          }).catch((err) => {
+              console.log(err);
+              res.status(500).json(err);
+          });
+  });
+
+
 // Get all orders for a user
 router.get("/user-orders", verifytoken, async (req, res) => {
   try {
-    const orders = await Model.find({ user: req.user.id }); // ✅ corrected field
+    const orders = await Model.find({ user: req.user._id }); // ✅ corrected field
     res.status(200).json(orders);
   } catch (error) {
     res.status(500).json({ error: "Failed to fetch orders", details: error.message });

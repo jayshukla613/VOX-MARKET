@@ -1,14 +1,12 @@
 require('dotenv').config();
 const Razorpay = require("razorpay");
+const crypto = require("crypto"); // Import the crypto module
+const express = require("express");
 
 const razorpay = new Razorpay({
-
     key_id: process.env.RAZORPAY_KEY_ID,
     key_secret: process.env.RAZORPAY_SECRET,
 });
-
-const express = require("express");
-// const { createOrder, verifyPayment } = require("../controllers/razorpayController");
 
 const router = express.Router();
 
@@ -28,11 +26,10 @@ router.post("/create-order", async (req, res) => {
         console.error("Error creating order:", error);
         res.status(500).json({ error: "Failed to create order" });
     }
-}
-);
+});
 
-router.get("/verify-payment", async (req, res) => {
-    const { razorpay_payment_id, razorpay_order_id, razorpay_signature } = req.query;
+router.post("/verify-payment", async (req, res) => {
+    const { razorpay_payment_id, razorpay_order_id, razorpay_signature } = req.body;
 
     const generated_signature = crypto
         .createHmac("sha256", process.env.RAZORPAY_SECRET)
@@ -40,6 +37,8 @@ router.get("/verify-payment", async (req, res) => {
         .digest("hex");
 
     if (generated_signature === razorpay_signature) {
+        console.log("Payment verified successfully");
+        
         res.json({ success: true });
     } else {
         res.status(400).json({ error: "Payment verification failed" });
