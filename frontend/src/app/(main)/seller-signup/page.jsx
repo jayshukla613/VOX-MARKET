@@ -42,7 +42,7 @@ const schema = yup.object().shape({
     },
     onSubmit: (values,{ resetForm,setSubmitting}) => {
       console.log(values);
-      axios.post('http://localhost:5000/seller/add',values)
+      axios.post(`${process.env.NEXT_PUBLIC_API_URL}/seller/add`,values)
       .then((result) => {
         toast.success('sellesignup successful')
 

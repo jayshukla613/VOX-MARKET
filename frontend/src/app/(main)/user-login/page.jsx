@@ -35,7 +35,7 @@ const Userlogin = () => {
     onSubmit:(value)=>{
       console.log(value);
 
-      axios.post('http://localhost:5000/user/authenticate',value)
+      axios.post(`${process.env.NEXT_PUBLIC_API_URL}/user/authenticate`,value)
       .then((result) => {
         toast.success('login succesfull')
         console.log(result.data?.token);

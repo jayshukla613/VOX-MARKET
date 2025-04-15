@@ -26,7 +26,7 @@ const ViewProduct = () => {
     if (id) {
       const fetchProduct = async () => {
         try {
-          const res = await axios.get(`http://localhost:5000/product/getbyid/${id}`);
+          const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/product/getbyid/${id}`);
           const data = res.data;
           console.log(res.data);
           if (res.data?.category) fetchRelatedProducts(res.data?.category);
@@ -43,7 +43,7 @@ const ViewProduct = () => {
 
 
   const addToCart = () => {
-    axios.post(`http://localhost:5000/cart/addtocart`,
+    axios.post(`${process.env.NEXT_PUBLIC_API_URL}/cart/addtocart`,
       {
         productId: id,
         name: product.name,
@@ -78,7 +78,7 @@ const ViewProduct = () => {
 
   const fetchRelatedProducts = async (category) => {
     try {
-      const res = await axios.get(`http://localhost:5000/product/getbycategory/${category}`);
+      const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/product/getbycategory/${category}`);
       const data = res.data;
       console.log('Related Products:', data); // Debugging
       setRelatedProducts(data); // Set related products

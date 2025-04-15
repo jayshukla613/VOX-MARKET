@@ -31,11 +31,21 @@ const Card = ({ product }) => {
         This is a brief description of the product highlighting its key features
         and benefits.
       </p>
+      
     </div>
+     <span className="text-yellow-500 flex ml-6">
+              <IconStarFilled/>
+              <IconStarFilled/>
+              <IconStarFilled/>
+              <IconStarFilled/>
+              
+            </span>
+    
     <div className="px-6 pt-4 pb-2">
       <span className="inline-block bg-green-500 text-white rounded-full px-4 py-2 text-lg font-semibold">
         RS {product.price}
       </span>
+      <span></span>
       <div className="mt-4">
         <button onClick={()=>{
         

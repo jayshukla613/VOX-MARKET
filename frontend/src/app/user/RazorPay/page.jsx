@@ -14,12 +14,14 @@ const [isprocessing, setIsProcessing] = useState(false);
 
     try {
       // Step 1: Create an order on the server
+      // console.log(process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID);
       const { data } = await axios.post('http://localhost:5000/razorpay/create-order', {
         amount: 500, // Amount in INR (e.g., 500 INR)
         currency: 'INR',
       });
 
       const { order } = data;
+      
 
       // Step 2: Open Razorpay payment gateway
       const options = {
