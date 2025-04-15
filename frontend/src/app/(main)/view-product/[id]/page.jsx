@@ -211,15 +211,31 @@ const ViewProduct = () => {
               >
                 Add to Cart
               </button>
+<<<<<<< HEAD
+<button
+  onClick={() => handleBuyNow(product)}
+  className="bg-green-500 text-white px-4 py-2 rounded w-full md:w-auto"
+>
+  Buy Now
+</button>
+
+              {/* <button
+=======
 
               <button
+>>>>>>> 6a626ff7444da4e25110aa3f778291e783c78b99
                 onClick={() => handleBuyNow(product)}
                 className="bg-green-500 text-white px-4 py-2 rounded w-full md:w-auto"
               >
                 Buy Now
+<<<<<<< HEAD
+                
+              </button> */}
+=======
               </button>
 
 
+>>>>>>> 6a626ff7444da4e25110aa3f778291e783c78b99
             </div>
 
             {/* Return Policy */}
