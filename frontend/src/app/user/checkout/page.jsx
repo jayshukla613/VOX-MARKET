@@ -8,6 +8,7 @@ import { useState } from "react";
 import toast from "react-hot-toast";
 import * as Yup from 'yup';
 
+
 const validation = Yup.object().shape({
   name: Yup.string()
     .min(3, 'Name must be at least 3 characters')
@@ -49,8 +50,11 @@ const validation = Yup.object().shape({
 
 export default function CheckoutPage() {
   const router = useRouter();
-  const { cartItems } = useCartContext();
-  const [paymentMethod, setPaymentMethod] = useState("creditCard");
+  const { cartItems,calculateTotalAmount} = useCartContext();
+   
+
+
+  
 
   const formikform = useFormik({
     initialValues: {
@@ -64,276 +68,239 @@ export default function CheckoutPage() {
       country: ''
     },
     onSubmit: async (values) => {
-      const fullAddress = `${values.name}, ${values.phone}, ${values.address}, ${values.city}, ${values.state} - ${values.pincode}, ${values.country}`;
+      console.log(values);
+      
 
-  const data = {
-    items: cartItems,
-    address: fullAddress, // ✅ send flat string
-    paymentMethod: paymentMethod
-  };
+      
 
-      try {
-         axios.post(`${process.env.NEXT_PUBLIC_API_URL}/order/add`, data, {
-          headers: {
-            'x-auth-token': localStorage.getItem('user-token')
-          }
-        });
-        toast.success("Order placed successfully!");
-        console.log(data);
-        
-        router.push("/user/thankyou");
-      } catch (err) {
-        console.error(err);
-        toast.error("Error placing order");
-      }
     },
     validationSchema: validation
   });
 
+
+
+
   return (
-    <div className="container mx-auto p-6">
-      <h1 className="text-3xl font-bold mb-6">Checkout</h1>
-
-      {/* Product Summary */}
-      <div className="mb-6">
-        <h2 className="text-2xl font-bold mb-4">Order Summary</h2>
-        {cartItems.map((item, index) => (
-          <div key={index} className="border p-4 rounded-lg shadow-md mb-4">
-            <img
-              src={item.image}
-              alt={item.name}
-              className="w-32 h-32 object-cover mb-4"
-            />
-            <p><strong>Product Name:</strong> {item.name}</p>
-            <p><strong>Price:</strong> ${item.price}</p>
-            <p><strong>Quantity:</strong> {item.quantity}</p>
-            <p><strong>Total:</strong> ${item.price * item.quantity}</p>
-          </div>
-        ))}
-      </div>
-
-<<<<<<< HEAD
-    const handleInputChange = (e) => {
-        const { name, value } = e.target;
-        setShippingDetails((prevDetails) => ({
-            ...prevDetails,
-            [name]: value,
-        }));
-    };
-
-    const handleCheckout = () => {
-        // Handle checkout logic here (e.g., send data to the server)
-        alert("Order placed successfully!");
-    };
-
-
-    const fetchProduct = async (id) => {
-        axios.get(`http://localhost:5000/product/getbyid/${id}`)
-            .then((response) => {
-                console.log(response.data);
-                setproduct(data)
-            })
-            .catch((error) => {
-                console.error(error);
-            });
-    }
-    useEffect(() => {
-        fetchProduct();
-    }, [id]);
-
-    return (
-        <div className="container mx-auto p-6">
-            <h1 className="text-3xl font-bold mb-6">Checkout</h1>
-
-            {/* Product Summary */}
- {
-      cartItems.map((item) => (
-        <div key={item.id} className="bg-white rounded-lg shadow-md p-6 mb-4">
-            <div className="flex items-center mb-4">
-              <img src={item.image} alt={item.name} className="w-20 h-20 object-cover rounded mr-4" />
-              <div className="flex-1">  
-                  <h2 className="text-xl font-semibold">{item.name}</h2>
-                  <p className="text-gray-600">Category: {item.category}</p>
-                  <p className="text-gray-600">Price: ₹{item.price}</p>
-                  <p className="text-gray-600">Quantity: {item.quantity}</p>  
-              </div>
-            </div>
-        </div>
-      ))
- }
-
-            {/* Shipping Details */}
-            <div className="mb-6">
-                <h2 className="text-2xl font-bold mb-4">Shipping Details</h2>
-                <div className=' flex justify-center '>
-      <form onSubmit={formikform.handleSubmit}>
-        <div className="mb-6">
-      
-          <div className="space-y-4">
-=======
-      {/* Shipping Details */}
-      <div className="mb-6">
-        <h2 className="text-2xl font-bold mb-4">Shipping Details</h2>
-        <div className='flex justify-center'>
-          <form onSubmit={formikform.handleSubmit} className="w-full max-w-2xl space-y-4">
->>>>>>> 577e4f23ea30cf56ac453bac3d81f60b757b5587
-            <input
-              type="text"
-              name="name"
-              onChange={formikform.handleChange}
-              onBlur={formikform.handleBlur}
-              value={formikform.values.name}
-              placeholder="Full Name"
-              className="w-full p-2 border rounded-md"
-            />
-            {formikform.errors.name && formikform.touched.name && (
-              <div className="text-red-500">{formikform.errors.name}</div>
-            )}
-
-            <input
-              type="email"
-              name="email"
-              onChange={formikform.handleChange}
-              onBlur={formikform.handleBlur}
-              value={formikform.values.email}
-              placeholder="Email Address"
-              className="w-full p-2 border rounded-md"
-            />
-            {formikform.errors.email && formikform.touched.email && (
-              <div className="text-red-500">{formikform.errors.email}</div>
-            )}
-
-            <input
-              type="tel"
-              name="phone"
-              onChange={formikform.handleChange}
-              onBlur={formikform.handleBlur}
-              value={formikform.values.phone}
-              placeholder="Phone Number"
-              className="w-full p-2 border rounded-md"
-            />
-            {formikform.errors.phone && formikform.touched.phone && (
-              <div className="text-red-500">{formikform.errors.phone}</div>
-            )}
-
-            <input
-              type="text"
-              name="address"
-              onChange={formikform.handleChange}
-              onBlur={formikform.handleBlur}
-              value={formikform.values.address}
-              placeholder="Street Address"
-              className="w-full p-2 border rounded-md"
-            />
-            {formikform.errors.address && formikform.touched.address && (
-              <div className="text-red-500">{formikform.errors.address}</div>
-            )}
-
-            <div className="flex space-x-4">
+    <div>
+     <div className="container mx-auto p-4">
+    <h1 className="text-3xl font-bold mb-6">Checkout</h1>
+    <div className="flex flex-col lg:flex-row gap-6">
+      {/* Billing Details */}
+      <div className="w-full lg:w-2/3 bg-white p-6 rounded-lg shadow-md">
+        <h2 className="text-2xl font-semibold mb-4">shipping Details</h2>
+        <form onSubmit={formikform.handleSubmit} className="space-y-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+              <label
+                className="block text-sm font-medium text-gray-700"
+                htmlFor="first-name"
+              >
+                First Name
+              </label>
               <input
+                className="mt-1 block w-full border-gray-300 rounded-md shadow-sm text-lg p-2"
+                id="first-name"
                 type="text"
+                name="name"
+                onChange={formikform.handleChange}
+                value={formikform.values.name}
+              />
+              {formikform.touched.name && formikform.errors.name ? (
+                <div className="text-red-500 text-sm">{formikform.errors.name}</div>
+              ) : null}
+            </div>
+            <div>
+              <label
+                className="block text-sm font-medium text-gray-700"
+                htmlFor="last-name"
+              >
+                Phone Number
+              </label>
+              <input
+                className="mt-1 block w-full border-gray-300 rounded-md shadow-sm text-lg p-2"
+                name="phone"
+                onChange={formikform.handleChange}
+                value={formikform.values.phone}
+
+                type="number"
+              />
+              {formikform.touched.phone && formikform.errors.phone ? (
+                <div className="text-red-500 text-sm">{formikform.errors.phone}</div>
+              ) : null}
+            </div>
+            <div className="col-span-2">
+              <label
+                className="block text-sm font-medium text-gray-700"
+                htmlFor="email"
+              >
+                Email
+              </label>
+              <input
+                className="mt-1 block w-full border-gray-300 rounded-md shadow-sm text-lg p-2"
+                id="email"
+                name="email"
+                onChange={formikform.handleChange}
+                value={formikform.values.email}
+                type="email"
+              />
+              {formikform.touched.email && formikform.errors.email ? (
+                <div className="text-red-500 text-sm">{formikform.errors.email}</div>
+              ) : null}
+            </div>
+            <div className="col-span-2">
+              <label
+                className="block text-sm font-medium text-gray-700"
+                htmlFor="address"
+              >
+                Address
+              </label>
+              <input
+                className="mt-1 block w-full border-gray-300 rounded-md shadow-sm text-lg p-2"
+                id="address"
+                type="text"
+                name="address"
+                onChange={formikform.handleChange}
+                value={formikform.values.address}
+
+              />
+              {formikform.touched.address && formikform.errors.address ? (
+                <div className="text-red-500 text-sm">{formikform.errors.address}</div>
+              ) : null}
+            </div>
+            <div>
+              <label
+                className="block text-sm font-medium text-gray-700"
+                htmlFor="city"
+              >
+                City
+              </label>
+              <input
+                className="mt-1 block w-full border-gray-300 rounded-md shadow-sm text-lg p-2"
+                id="city"
                 name="city"
                 onChange={formikform.handleChange}
-                onBlur={formikform.handleBlur}
                 value={formikform.values.city}
-                placeholder="City"
-                className="w-1/2 p-2 border rounded-md"
-              />
-              <input
                 type="text"
+              />
+              {formikform.touched.city && formikform.errors.city ? (
+                <div className="text-red-500 text-sm">{formikform.errors.city}</div>
+              ) : null}
+
+            </div>
+            <div>
+              <label
+                className="block text-sm font-medium text-gray-700"
+                htmlFor="state"
+              >
+                State
+              </label>
+              <input
+                className="mt-1 block w-full border-gray-300 rounded-md shadow-sm text-lg p-2"
+                id="state"
                 name="state"
                 onChange={formikform.handleChange}
-                onBlur={formikform.handleBlur}
                 value={formikform.values.state}
-                placeholder="State/Province"
-                className="w-1/2 p-2 border rounded-md"
-              />
-            </div>
-            {(formikform.errors.city && formikform.touched.city) && (
-              <div className="text-red-500">{formikform.errors.city}</div>
-            )}
-            {(formikform.errors.state && formikform.touched.state) && (
-              <div className="text-red-500">{formikform.errors.state}</div>
-            )}
 
-            <div className="flex space-x-4">
-              <input
                 type="text"
+              />
+              {formikform.touched.state && formikform.errors.state ? (
+                <div className="text-red-500 text-sm">{formikform.errors.state}</div>
+              ) : null}
+
+            </div>
+            <div>
+              <label
+                className="block text-sm font-medium text-gray-700"
+                htmlFor="zip"
+              >
+                Zip Code
+              </label>
+              <input
+                className="mt-1 block w-full border-gray-300 rounded-md shadow-sm text-lg p-2"
+                id="zip"
                 name="pincode"
                 onChange={formikform.handleChange}
-                onBlur={formikform.handleBlur}
                 value={formikform.values.pincode}
-                placeholder="ZIP/Postal Code"
-                className="w-1/2 p-2 border rounded-md"
-              />
-              <input
+
                 type="text"
+              />
+
+              {formikform.touched.pincode && formikform.errors.pincode ? (
+                <div className="text-red-500 text-sm">{formikform.errors.pincode}</div>
+              ) : null}
+
+            </div>
+            <div>
+              <label
+                className="block text-sm font-medium text-gray-700"
+                htmlFor="country"
+              >
+                Country
+              </label>
+              <input
+                className="mt-1 block w-full border-gray-300 rounded-md shadow-sm text-lg p-2"
+                id="country"
                 name="country"
                 onChange={formikform.handleChange}
-                onBlur={formikform.handleBlur}
                 value={formikform.values.country}
-                placeholder="Country"
-                className="w-1/2 p-2 border rounded-md"
+
+                type="text"
               />
-            </div>
-            {(formikform.errors.pincode && formikform.touched.pincode) && (
-              <div className="text-red-500">{formikform.errors.pincode}</div>
-            )}
-            {(formikform.errors.country && formikform.touched.country) && (
-              <div className="text-red-500">{formikform.errors.country}</div>
-            )}
+              {formikform.touched.country && formikform.errors.country ? (
+                <div className="text-red-500 text-sm">{formikform.errors.country}</div>
+              ) : null}
 
-            {/* Payment Method */}
-            <div className="mb-4">
-              <h2 className="text-xl font-bold mb-2">Payment Method</h2>
-              <div className="flex items-center space-x-4">
-                <label className="flex items-center">
-                  <input
-                    type="radio"
-                    name="paymentMethod"
-                    value="creditCard"
-                    checked={paymentMethod === "creditCard"}
-                    onChange={(e) => setPaymentMethod(e.target.value)}
-                    className="mr-2"
-                  />
-                  Credit Card
-                </label>
-                <label className="flex items-center">
-                  <input
-                    type="radio"
-                    name="paymentMethod"
-                    value="paypal"
-                    checked={paymentMethod === "paypal"}
-                    onChange={(e) => setPaymentMethod(e.target.value)}
-                    className="mr-2"
-                  />
-                  PayPal
-                </label>
-                <label className="flex items-center">
-                  <input
-                    type="radio"
-                    name="paymentMethod"
-                    value="cod"
-                    checked={paymentMethod === "cod"}
-                    onChange={(e) => setPaymentMethod(e.target.value)}
-                    className="mr-2"
-                  />
-                  Cash on Delivery
-                </label>
+            </div>
+          </div>
+          <button type="submit">complete</button>
+        </form>
+      </div>
+      {/* Order Summary */}
+      <div className="w-full lg:w-1/3 bg-white p-6 rounded-lg shadow-md">
+        <h2 className="text-2xl font-semibold mb-4">Order Summary</h2>
+        <div className="flex flex-col gap-4">
+         
+         
+          {cartItems.map((item) => (
+            <div key={item.id} className="flex items-center justify-between border-b pb-4">
+              <div className="flex items-center gap-4">
+                <img src={item.image} alt={item.name} className="w-16 h-16 rounded-md" />
+                <div>
+                  <p className="text-lg font-medium">{item.name}</p>
+                  <p className="text-gray-600">RS..{item.price}</p>
+                </div>
               </div>
+              <p className="text-lg font-medium">Quantity{item.quantity}</p>
             </div>
+          ))}
+          {/* Total Amount */}
 
-            <div className="text-center">
-              <button
-                type="submit"
-                className="bg-blue-500 text-white px-6 py-3 rounded hover:bg-blue-600 focus:outline-none"
-              >
-                Place Order
-              </button>
+
+
+
+
+
+          <div className="border-t border-gray-200 pt-4">
+            <div className="flex items-center justify-between">
+              <p className="text-lg font-medium">Subtotal</p>
+              <p className="text-lg font-medium">Rs.. {calculateTotalAmount().toFixed(2)}</p>
             </div>
-          </form>
+            <div className="flex items-center justify-between">
+              <p className="text-lg font-medium">Shipping</p>
+              <p className="text-lg font-medium">RS..20.00</p>
+            </div>
+            <div className="flex items-center justify-between">
+              <p className="text-lg font-medium">Total</p>
+              <p className="text-lg font-bold">RS...{calculateTotalAmount().toFixed(2)}</p>
+            </div>
+          </div>
+          <button className="w-full bg-blue-600 text-white py-2 rounded-md text-lg font-medium hover:bg-blue-700">
+            Place Order
+          </button>
         </div>
       </div>
+    </div>
+  </div>
     </div>
   );
 }
