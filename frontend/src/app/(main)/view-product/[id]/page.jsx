@@ -7,6 +7,7 @@ import React, { useState, useEffect, use } from 'react';
 import ReviewRating from '../../reviewProduct/page';
 import toast from 'react-hot-toast';
 import useCartContext from '@/context/CartContext';
+import { IconStarFilled } from '@tabler/icons-react';
 
 const ViewProduct = () => {
   // Removed duplicate declaration of token
@@ -267,13 +268,28 @@ const ViewProduct = () => {
                       src={relatedProduct.image}
                     />
                     <h3 className="text-lg font-bold">{relatedProduct.name}</h3>
-                    <p className="text-red-600 font-bold">Price: {relatedProduct.price}</p>
-                    <button
-                      onClick={() => router.push(`/view-product/${relatedProduct._id}`)}
-                      className="bg-blue-500 text-white px-4 py-2 rounded mt-2"
-                    >
-                      View Product
-                    </button>
+                    <span className="text-yellow-500 flex ">
+                              <IconStarFilled/>
+                              <IconStarFilled/>
+                              <IconStarFilled/>
+                              <IconStarFilled/>
+                              
+                            </span>
+                    <span className="inline-block mt-4 bg-green-500 text-white rounded-full px-4 py-2 text-lg font-semibold">
+                  RS {relatedProduct.price}
+
+                </span>
+                <span className=" line-through ml-2 text-lg text-red-500 font-semibold p-5">RS {relatedProduct.price + relatedProduct.price * 0.4}</span>
+
+                <div className="px-6 pt-4 pb-2">
+                <button onClick={() => {
+                  router.push(`/view-product/${relatedProduct._id}?name=${encodeURIComponent(relatedProduct.name)}`);
+                }} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded w-full">
+                  <i className="fas fa-cart-plus"></i>
+                  View Product
+                </button>
+              </div>
+             
                   </div>
                 ))
               ) : (

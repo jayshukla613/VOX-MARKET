@@ -12,7 +12,7 @@ const UserManagement = () => {
 
     const { userLoggedIn, logout } = useAppContext();
     const [users, setUsers] = useState([]);
-    const [form, setForm] = useState({ name: '', email: '', role: '', status: 'Active' });
+    const [form, setForm] = useState({ name: '', email: '', role: ' Buyer', status: 'Active' });
     const [editingUser, setEditingUser] = useState(null);
 
 
@@ -27,11 +27,18 @@ const UserManagement = () => {
 
 
 
-    const deleteUser = (id) => {
-        axios.delete(`http://localhost:5000/users/${id}`).then(() => {
-            setUsers(users.filter(user => user._id !== id));
-        });
-    };
+      const deleteUser = async (id) => {
+        axios.delete(`http://localhost:5000/user/deletebyid/${id}`)
+          .then((result) => {
+            console.log(result.data)
+            toast.success('delete')
+    
+          }).catch((err) => {
+            console.log(err)
+            
+    
+          });
+      }
 
    const removeuser=() =>   {
     if (typeof window !== 'undefined') {
@@ -78,7 +85,7 @@ const UserManagement = () => {
                         <tr key={user._id} className="border-t">
                             <td className="p-2 text-center">{user.name}</td>
                             <td className="p-2 text-center">{user.email}</td>
-                            <td className="p-2 text-center">{user.role}</td>
+                            <td className="p-2 text-center">{user.role} Buyer</td>
 
                             <td className="p-3">
                                 <span
@@ -92,7 +99,14 @@ const UserManagement = () => {
                             </td>
                             <td className="p-2 text-center">
                                 <button className="bg-yellow-500 text-white px-3 py-1 rounded hover:bg-yellow-600 mr-2" onClick={() => router.push(`/admin/viewuser/${user._id}`)}>View</button>
-                                <button className="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600" onClick={() => deleteUser(user._id)}>Delete</button>
+                                <button className="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600" onClick={() => {
+                    var result = confirm("Are you sure  to Delete this seller Account?");
+                    if (result) {
+                      deleteUser(user._id) 
+                    }
+                   
+                    
+                  }}>Delete</button>
 
                                 <button className="bg-red-500 text-white px-3 ml-2 py-1 rounded hover:bg-red-600" onClick={removeuser}>Remove</button>
 
