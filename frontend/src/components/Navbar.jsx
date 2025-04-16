@@ -114,7 +114,7 @@ const Navbar = (product) => {
                 e.preventDefault();
                 router.push(`/searchpage/${search}`);
                 if (search) { handleSearch(); }
-                else { toast.error("Please enter a search term"); }
+                else { error("Please enter a search term"); }
                 setSearch("");
               }}
 

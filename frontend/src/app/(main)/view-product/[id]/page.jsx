@@ -93,7 +93,7 @@ const ViewProduct = () => {
   const handleBuyNow = (product) => {
     if (token == null) {
       toast.error('Please login to buy the product!');
-      router.push('/user-signup');
+      router.push('/user-login');
       return;
     }
     else {
