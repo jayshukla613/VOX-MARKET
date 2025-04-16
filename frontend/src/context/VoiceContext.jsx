@@ -69,6 +69,10 @@ const pageDetails = [
     pagePath: '/user-signup'
   },
   {
+    pageName: 'category',
+    pagePath: '/category'
+  },
+  {
     pageName: 'login',
     pagePath: '/user-login'
   },
@@ -190,7 +194,7 @@ export const VoiceProvider = ({ children }) => {
       }
     },
     {
-      command: 'I want to contact you',
+      command: 'I want to contact ',
       callback: (pageName) => {
         console.log('Opening page: ', pageName);
         voicePageNavigator('contact')
@@ -226,70 +230,70 @@ export const VoiceProvider = ({ children }) => {
       }
     },
     {
-      command: 'open reset password page',
+      command: 'open reset password ',
       callback: (pageName) => {
         console.log('Opening page: ', pageName);
         voicePageNavigator('resetPassword')
       }
     },
     {
-      command: 'open signup page',
+      command: 'open signup ',
       callback: (pageName) => {
         console.log('Opening page: ', pageName);
         voicePageNavigator('signup')
       }
     },
     {
-      command: 'open admin dashboard',
+      command: 'open admin dashboard page',
       callback: (pageName) => {
         console.log('Opening page: ', pageName);
         voicePageNavigator('admindashboard')
       }
     },
     {
-      command: 'open manage user',
+      command: 'open manage user page',
       callback: (pageName) => {
         console.log('Opening page: ', pageName);
         voicePageNavigator('manageuser')
       }
     },
     {
-      command: 'open admin profile',
+      command: 'open admin profile page',
       callback: (pageName) => {
         console.log('Opening page: ', pageName);
         voicePageNavigator('adminprofile')
       }
     },
     {
-      command: 'open add product',
+      command: 'open add product page',
       callback: (pageName) => {
         console.log('Opening page: ', pageName);
         voicePageNavigator('addProduct')
       }
     },
     {
-      command: 'open manage product',
+      command: 'open manage product page',
       callback: (pageName) => {
         console.log('Opening page: ', pageName);
         voicePageNavigator('manageProduct')
       }
     },
     {
-      command: 'open seller dashboard',
+      command: 'open seller dashboard page',
       callback: (pageName) => {
         console.log('Opening page: ', pageName);
         voicePageNavigator('sellerdashboard')
       }
     },
     {
-      command: 'open seller sign up',
+      command: 'open seller sign up page',
       callback: (pageName) => {
         console.log('Opening page: ', pageName);
         voicePageNavigator('sellersignup')
       }
     },
     {
-      command: 'open user profile',
+      command: 'open user profile page',
       callback: (pageName) => {
         console.log('Opening page: ', pageName);
         voicePageNavigator('profile')
@@ -392,7 +396,7 @@ export const VoiceProvider = ({ children }) => {
     if (finalTranscript === 'start listening') {
       voiceResponse('I am listening');
       SpeechRecognition.startListening({ continuous: true });
-      triggerModal('Voice Assistant', 'I am listening');
+      triggerModal('Voice Assistant', 'I am listening how can i help you');
     }
     if (finalTranscript.includes('top listening')) {
       voiceResponse('Okay, I will stop listening now');
