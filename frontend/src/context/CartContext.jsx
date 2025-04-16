@@ -67,6 +67,12 @@ export const CartProvider = ({ children }) => {
         setCartItems((prevItems) => prevItems.filter((cartItem) => cartItem._id !== itemId));
     };
 
+    // Function to clear the cart
+    const clearCart = () => {
+        setCartItems([]);
+        localStorage.removeItem("cartItems"); // Optionally clear cart from localStorage
+    };
+
     // Function to calculate the total amount
     const calculateTotalAmount = () => {
         return cartItems.reduce(
@@ -77,7 +83,14 @@ export const CartProvider = ({ children }) => {
 
     return (
         <CartContext.Provider
-            value={{ cartItems, deleteItemFromCart, addItemToCart, removeItemFromCart, calculateTotalAmount }}
+            value={{
+                cartItems,
+                deleteItemFromCart,
+                addItemToCart,
+                removeItemFromCart,
+                calculateTotalAmount,
+                clearCart, // Add clearCart to the context
+            }}
         >
             {children}
         </CartContext.Provider>

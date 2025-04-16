@@ -5,26 +5,47 @@ const router = express.Router();
 
 // Create a new order
 router.post("/add", verifytoken, async (req, res) => {
+  console.log('add order');
+  
   try {
-    const orderData = {
-      ...req.body,
-      user: req.user.id, // ✅ Attach user ID from token
-    };
-
-    const order = new Model(orderData);
-    await order.save();
-
-    res.status(201).json({ message: "Order created successfully", order });
+    const { items, address, city, postalCode, name, country, cardNumber, expiry, cvc, totalPrice } = req.body;
+    const newOrder = new Model({
+      user: req.user._id,
+      items,
+      address,
+      city,
+      postalCode,
+      name,
+      country,
+      cardNumber,
+      expiry,
+      cvc,
+      totalPrice
+    });
+    await newOrder.save();
+    res.status(201).json(newOrder);
   } catch (error) {
     res.status(500).json({ error: "Failed to create order", details: error.message });
   }
-});
+}
+);  
+
+
+router.get("/getall",  async (req, res) => {
+   Model.find()
+          .then((result) => {
+              res.status(200).json(result);
+          }).catch((err) => {
+              console.log(err);
+              res.status(500).json(err);
+          });
+  });
 
 
 // Get all orders for a user
 router.get("/user-orders", verifytoken, async (req, res) => {
   try {
-    const orders = await Model.find({ user: req.user.id }); // ✅ corrected field
+    const orders = await Model.find({ user: req.user._id }); // ✅ corrected field
     res.status(200).json(orders);
   } catch (error) {
     res.status(500).json({ error: "Failed to fetch orders", details: error.message });
