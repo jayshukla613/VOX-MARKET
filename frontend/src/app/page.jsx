@@ -38,13 +38,14 @@ const Homepage = () => {
     <>
       <div>
         <Herosection />
-        <h2 className='text-center text-4xl text-black italic p-6 font-light'>POPULAR PRODUCTS</h2>
-        <p className='text-center font-extralight text-3xl italic text-gray-400'>Trending Now</p>
+
+        
+       
         <div className="flex gap-4 p-4 mx-auto">
         {(() => {
           const num1 = Math.floor(Math.random() * 40 + 1);
           const num2 = num1 + 4;
-          return products.slice(0, 3).map((product) => (
+          return products.slice(0, 4).map((product) => (
             <Card key={`${product._id}-${product.name}`} product={product} />
           ));
         })()}
@@ -54,7 +55,7 @@ const Homepage = () => {
         {(() => {
           const num1 = Math.floor(Math.random() * 40 + 1);
           const num2 = num1 + 4;
-          return products.slice(4, 7).map((product) => (
+          return products.slice(4, 8).map((product) => (
             <Card key={`${product._id}-${product.name}`} product={product} />
           ));
         })()}
@@ -62,16 +63,27 @@ const Homepage = () => {
 
         </div>
         <Herosection1 />
-        <div className="flex gap-4 p-4">
+        <div className="flex gap-4 p-4 mx-auto">
        
         {(() => {
           const num1 = Math.floor(Math.random() * 40 + 1);
           const num2 = num1 + 4;
-          return products.slice(8, 11).map((product) => (
+          return products.slice(8, 12).map((product) => (
             <Card key={`${product._id}-${product.name}`} product={product} />
           ));
         })()}
         </div>
+
+        <div className="flex gap-4 p-4 mx-auto">
+        {(() => {
+          const num1 = Math.floor(Math.random() * 40 + 1);
+          const num2 = num1 + 4;
+          return products.slice(0, 4).map((product) => (
+            <Card key={`${product._id}-${product.name}`} product={product} />
+          ));
+        })()}
+        </div>
+      
         <div className='bg-gradient-to-r from-blue-400 to-cyan-200'>
           <section className="py-12">
             <div className="container mx-auto px-4">

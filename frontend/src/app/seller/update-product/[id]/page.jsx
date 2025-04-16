@@ -42,6 +42,25 @@ const UpdateProduct = () => {
         }
     };
 
+    const handleFileUplaod = (e) => { 
+        const file = e.target.files[0];
+        if(!file) toast.error('No file selected');
+    
+        const formData = new FormData();
+        formData.append('file', file);
+        formData.append('upload_preset', 'VoxMarket');
+        formData.append('cloud_name', 'drwbpgiun');
+    
+        axios.post('https://api.cloudinary.com/v1_1/drwbpgiun/image/upload', formData)
+        .then((result) => {
+            toast.success('File uploaded successfully');
+            addform.setFieldValue('image', [result.data.url]);
+        }).catch((err) => {
+            toast.error('File upload failed');
+        });
+    
+      }
+
     return (
         <div>
             {productdata === null ? (

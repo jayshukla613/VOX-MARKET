@@ -40,9 +40,9 @@ const categorynavigation = () => {
   return (
     <div>
        <div className='flex gap-8 justify-evenly bg-gray-500  p-2  text-white text-lg w-full flex-wrap'>
-        <Link href={'/browse/electronic'}>Electronics</Link>
+        <Link href={'/browse/electronics'}>Electronics</Link>
         <Link href={'/browse/fashion'} >Fashion</Link>
-        <Link href={'browse'} >Home</Link>
+        <Link href={`/browse/home`} >Home</Link>
         <Link href={'/browse/book'}>Books</Link>
         <Link href={'/browse/fashion'} >Sports</Link>
         <Link href={'/browse/fashion'} >Health</Link>

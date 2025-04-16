@@ -35,12 +35,14 @@ const ProductBrowser = () => {
     fetchProducts();
 
   }, []);
+  
+
   return (
     <div className="  mx-auto">
-      <Categorynavigation/>
-      
+      <Categorynavigation />
+
       <div className=" rounded shadow-lg bg-white  h-[10%] w-full">
-        
+
         <ul className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-8">
           {products.map((product, index) => (
             <li key={index}>
@@ -55,33 +57,34 @@ const ProductBrowser = () => {
               />
               <div className="px-6 py-4">
                 <div className="font-bold text-xl mb-2 mr-1">{product.name}</div>
-              
-                <p className="text-gray-700 text-bold text-2xl">RS{product.price}</p>
-                <p className="text-green-500 font-semibold mb-4">{product.discount} OFF 20%</p>
+                 <span className="text-yellow-500 flex ">
+                              <IconStarFilled/>
+                              <IconStarFilled/>
+                              <IconStarFilled/>
+                              <IconStarFilled/>
+                              
+                            </span>
+                <span className="inline-block mt-4 bg-green-500 text-white rounded-full px-4 py-2 text-lg font-semibold">
+                  RS {product.price}
+
+                </span>
+                <span className=" line-through ml-2 text-lg text-red-500 font-semibold p-5">RS {product.price + product.price * 0.4}</span>
+
+
                 <div className="flex items-center mt-2">
-                  <span className="text-yellow-500 flex">
-                    {/* Assuming you have a rating property in your product */}
-                    {Array.from({ length: product.rating }).map((_, index) => (
-                      <IconStarFilled key={index} />
-                    ))}
-                  </span>
+                
 
                 </div>
               </div>
-              <div className="px-6 pt-4 pb-2 flex justify-between">
-                <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-                  onClick={() => {
-                    // when user click on view button then it will redirect to view-product/id page and show all details of product 
-
-                    router.push(`/view-product/${product._id}`)
-
-                  }}>
-                  View
-                </button>
-                <button className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">
-                  Buy
+              <div className="px-6 pt-4 pb-2">
+                <button onClick={() => {
+                  router.push(`/view-product/${product._id}?name=${encodeURIComponent(product.name)}`);
+                }} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded w-full">
+                  <i className="fas fa-cart-plus"></i>
+                  View Product
                 </button>
               </div>
+             
 
             </li>
 

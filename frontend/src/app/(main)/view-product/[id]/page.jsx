@@ -169,7 +169,7 @@ const ViewProduct = () => {
               <p>Categories: {product.category}</p>
             </div>
             <div className="text-2xl font-bold text-red-600 mb-2">Price: {product.price}</div>
-            <div className="text-blue-500 line-through mb-2 text-2xl Font-bold">Was:  RS.{product.price+product.price*0.3}</div>
+            <div className="text-blue-500 line-through mb-2 text-2xl Font-bold">Was:  RS.{product.price+product.price*0.4}</div>
 
             {/* Product Variants */}
             <div className="mb-4">
@@ -211,7 +211,6 @@ const ViewProduct = () => {
               >
                 Add to Cart
               </button>
-<<<<<<< HEAD
 <button
   onClick={() => handleBuyNow(product)}
   className="bg-green-500 text-white px-4 py-2 rounded w-full md:w-auto"
@@ -220,22 +219,12 @@ const ViewProduct = () => {
 </button>
 
               {/* <button
-=======
-
-              <button
->>>>>>> 6a626ff7444da4e25110aa3f778291e783c78b99
                 onClick={() => handleBuyNow(product)}
                 className="bg-green-500 text-white px-4 py-2 rounded w-full md:w-auto"
               >
                 Buy Now
-<<<<<<< HEAD
                 
               </button> */}
-=======
-              </button>
-
-
->>>>>>> 6a626ff7444da4e25110aa3f778291e783c78b99
             </div>
 
             {/* Return Policy */}

@@ -85,7 +85,7 @@ const manageproduct = () => {
                   Price
                 </th>
                 <th className="w-1/6 py-3 px-4 uppercase font-semibold text-sm">
-                  Stock
+                  Category
                 </th>
                 <th className="w-1/6 py-3 px-4 uppercase font-semibold text-sm">
                   Sold
@@ -111,7 +111,7 @@ const manageproduct = () => {
                       </td>
                       <td className="w-1/6 py-3 px-4">{item.name}</td>
                       <td className="w-1/6 py-3 px-4"> Rs. {item.price}</td>
-                      <td className="w-1/6 py-3 px-4"> {item.stock}</td>
+                      <td className="w-1/6 py-3 px-4"> {item.category}</td>
                       <td className="w-1/6 py-3 px-4"> {item.sold}</td>
                       <td className="w-1/6 col-span-2 py-3 space-x-4 px-4">
 
@@ -133,7 +133,7 @@ const manageproduct = () => {
                       </td>
 
                       <td className="w-1/6 col-span-2 py-3 space-x-4 px-4">
-                        <Link href={`/update-product/${item._id}`}>
+                        <Link href={`/seller/update-product/${item._id}`}>
                           <IconPencil /></Link>
                       </td>
                     </tr>
