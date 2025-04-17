@@ -9,7 +9,7 @@ const notfound = () => {
         alt="Illustration showing the number 404 in a creative design"
         className="mx-auto w-64 md:w-80"
         height={300}
-        src="https://oaidalleapiprodscus.blob.core.windows.net/private/org-LmQ09WWGIGwOeeA4ArnRw0x5/user-uJPET5fjNenSso8wCETWVNOp/img-8mZGDCqEsxCa5N5gNSoih6lB.png?st=2025-04-16T00%3A16%3A45Z&se=2025-04-16T02%3A16%3A45Z&sp=r&sv=2024-08-04&sr=b&rscd=inline&rsct=image/png&skoid=cc612491-d948-4d2e-9821-2683df3719f5&sktid=a48cca56-e6da-484e-a814-9c849652bcb3&skt=2025-04-15T04%3A51%3A18Z&ske=2025-04-16T04%3A51%3A18Z&sks=b&skv=2024-08-04&sig=8xHcjUzBMBQu3ZvyISPOpJj4s0aw%2Bi%2B9cIZRAzNW23w%3D"
+        src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTzVDx8sFiUppQwy5wjhcHFkRSwqrd1R0nKbA&s"
         width={400}
       />
     </div>

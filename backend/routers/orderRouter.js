@@ -3,6 +3,8 @@ const Model = require("../models/orderModel");
 const verifytoken = require('../middlewares/verifytoken');
 const router = express.Router();
 
+let currentOrderId = 11111;
+
 // Create a new order
 router.post("/add", verifytoken, async (req, res) => {
   console.log('add order');
@@ -68,7 +70,7 @@ router.get("/buy/:id", async (req, res) => {
 // Delete an order by ID
 router.delete("/:id", verifytoken, async (req, res) => {
   try {
-    const order = await Model.findByIdAndDelete(req.params.id);
+    const order = await Model.findByIdAndDelete(req.params._id);
     if (!order) {
       return res.status(404).json({ error: "Order not found" });
     }
@@ -77,5 +79,25 @@ router.delete("/:id", verifytoken, async (req, res) => {
     res.status(500).json({ error: "Failed to delete order", details: error.message });
   }
 });
+
+router.get('/generate-order-id', (req, res) => {
+  const orderId = currentOrderId++;
+  res.json({ orderId });
+
+});
+
+router.get('/order/:id', async (req, res) => {
+  try {
+    const order = await Model.findById(req.params.id);
+    if (!order) {
+      return res.status(404).json({ message: 'Order not found' });
+    }
+    res.json(order);
+  } catch (error) {
+    res.status(500).json({ message: 'Error fetching order', error });
+  }
+});
+
+
 
 module.exports = router;

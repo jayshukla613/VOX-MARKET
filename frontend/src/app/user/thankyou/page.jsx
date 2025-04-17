@@ -12,7 +12,7 @@ export default function ManageUser() {
         alt="A simple illustration of a smiley face with shopping bags"
         className="mb-6 md:mb-0 md:mr-6 w-full md:w-1/2"
         height={300}
-        src="https://oaidalleapiprodscus.blob.core.windows.net/private/org-LmQ09WWGIGwOeeA4ArnRw0x5/user-uJPET5fjNenSso8wCETWVNOp/img-YjhVbh0r5czXUmmhpxnXr3iU.png?st=2025-04-16T00%3A28%3A43Z&se=2025-04-16T02%3A28%3A43Z&sp=r&sv=2024-08-04&sr=b&rscd=inline&rsct=image/png&skoid=cc612491-d948-4d2e-9821-2683df3719f5&sktid=a48cca56-e6da-484e-a814-9c849652bcb3&skt=2025-04-15T06%3A13%3A39Z&ske=2025-04-16T06%3A13%3A39Z&sks=b&skv=2024-08-04&sig=QnG8fcyrqYxNvhkDLGoHLqMinLg8iyJnAIUaUxfSDG0%3D"
+        src="https://img.freepik.com/premium-vector/smiling-face-emoji_6735-648.jpg?ga=GA1.1.1740835140.1740818164&semt=ais_hybrid&w=740"
         width={300}
       />
       <div className="text-center md:text-left w-full md:w-1/2">

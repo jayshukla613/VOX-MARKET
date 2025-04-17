@@ -1,18 +1,21 @@
+
 'use client'
-import React, { useState, useEffect } from "react";
-import { useRouter } from "next/navigation";
-import { useFormik } from "formik";
-import * as Yup from 'yup';
-import axios from "axios";
-import toast from "react-hot-toast";
-import useCartContext from "@/context/CartContext";
+import { Formik, Form, Field, ErrorMessage } from 'formik'
+import * as Yup from 'yup'
+import axios from 'axios'
+import React, { useEffect, useState } from 'react'
+import useCartContext from '@/context/CartContext'
+import toast from 'react-hot-toast'
+import { useRouter } from 'next/navigation'
+import Link from 'next/link'
+
 
 const CheckoutSchema = Yup.object().shape({
-  fullName: Yup.string().required('Full Name is required'),
-  address: Yup.string().required('Address is required'),
-  city: Yup.string().required('City is required'),
-  postalCode: Yup.string().required('Postal Code is required'),
-  country: Yup.string().required('Country is required'),
+  fullName: Yup.string().required('Required'),
+  address: Yup.string().required('Required'),
+  city: Yup.string().required('Required'),
+  postalCode: Yup.string().required('Required'),
+  country: Yup.string().required('Required'),
   paymentMethod: Yup.string().required('Please select a payment method'),
   cardNumber: Yup.string().when('paymentMethod', {
     is: 'card',
@@ -26,113 +29,59 @@ const CheckoutSchema = Yup.object().shape({
     is: 'card',
     then: (schema) => schema.required('CVV is required').matches(/^\d{3}$/, 'CVV must be 3 digits'),
   }),
-});
+})
 
 export default function CheckoutPage() {
   const { cartItems, calculateTotalAmount, clearCart } = useCartContext();
   const [isProcessing, setIsProcessing] = useState(false);
+  const [userData, setUserData] = useState(null);
+  const [paymentstatus, setpaymentstatus] = useState('');
   const router = useRouter();
+  const [orderId, setOrderId] = useState(''); // State to store the generated order ID
 
-  const formik = useFormik({
-    initialValues: {
-      fullName: '',
-      address: '',
-      city: '',
-      postalCode: '',
-      country: '',
-      paymentMethod: '',
-      cardNumber: '',
-      expiry: '',
-      cvv: '',
-    },
-    validationSchema: CheckoutSchema,
-    onSubmit: async (values) => {
-      try {
-        setIsProcessing(true);
-        toast.loading('Processing payment...');
+  const subtotal = calculateTotalAmount();
+  const shipping = subtotal * 0.05;
+  const tax = subtotal * 0.1;
+  const totalAmount = (subtotal + shipping + tax).toFixed(2);
 
-        if (values.paymentMethod === 'card') {
-          const { data: order } = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/razorpay/create-order`, {
-            amount: calculateTotalAmount() * 100, // Amount in paise
-            currency: 'INR',
-          });
 
-          const options = {
-            key: process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID,
-            amount: order.amount,
-            currency: order.currency,
-            name: 'Vox Market',
-            description: 'Order Payment',
-            order_id: order.id,
-            handler: async (response) => {
-              try {
-                const verifyResponse = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/razorpay/verify-payment`, {
-                  razorpay_order_id: response.razorpay_order_id,
-                  razorpay_payment_id: response.razorpay_payment_id,
-                  razorpay_signature: response.razorpay_signature,
-                });
 
-                if (verifyResponse.data.success) {
-                  toast.success('Payment successful!');
-                  await placeOrder(values, 'success');
-                } else {
-                  toast.error('Payment verification failed!');
-                }
-              } catch (error) {
-                console.error('Error verifying payment:', error);
-                toast.error('Payment verification failed!');
-              }
-            },
-            prefill: {
-              name: values.fullName,
-              email: 'test@example.com', // Replace with actual user email
-              contact: '9999999999', // Replace with actual user phone
-            },
-            theme: {
-              color: '#3399cc',
-            },
-          };
-
-          const razorpay = new window.Razorpay(options);
-          razorpay.open();
-        } else {
-          await placeOrder(values, 'pending');
-        }
-      } catch (error) {
-        console.error('Error during payment:', error);
-        toast.error('Failed to process payment.');
-      } finally {
-        setIsProcessing(false);
-      }
-    },
-  });
-
-  const placeOrder = async (values, paymentStatus) => {
+  const generateOrderId = async () => {
     try {
-      const order = {
-        shippingAddress: `${values.fullName}, ${values.address}, ${values.city}, ${values.postalCode}, ${values.country}`,
-        paymentMethod: values.paymentMethod,
-        items: cartItems,
-        totalAmount: calculateTotalAmount(),
-        status: paymentStatus,
-      };
-
-      const response = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/order/add`, order, {
-        headers: {
-          'x-auth-token': localStorage.getItem('user-token'),
-        },
-      });
-
-      toast.success('Order placed successfully!');
-      clearCart();
-      router.replace('/user/thankyou');
+      const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/order/generate-order-id`);
+      if (response.data && response.data.orderId) {
+        setOrderId(response.data.orderId); // Set the generated order ID
+      } else {
+        throw new Error('Order ID not returned from the server');
+      }
     } catch (error) {
-      console.error('Order error:', error);
-      toast.error('Error placing order. Please try again.');
+      console.error('Error generating order ID:', error);
+      toast.error('Failed to generate order ID!');
     }
   };
 
   useEffect(() => {
+    generateOrderId(); // Generate order ID when the component mounts
+  }, []);
+
+  const getUserDetails = () => {
+    axios.get(`${process.env.NEXT_PUBLIC_API_URL}/user/getdetails`, {
+      headers: {
+        'x-auth-token': localStorage.getItem('user-token'),
+      },
+    })
+      .then((response) => {
+        console.log('User details:', response.data);
+        setUserData(response.data);
+      })
+      .catch((error) => {
+        console.error('Error fetching user details:', error);
+      });
+  }
+
+  useEffect(() => {
+    // Dynamically load Razorpay script
+    getUserDetails();
     const script = document.createElement('script');
     script.src = 'https://checkout.razorpay.com/v1/checkout.js';
     script.async = true;
@@ -142,148 +91,227 @@ export default function CheckoutPage() {
     };
   }, []);
 
+  const handlePayment = async (cb) => {
+    // cb();
+    // return;
+    setIsProcessing(true);
+    toast.loading('Processing payment...');
+
+    const { name, email, phone } = userData || {};
+
+    try {
+      // Step 1: Create an order on the server
+      const { data } = await axios.post('http://localhost:5000/razorpay/create-order', {
+        amount: calculateTotalAmount(), // Amount in INR (e.g., 500 INR)
+        currency: 'INR',
+      });
+
+      const order = data;
+
+      // Step 2: Open Razorpay payment gateway
+      const options = {
+        key: process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID, // Replace with your Razorpay Key ID
+        amount: order.amount,
+        currency: order.currency,
+        name: 'Vox Market',
+        description: 'Test Transaction',
+        order_id: order.id,
+        handler: async (response) => {
+          console.log('Payment response:', response);
+
+          // Step 3: Verify payment on the server
+          const verifyResponse = await axios.post('http://localhost:5000/razorpay/verify-payment', {
+            razorpay_order_id: response.razorpay_order_id,
+            razorpay_payment_id: response.razorpay_payment_id,
+            razorpay_signature: response.razorpay_signature,
+          });
+
+          if (verifyResponse.data.success) {
+            toast.success('Payment successful!');
+            setpaymentstatus('success');
+            cb();
+          } else {
+            toast.error('Payment verification failed!');
+            setpaymentstatus('failed');
+          }
+        },
+        prefill: {
+          name,
+          email,
+          contact: phone,
+        },
+        theme: {
+          color: '#3399cc',
+        },
+      };
+
+      const razorpay = new window.Razorpay(options); // Use Razorpay from the browser SDK
+      razorpay.open();
+    } catch (error) {
+      console.error('Error during payment:', error);
+      toast.error('Failed to initiate payment.');
+    } finally {
+      setIsProcessing(false);
+    }
+  };
+
+  const handleSubmit = async (values) => {
+
+    handlePayment(async () => {
+      const order = {
+        shippingAddress: `${values.fullName}, ${values.address}, ${values.city}, ${values.postalCode}, ${values.country}`,
+        paymentMethod: values.paymentMethod,
+        cardDetails:
+          values.paymentMethod === 'card'
+            ? {
+              cardNumber: values.cardNumber,
+              expiry: values.expiry,
+              cvv: values.cvv,
+            }
+            : null,
+        items: cartItems,
+        status: paymentstatus,
+      }
+
+      try {
+        const response = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/order/add`, order, {
+          headers: {
+            'x-auth-token': localStorage.getItem('user-token'),
+          },
+        })
+        console.log('Order placed:', response.data)
+        toast.success('Order placed successfully!');
+        clearCart();
+        router.replace('/user/thankyou');
+
+      } catch (error) {
+        console.error('Order error:', error)
+        toast.error('Error placing order. Please try again.')
+      }
+    })
+
+  }
+
   return (
-    <div className="container mx-auto p-4">
-      <h1 className="text-3xl font-bold mb-6">Checkout</h1>
-      <form onSubmit={formik.handleSubmit} className="space-y-4">
-        <input
-          type="text"
-          name="fullName"
-          placeholder="Full Name"
-          onChange={formik.handleChange}
-          onBlur={formik.handleBlur}
-          value={formik.values.fullName}
-          className="w-full p-2 border rounded-md"
-        />
-        {formik.touched.fullName && formik.errors.fullName && (
-          <div className="text-red-500">{formik.errors.fullName}</div>
+    <div style={{ maxWidth: '800px', margin: '0 auto', padding: '2rem' }}>
+
+      <Formik
+        initialValues={{
+          fullName: '',
+          address: '',
+          city: '',
+          postalCode: '',
+          country: '',
+          paymentMethod: '',
+          cardNumber: '',
+          expiry: '',
+          cvv: '',
+        }}
+        validationSchema={CheckoutSchema}
+        onSubmit={handleSubmit}
+      >
+        {({ values }) => (
+          <Form style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+            <div>
+              <label className='font-bold p-1'>Full Name</label><br />
+              <Field name="fullName" className="w-full p-3 border-2 border-black rounded-lg" />
+              <ErrorMessage name="fullName" component="div" style={{ color: 'red' }} />
+            </div>
+
+            <div>
+              <label className='font-bold p-1'>Address</label><br />
+              <Field name="address" className="w-full p-3 border-2 border-black rounded-lg" />
+              <ErrorMessage name="address" component="div" style={{ color: 'red' }} />
+            </div>
+
+            <div>
+              <label className='font-bold p-1'>City</label><br />
+              <Field name="city" className="w-full p-3 border-2 border-black rounded-lg" />
+              <ErrorMessage name="city" component="div" style={{ color: 'red' }} />
+            </div>
+
+            <div>
+              <label className='font-bold p-1'>Postal Code</label><br />
+              <Field name="postalCode" className="w-full p-3 border-2 border-black rounded-lg" />
+              <ErrorMessage name="postalCode" component="div" style={{ color: 'red' }} />
+            </div>
+
+            <div>
+              <label className='font-bold p-1'>Country</label><br />
+              <Field name="country" className="w-full p-3 border-2 border-black rounded-lg" />
+              <ErrorMessage name="country" component="div" style={{ color: 'red' }} />
+            </div>
+
+            <div>
+              <label className='font-bold '>Payment Method</label>
+              <div role="group" aria-labelledby="paymentMethod">
+                <label>
+                  <Field type="radio" name="paymentMethod" value="cod" />
+                  {' '}Cash on Delivery
+                </label><br />
+                <label>
+                  <Field type="radio" name="paymentMethod" value="card" />
+                  {' '} online payment
+                </label>
+              </div>
+              <ErrorMessage name="paymentMethod" component="div" style={{ color: 'red' }} />
+            </div>
+
+            {values.paymentMethod === 'card' && (
+              <>
+
+              </>
+            )}
+
+            <button disabled={isProcessing} type="submit" style={{ padding: '0.5rem', background: 'black', color: 'white' }}>
+              {isProcessing ? 'Processing...' : 'Pay Now'}
+            </button>
+
+            {/* <button
+              type='button'
+              onClick={handlePayment}
+              className="bg-blue-500 text-white px-6 py-3 rounded-lg hover:bg-blue-600 transition"
+              
+            >
+              
+            </button> */}
+
+
+          </Form>
         )}
-        <input
-          type="text"
-          name="address"
-          placeholder="Address"
-          onChange={formik.handleChange}
-          onBlur={formik.handleBlur}
-          value={formik.values.address}
-          className="w-full p-2 border rounded-md"
-        />
-        {formik.touched.address && formik.errors.address && (
-          <div className="text-red-500">{formik.errors.address}</div>
-        )}
-        <input
-          type="text"
-          name="city"
-          placeholder="City"
-          onChange={formik.handleChange}
-          onBlur={formik.handleBlur}
-          value={formik.values.city}
-          className="w-full p-2 border rounded-md"
-        />
-        {formik.touched.city && formik.errors.city && (
-          <div className="text-red-500">{formik.errors.city}</div>
-        )}
-        <input
-          type="text"
-          name="postalCode"
-          placeholder="Postal Code"
-          onChange={formik.handleChange}
-          onBlur={formik.handleBlur}
-          value={formik.values.postalCode}
-          className="w-full p-2 border rounded-md"
-        />
-        {formik.touched.postalCode && formik.errors.postalCode && (
-          <div className="text-red-500">{formik.errors.postalCode}</div>
-        )}
-        <input
-          type="text"
-          name="country"
-          placeholder="Country"
-          onChange={formik.handleChange}
-          onBlur={formik.handleBlur}
-          value={formik.values.country}
-          className="w-full p-2 border rounded-md"
-        />
-        {formik.touched.country && formik.errors.country && (
-          <div className="text-red-500">{formik.errors.country}</div>
-        )}
-        <div>
-          <label>Payment Method</label>
-          <div role="group" aria-labelledby="paymentMethod">
-            <label>
-              <input
-                type="radio"
-                name="paymentMethod"
-                value="cod"
-                onChange={formik.handleChange}
-                onBlur={formik.handleBlur}
-                checked={formik.values.paymentMethod === 'cod'}
-              />
-              {' '}Cash on Delivery
-            </label><br />
-            <label>
-              <input
-                type="radio"
-                name="paymentMethod"
-                value="card"
-                onChange={formik.handleChange}
-                onBlur={formik.handleBlur}
-                checked={formik.values.paymentMethod === 'card'}
-              />
-              {' '}Credit/Debit Card (Mock)
-            </label>
+      </Formik>
+
+      <div className="mt-4">
+        <div className="p-4 w-full">
+          <div className="bg-white shadow rounded-lg p-6">
+            <h3 className="text-lg font-semibold text-gray-800 mb-4">
+              Order Summary
+            </h3>
+            <div className="flex justify-between mb-2">
+              <span className="text-gray-600">Order ID</span>
+              <span className="text-gray-800 font-semibold">{orderId || 'Generating...'}</span>
+            </div>
+            <div className="flex justify-between mb-2">
+              <span className="text-gray-600">Subtotal</span>
+              <span className="text-gray-800 font-semibold">RS: {subtotal.toFixed(2)}</span>
+            </div>
+            <div className="flex justify-between mb-2">
+              <span className="text-gray-600">Shipping</span>
+              <span className="text-gray-800 font-semibold">RS: {shipping.toFixed(2)}</span>
+            </div>
+            <div className="flex justify-between mb-4">
+              <span className="text-gray-600">Tax</span>
+              <span className="text-gray-800 font-semibold">RS: {tax.toFixed(2)}</span>
+            </div>
+            <div className="flex justify-between mb-4">
+              <span className="text-gray-800 font-semibold">Total</span>
+              <span className="text-gray-800 font-semibold">RS: {totalAmount}</span>
+            </div>
+
           </div>
-          {formik.touched.paymentMethod && formik.errors.paymentMethod && (
-            <div className="text-red-500">{formik.errors.paymentMethod}</div>
-          )}
         </div>
-        {formik.values.paymentMethod === 'card' && (
-          <>
-            <input
-              type="text"
-              name="cardNumber"
-              placeholder="Card Number"
-              onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
-              value={formik.values.cardNumber}
-              className="w-full p-2 border rounded-md"
-            />
-            {formik.touched.cardNumber && formik.errors.cardNumber && (
-              <div className="text-red-500">{formik.errors.cardNumber}</div>
-            )}
-            <input
-              type="text"
-              name="expiry"
-              placeholder="MM/YY"
-              onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
-              value={formik.values.expiry}
-              className="w-full p-2 border rounded-md"
-            />
-            {formik.touched.expiry && formik.errors.expiry && (
-              <div className="text-red-500">{formik.errors.expiry}</div>
-            )}
-            <input
-              type="text"
-              name="cvv"
-              placeholder="CVV"
-              onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
-              value={formik.values.cvv}
-              className="w-full p-2 border rounded-md"
-            />
-            {formik.touched.cvv && formik.errors.cvv && (
-              <div className="text-red-500">{formik.errors.cvv}</div>
-            )}
-          </>
-        )}
-        <button
-          type="submit"
-          disabled={isProcessing}
-          className="w-full bg-blue-600 text-white py-2 rounded-md text-lg font-medium hover:bg-blue-700"
-        >
-          {isProcessing ? 'Processing...' : 'Place Order'}
-        </button>
-      </form>
+      </div>
     </div>
-  );
+
+  )
 }

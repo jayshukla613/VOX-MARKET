@@ -17,7 +17,12 @@ const orderSchema = Schema({
     status: { type: String, default: 'pending' },
     paymentMethod: { type: String, default: 'cod' },
     paymentStatus: { type: String, default: 'pending' },
-    orderDate: { type: Date, default: Date.now() }
+    orderDate: { type: Date, default: Date.now() },
+    deliveryDate: { type: Date },
+    deliveryStatus: { type: String, default: 'pending' },
+
+    orderId: { type: String, unique: true }
+    
 });
 
 module.exports = model('order', orderSchema);

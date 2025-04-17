@@ -2,9 +2,11 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import toast from 'react-hot-toast';
+import { useRouter } from 'next/navigation';
 
 const Orderdetailspage = () => {
     const [orders, setOrders] = useState([]);
+    const router = useRouter();
 
     const fetchOrders = async () => {
         try {
@@ -28,20 +30,23 @@ const Orderdetailspage = () => {
             <table className="w-full bg-white rounded-lg shadow-md">
                 <thead className="bg-gray-200 text-gray-700">
                     <tr>
-                        <th className="p-2">User ID</th>
+                        <th className="p-2">Order ID</th>
                         <th className="p-2">Product Image</th>
                         <th className="p-2">Product Name</th>
                         <th className="p-2">Quantity</th>
                         <th className="p-2">Price</th>
                         <th className="p-2">Order Date</th>
                         <th className="p-2">Status</th>
+                        <th className="p-2">payment  Method</th>
+                        <th className="p-2">Action</th>
+
                     </tr>
                 </thead>
                 <tbody>
                     {orders.map((order, index) => (
                         order.items.map((item, itemIndex) => (
                             <tr key={`${index}-${itemIndex}`} className="border-t">
-                                <td className="p-2 text-center">{order.user || 'Unknown User'}</td>
+                                <td className="p-2 text-center">{order._id || 'Unknown Order ID'}</td>
                                 <td className="p-2 text-center">
                                     <img
                                         src={item.image[0] || '/placeholder.png'}
@@ -66,6 +71,19 @@ const Orderdetailspage = () => {
                                         {order.status || 'Pending'}
                                     </span>
                                 </td>
+                                <td className="p-2 text-center">{order.paymentMethod || 'Unknown Payment Method'}</td>
+                                <td className="p-2 text-center" >
+                                    <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold px-3 py-1  rounded" 
+                                    
+                                    onClick={() => {
+                                        router.push(`/admin/vieworder/${order._id}`, '_blank');
+                                    }
+                                    }>
+                                        View 
+                                    </button>
+                                </td>
+                                    
+                                   
                             </tr>
                         ))
                     ))}

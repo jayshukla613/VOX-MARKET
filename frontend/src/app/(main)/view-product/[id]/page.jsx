@@ -103,6 +103,17 @@ const ViewProduct = () => {
 
   };
 
+  const handleAddToCart = (product) => {
+    if (token == null) {
+      toast.error('Please login to add the product to cart!');
+      router.push('/user-login');
+      return;
+    }
+    addItemToCart(product); // Add the product to the cart
+    toast.success('Product added to cart!');
+  }
+
+
   // Show a loading message if the product is null
   if (!product) return <div>Loading product details...</div>;
 
@@ -170,7 +181,7 @@ const ViewProduct = () => {
               <p>Categories: {product.category}</p>
             </div>
             <div className="text-2xl font-bold text-red-600 mb-2">Price: {product.price}</div>
-            <div className="text-blue-500 line-through mb-2 text-2xl Font-bold">Was:  RS.{product.price+product.price*0.4}</div>
+            <div className="text-blue-500 line-through mb-2 text-2xl Font-bold">Was:  RS.{product.price + product.price * 0.4}</div>
 
             {/* Product Variants */}
             <div className="mb-4">
@@ -206,18 +217,18 @@ const ViewProduct = () => {
               <button
                 type="submit"
                 // onClick={() => addToCart()}
-                onClick={() => addItemToCart(product)}
+                onClick={() => handleAddToCart(product)}
 
                 className="bg-blue-500 text-white px-4 py-2 rounded w-full md:w-auto"
               >
                 Add to Cart
               </button>
-<button
-  onClick={() => handleBuyNow(product)}
-  className="bg-green-500 text-white px-4 py-2 rounded w-full md:w-auto"
->
-  Buy Now
-</button>
+              <button
+                onClick={() => handleBuyNow(product)}
+                className="bg-green-500 text-white px-4 py-2 rounded w-full md:w-auto"
+              >
+                Buy Now
+              </button>
 
               {/* <button
                 onClick={() => handleBuyNow(product)}
@@ -269,27 +280,27 @@ const ViewProduct = () => {
                     />
                     <h3 className="text-lg font-bold">{relatedProduct.name}</h3>
                     <span className="text-yellow-500 flex ">
-                              <IconStarFilled/>
-                              <IconStarFilled/>
-                              <IconStarFilled/>
-                              <IconStarFilled/>
-                              
-                            </span>
+                      <IconStarFilled />
+                      <IconStarFilled />
+                      <IconStarFilled />
+                      <IconStarFilled />
+
+                    </span>
                     <span className="inline-block mt-4 bg-green-500 text-white rounded-full px-4 py-2 text-lg font-semibold">
-                  RS {relatedProduct.price}
+                      RS {relatedProduct.price}
 
-                </span>
-                <span className=" line-through ml-2 text-lg text-red-500 font-semibold p-5">RS {relatedProduct.price + relatedProduct.price * 0.4}</span>
+                    </span>
+                    <span className=" line-through ml-2 text-lg text-red-500 font-semibold p-5">RS {relatedProduct.price + relatedProduct.price * 0.4}</span>
 
-                <div className="px-6 pt-4 pb-2">
-                <button onClick={() => {
-                  router.push(`/view-product/${relatedProduct._id}?name=${encodeURIComponent(relatedProduct.name)}`);
-                }} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded w-full">
-                  <i className="fas fa-cart-plus"></i>
-                  View Product
-                </button>
-              </div>
-             
+                    <div className="px-6 pt-4 pb-2">
+                      <button onClick={() => {
+                        router.push(`/view-product/${relatedProduct._id}?name=${encodeURIComponent(relatedProduct.name)}`);
+                      }} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded w-full">
+                        <i className="fas fa-cart-plus"></i>
+                        View Product
+                      </button>
+                    </div>
+
                   </div>
                 ))
               ) : (

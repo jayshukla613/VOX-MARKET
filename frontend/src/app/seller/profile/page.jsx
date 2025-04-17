@@ -58,7 +58,7 @@ export default function SellerProfile() {
             <div>
               {sellerdata ? (
                 <>
-                  <h1 className="text-gray-600 text-xl font-semibold">Email Account: {sellerdata.name}</h1>
+                  <h1 className="text-gray-600 text-xl font-semibold"> Name : {sellerdata.name}</h1>
                   <h1 className="text-gray-600 text-xl font-semibold">Email Account: {sellerdata.email}</h1>
                   <h1 className="text-gray-600 text-xl font-semibold">Phone Number: {sellerdata.phone}</h1>
                   <h1 className="text-gray-600 text-xl font-semibold">Store Name: {sellerdata.storeName}</h1>
