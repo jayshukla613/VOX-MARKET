@@ -1,4 +1,5 @@
 
+
 'use client'
 import { Formik, Form, Field, ErrorMessage } from 'formik'
 import * as Yup from 'yup'
@@ -11,6 +12,11 @@ import Link from 'next/link'
 
 
 const CheckoutSchema = Yup.object().shape({
+  fullName: Yup.string().required('Required'),
+  address: Yup.string().required('Required'),
+  city: Yup.string().required('Required'),
+  postalCode: Yup.string().required('Required'),
+  country: Yup.string().required('Required'),
   fullName: Yup.string().required('Required'),
   address: Yup.string().required('Required'),
   city: Yup.string().required('Required'),
@@ -30,10 +36,13 @@ const CheckoutSchema = Yup.object().shape({
     then: (schema) => schema.required('CVV is required').matches(/^\d{3}$/, 'CVV must be 3 digits'),
   }),
 })
+})
 
 export default function CheckoutPage() {
   const { cartItems, calculateTotalAmount, clearCart } = useCartContext();
   const [isProcessing, setIsProcessing] = useState(false);
+  const [userData, setUserData] = useState(null);
+  const [paymentstatus, setpaymentstatus] = useState('');
   const [userData, setUserData] = useState(null);
   const [paymentstatus, setpaymentstatus] = useState('');
   const router = useRouter();
@@ -105,7 +114,34 @@ export default function CheckoutPage() {
         amount: calculateTotalAmount(), // Amount in INR (e.g., 500 INR)
         currency: 'INR',
       });
+    const { name, email, phone } = userData || {};
 
+    try {
+      // Step 1: Create an order on the server
+      const { data } = await axios.post('http://localhost:5000/razorpay/create-order', {
+        amount: calculateTotalAmount(), // Amount in INR (e.g., 500 INR)
+        currency: 'INR',
+      });
+
+      const order = data;
+
+      // Step 2: Open Razorpay payment gateway
+      const options = {
+        key: process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID, // Replace with your Razorpay Key ID
+        amount: order.amount,
+        currency: order.currency,
+        name: 'Vox Market',
+        description: 'Test Transaction',
+        order_id: order.id,
+        handler: async (response) => {
+          console.log('Payment response:', response);
+
+          // Step 3: Verify payment on the server
+          const verifyResponse = await axios.post('http://localhost:5000/razorpay/verify-payment', {
+            razorpay_order_id: response.razorpay_order_id,
+            razorpay_payment_id: response.razorpay_payment_id,
+            razorpay_signature: response.razorpay_signature,
+          });
       const order = data;
 
       // Step 2: Open Razorpay payment gateway
@@ -144,7 +180,36 @@ export default function CheckoutPage() {
           color: '#3399cc',
         },
       };
+          if (verifyResponse.data.success) {
+            toast.success('Payment successful!');
+            setpaymentstatus('success');
+            cb();
+          } else {
+            toast.error('Payment verification failed!');
+            setpaymentstatus('failed');
+          }
+        },
+        prefill: {
+          name,
+          email,
+          contact: phone,
+        },
+        theme: {
+          color: '#3399cc',
+        },
+      };
 
+      const razorpay = new window.Razorpay(options); // Use Razorpay from the browser SDK
+      razorpay.open();
+    } catch (error) {
+      console.error('Error during payment:', error);
+      toast.error('Failed to initiate payment.');
+    } finally {
+      setIsProcessing(false);
+    }
+  };
+
+  const handleSubmit = async (values) => {
       const razorpay = new window.Razorpay(options); // Use Razorpay from the browser SDK
       razorpay.open();
     } catch (error) {
@@ -158,9 +223,18 @@ export default function CheckoutPage() {
   const handleSubmit = async (values) => {
 
     handlePayment(async () => {
+    handlePayment(async () => {
       const order = {
         shippingAddress: `${values.fullName}, ${values.address}, ${values.city}, ${values.postalCode}, ${values.country}`,
         paymentMethod: values.paymentMethod,
+        cardDetails:
+          values.paymentMethod === 'card'
+            ? {
+              cardNumber: values.cardNumber,
+              expiry: values.expiry,
+              cvv: values.cvv,
+            }
+            : null,
         cardDetails:
           values.paymentMethod === 'card'
             ? {
@@ -312,6 +386,8 @@ export default function CheckoutPage() {
         </div>
       </div>
     </div>
+
+  )
 
   )
 }
