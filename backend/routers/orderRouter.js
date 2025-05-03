@@ -2,22 +2,28 @@ const express = require("express");
 const Model = require("../models/orderModel");
 const verifytoken = require('../middlewares/verifytoken');
 const router = express.Router();
+const jwt = require("jsonwebtoken");
 
 let currentOrderId = 11111;
 
 // Create a new order
 router.post("/add", verifytoken, async (req, res) => {
-  console.log('add order');
+  console.log(req.body);
   
   try {
-    const { items, address, city, postalCode, name, country, cardNumber, expiry, cvc, totalPrice } = req.body;
+    const { items, shippingAddress,status,orderId,deliveryDate,email,phone, city, postalCode, name, country, cardNumber, expiry, cvc, totalPrice } = req.body;
     const newOrder = new Model({
       user: req.user._id,
       items,
-      address,
+      shippingAddress,
       city,
+      email,
+      phone,
       postalCode,
       name,
+      status,
+      deliveryDate,
+      orderId,
       country,
       cardNumber,
       expiry,
@@ -34,7 +40,8 @@ router.post("/add", verifytoken, async (req, res) => {
 
 
 router.get("/getall",  async (req, res) => {
-   Model.find()
+
+   Model.find(req.body.save)
           .then((result) => {
               res.status(200).json(result);
           }).catch((err) => {
@@ -44,10 +51,36 @@ router.get("/getall",  async (req, res) => {
   });
 
 
-// Get all orders for a user
-router.get("/user-orders", verifytoken, async (req, res) => {
+const verifyUserToken = (req, res, next) => {
+    const token = req.headers['x-auth-token'];
+    if (!token) return res.status(401).json({ error: 'No token provided' });
+
+    try {
+        const decoded = jwt.verify(token, process.env.JWT_SECRET);
+        req.userId = decoded.id; // Extract user ID from token
+        next();
+    } catch (err) {
+        res.status(401).json({ error: 'Invalid token' });
+    }
+};
+
+// Route to fetch orders for a user
+router.get('/user-orders', verifyUserToken, async (req, res) => {
+    try {
+        const orders = await Model.find({ user: req.userId }).populate('items.seller', 'name').populate('user', 'email');
+        res.json(orders);
+    } catch (err) {
+        console.error('Error fetching user orders:', err);
+        res.status(500).json({ error: 'Failed to fetch orders' });
+    }
+});
+
+
+
+
+router.get("/seller-orders", verifytoken, async (req, res) => {
   try {
-    const orders = await Model.find({ user: req.user._id }); // ✅ corrected field
+    const orders = await Model.find({ seller: req.seller._id }); // ✅ corrected field
     res.status(200).json(orders);
   } catch (error) {
     res.status(500).json({ error: "Failed to fetch orders", details: error.message });

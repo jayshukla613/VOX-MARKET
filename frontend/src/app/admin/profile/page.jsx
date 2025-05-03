@@ -9,6 +9,7 @@ const Admindashboard = () => {
   const [totalSellers, setTotalSellers] = useState(0);
   const [totalProducts, setTotalProducts] = useState(0);
   const [totalOrders, setTotalOrders] = useState(0);
+  const [totalRevenue, setTotalRevenue] = useState(0); // State for total revenue
 
   const fetchCounts = async () => {
     try {
@@ -22,13 +23,15 @@ const Admindashboard = () => {
 
       // Fetch total products
       const productResponse = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/product/getall`);
-      setTotalProducts(productResponse.data.length); 
-      
-      // Assuming the API returns an array of products
+      setTotalProducts(productResponse.data.length); // Assuming the API returns an array of products
 
+      // Fetch total orders
       const orderResponse = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/order/getall`);
       setTotalOrders(orderResponse.data.length); // Assuming the API returns an array of orders
 
+      // Calculate total revenue
+      const totalRevenue = productResponse.data.reduce((sum, product) => sum + (product.price || 0), 0);
+      setTotalRevenue(totalRevenue); // Set the total revenue
     } catch (error) {
       console.error('Error fetching counts:', error);
       toast.error('Failed to fetch counts!');
@@ -54,7 +57,7 @@ const Admindashboard = () => {
                 </div>
                 <div className="ml-4">
                   <h2 className="text-xl font-semibold">Total Users</h2>
-                  <p className="text-gray-600">{totalUsers}</p> {/* Display total user count */}
+                  <p className="text-gray-600">{totalUsers}</p>
                 </div>
               </div>
             </div>
@@ -66,7 +69,7 @@ const Admindashboard = () => {
                 </div>
                 <div className="ml-4">
                   <h2 className="text-xl font-semibold">Total Sellers</h2>
-                  <p className="text-gray-600">{totalSellers}</p> {/* Display total seller count */}
+                  <p className="text-gray-600">{totalSellers}</p>
                 </div>
               </div>
             </div>
@@ -78,7 +81,7 @@ const Admindashboard = () => {
                 </div>
                 <div className="ml-4">
                   <h2 className="text-xl font-semibold">Total Products</h2>
-                  <p className="text-gray-600">{totalProducts}</p> {/* Display total product count */}
+                  <p className="text-gray-600">{totalProducts}</p>
                 </div>
               </div>
             </div>
@@ -102,7 +105,7 @@ const Admindashboard = () => {
                 </div>
                 <div className="ml-4">
                   <h2 className="text-xl font-semibold">Total Revenue</h2>
-                  <p className="text-gray-600">$123,456</p>
+                  <p className="text-gray-600">RS {totalRevenue.toFixed(2)}</p> {/* Display total revenue */}
                 </div>
               </div>
             </div>

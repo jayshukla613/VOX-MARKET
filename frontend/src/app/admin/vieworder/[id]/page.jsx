@@ -27,6 +27,9 @@ const OrderDetailspage = () => {
         }
     }, [id]);
 
+    
+        
+
     if (!orderDetails) {
         return <div>Loading...</div>; // Show a loading state while fetching data
     }
@@ -40,8 +43,15 @@ const OrderDetailspage = () => {
                 <p><strong>User ID:</strong> {orderDetails.user || 'N/A'}</p>
                 
                 <p><strong>Payment Method:</strong> {orderDetails.paymentMethod || 'N/A'}</p>
+
                 <p><strong>Status:</strong> {orderDetails.status || 'N/A'}</p>
+                <p><strong>Address:</strong> {orderDetails.shippingAddress || 'N/A'}</p>
+                
                 <p><strong>Order Date:</strong> {new Date(orderDetails.orderDate).toLocaleDateString()}</p>
+                <p><strong>Delivery Date:</strong> {new Date(orderDetails.deliveryDate).toLocaleDateString() || 'N/A'}</p>
+                <p><strong>Delivery Status:</strong> {orderDetails.deliveryStatus || 'N/A'}</p>
+                <p><strong>Total Price:</strong> RS {orderDetails.totalPrice || 'N/A'}</p>
+
             </div>
             <div className="mt-6 bg-white p-6 rounded-lg shadow-md">
                 <h2 className="text-xl font-semibold mb-4">Items</h2>
@@ -53,7 +63,7 @@ const OrderDetailspage = () => {
                                 <th className="p-2">Product Name</th>
                                 <th className="p-2">Price</th>
                                 <th className="p-2">Quantity</th>
-                                <th className="p-2">Total</th>
+                                
                                 <th className="p-2">Image</th>
                             </tr>
                         </thead>
@@ -65,7 +75,7 @@ const OrderDetailspage = () => {
                                     <td className="p-2 text-center">RS {item.price || 'N/A'}</td>
 
                                     <td className="p-2 text-center">{item.quantity || 'N/A'}</td>
-                                    <td className="p-2 text-center">RS {item.price * item.quantity || 'N/A'}</td>
+                                   
                                     <td className="p-2 text-center">
                                         {item.image ? (
                                             <img

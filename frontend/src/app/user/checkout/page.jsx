@@ -1,22 +1,13 @@
-
-
 'use client'
-import { Formik, Form, Field, ErrorMessage } from 'formik'
-import * as Yup from 'yup'
-import axios from 'axios'
-import React, { useEffect, useState } from 'react'
-import useCartContext from '@/context/CartContext'
-import toast from 'react-hot-toast'
-import { useRouter } from 'next/navigation'
-import Link from 'next/link'
-
+import { Formik, Form, Field, ErrorMessage } from 'formik';
+import * as Yup from 'yup';
+import axios from 'axios';
+import React, { useEffect, useState } from 'react';
+import useCartContext from '@/context/CartContext';
+import toast from 'react-hot-toast';
+import { useRouter } from 'next/navigation';
 
 const CheckoutSchema = Yup.object().shape({
-  fullName: Yup.string().required('Required'),
-  address: Yup.string().required('Required'),
-  city: Yup.string().required('Required'),
-  postalCode: Yup.string().required('Required'),
-  country: Yup.string().required('Required'),
   fullName: Yup.string().required('Required'),
   address: Yup.string().required('Required'),
   city: Yup.string().required('Required'),
@@ -36,42 +27,40 @@ const CheckoutSchema = Yup.object().shape({
     then: (schema) => schema.required('CVV is required').matches(/^\d{3}$/, 'CVV must be 3 digits'),
   }),
 })
-})
 
 export default function CheckoutPage() {
   const { cartItems, calculateTotalAmount, clearCart } = useCartContext();
   const [isProcessing, setIsProcessing] = useState(false);
   const [userData, setUserData] = useState(null);
-  const [paymentstatus, setpaymentstatus] = useState('');
-  const [userData, setUserData] = useState(null);
-  const [paymentstatus, setpaymentstatus] = useState('');
+  const [paymentStatus, setPaymentStatus] = useState('');
   const router = useRouter();
-  const [orderId, setOrderId] = useState(''); // State to store the generated order ID
 
   const subtotal = calculateTotalAmount();
   const shipping = subtotal * 0.05;
   const tax = subtotal * 0.1;
   const totalAmount = (subtotal + shipping + tax).toFixed(2);
+  
 
+  const generateOrderId = (() => {
+    let currentId = 11111;
+    return () => {
+      currentId += 1;
+      return currentId.toString().padStart(5, '0');
+    };
+  })();
+  const orderId = generateOrderId();
 
-
-  const generateOrderId = async () => {
-    try {
-      const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/order/generate-order-id`);
-      if (response.data && response.data.orderId) {
-        setOrderId(response.data.orderId); // Set the generated order ID
-      } else {
-        throw new Error('Order ID not returned from the server');
-      }
-    } catch (error) {
-      console.error('Error generating order ID:', error);
-      toast.error('Failed to generate order ID!');
-    }
+  // Function to calculate and print the delivery date 5 days later
+  const getDeliveryDate = () => {
+    const currentDate = new Date();
+    const deliveryDate = new Date(currentDate);
+    deliveryDate.setDate(currentDate.getDate() + 5); // Add 5 days to the current date
+    console.log('Delivery Date:', deliveryDate.toDateString()); // Print the delivery date
+    return deliveryDate.toDateString(); // Return the formatted delivery date
   };
 
-  useEffect(() => {
-    generateOrderId(); // Generate order ID when the component mounts
-  }, []);
+  const deliveryDate = getDeliveryDate(); // Call the function to get the delivery date
+// Print the delivery date
 
   const getUserDetails = () => {
     axios.get(`${process.env.NEXT_PUBLIC_API_URL}/user/getdetails`, {
@@ -86,10 +75,9 @@ export default function CheckoutPage() {
       .catch((error) => {
         console.error('Error fetching user details:', error);
       });
-  }
+  };
 
   useEffect(() => {
-    // Dynamically load Razorpay script
     getUserDetails();
     const script = document.createElement('script');
     script.src = 'https://checkout.razorpay.com/v1/checkout.js';
@@ -101,33 +89,22 @@ export default function CheckoutPage() {
   }, []);
 
   const handlePayment = async (cb) => {
-    // cb();
-    // return;
     setIsProcessing(true);
+    setPaymentStatus('Processing');
     toast.loading('Processing payment...');
 
     const { name, email, phone } = userData || {};
 
     try {
-      // Step 1: Create an order on the server
       const { data } = await axios.post('http://localhost:5000/razorpay/create-order', {
-        amount: calculateTotalAmount(), // Amount in INR (e.g., 500 INR)
-        currency: 'INR',
-      });
-    const { name, email, phone } = userData || {};
-
-    try {
-      // Step 1: Create an order on the server
-      const { data } = await axios.post('http://localhost:5000/razorpay/create-order', {
-        amount: calculateTotalAmount(), // Amount in INR (e.g., 500 INR)
+        amount: calculateTotalAmount(),
         currency: 'INR',
       });
 
       const order = data;
 
-      // Step 2: Open Razorpay payment gateway
       const options = {
-        key: process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID, // Replace with your Razorpay Key ID
+        key: process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID,
         amount: order.amount,
         currency: order.currency,
         name: 'Vox Market',
@@ -136,26 +113,6 @@ export default function CheckoutPage() {
         handler: async (response) => {
           console.log('Payment response:', response);
 
-          // Step 3: Verify payment on the server
-          const verifyResponse = await axios.post('http://localhost:5000/razorpay/verify-payment', {
-            razorpay_order_id: response.razorpay_order_id,
-            razorpay_payment_id: response.razorpay_payment_id,
-            razorpay_signature: response.razorpay_signature,
-          });
-      const order = data;
-
-      // Step 2: Open Razorpay payment gateway
-      const options = {
-        key: process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID, // Replace with your Razorpay Key ID
-        amount: order.amount,
-        currency: order.currency,
-        name: 'Vox Market',
-        description: 'Test Transaction',
-        order_id: order.id,
-        handler: async (response) => {
-          console.log('Payment response:', response);
-
-          // Step 3: Verify payment on the server
           const verifyResponse = await axios.post('http://localhost:5000/razorpay/verify-payment', {
             razorpay_order_id: response.razorpay_order_id,
             razorpay_payment_id: response.razorpay_payment_id,
@@ -164,29 +121,12 @@ export default function CheckoutPage() {
 
           if (verifyResponse.data.success) {
             toast.success('Payment successful!');
-            setpaymentstatus('success');
-            cb();
+            setPaymentStatus('Complete');
+            cb('Complete');
           } else {
             toast.error('Payment verification failed!');
-            setpaymentstatus('failed');
-          }
-        },
-        prefill: {
-          name,
-          email,
-          contact: phone,
-        },
-        theme: {
-          color: '#3399cc',
-        },
-      };
-          if (verifyResponse.data.success) {
-            toast.success('Payment successful!');
-            setpaymentstatus('success');
-            cb();
-          } else {
-            toast.error('Payment verification failed!');
-            setpaymentstatus('failed');
+            setPaymentStatus('Failed');
+            cb('Failed');
           }
         },
         prefill: {
@@ -199,76 +139,54 @@ export default function CheckoutPage() {
         },
       };
 
-      const razorpay = new window.Razorpay(options); // Use Razorpay from the browser SDK
+      const razorpay = new window.Razorpay(options);
       razorpay.open();
     } catch (error) {
       console.error('Error during payment:', error);
       toast.error('Failed to initiate payment.');
+      setPaymentStatus('Failed');
+      cb('Failed');
     } finally {
       setIsProcessing(false);
     }
   };
 
   const handleSubmit = async (values) => {
-      const razorpay = new window.Razorpay(options); // Use Razorpay from the browser SDK
-      razorpay.open();
-    } catch (error) {
-      console.error('Error during payment:', error);
-      toast.error('Failed to initiate payment.');
-    } finally {
-      setIsProcessing(false);
-    }
-  };
+    console.log('Form values:', values);
 
-  const handleSubmit = async (values) => {
-
-    handlePayment(async () => {
-    handlePayment(async () => {
+    handlePayment(async (paymentStatus) => {
       const order = {
+       
         shippingAddress: `${values.fullName}, ${values.address}, ${values.city}, ${values.postalCode}, ${values.country}`,
         paymentMethod: values.paymentMethod,
-        cardDetails:
-          values.paymentMethod === 'card'
-            ? {
-              cardNumber: values.cardNumber,
-              expiry: values.expiry,
-              cvv: values.cvv,
-            }
-            : null,
-        cardDetails:
-          values.paymentMethod === 'card'
-            ? {
-              cardNumber: values.cardNumber,
-              expiry: values.expiry,
-              cvv: values.cvv,
-            }
-            : null,
+       
         items: cartItems,
-        status: paymentstatus,
-      }
+        status: paymentStatus,
+        deliveryStatus: 'pending',
+        totalPrice: totalAmount,
+        deliveryDate: deliveryDate, // Use the calculated delivery date
+        orderId: orderId,
+      };
 
       try {
         const response = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/order/add`, order, {
           headers: {
             'x-auth-token': localStorage.getItem('user-token'),
           },
-        })
-        console.log('Order placed:', response.data)
+        });
+        console.log('Order placed:', response.data);
         toast.success('Order placed successfully!');
         clearCart();
         router.replace('/user/thankyou');
-
       } catch (error) {
-        console.error('Order error:', error)
-        toast.error('Error placing order. Please try again.')
+        console.error('Order error:', error);
+        toast.error('Error placing order. Please try again.');
       }
-    })
-
-  }
+    });
+  };
 
   return (
     <div style={{ maxWidth: '800px', margin: '0 auto', padding: '2rem' }}>
-
       <Formik
         initialValues={{
           fullName: '',
@@ -317,7 +235,7 @@ export default function CheckoutPage() {
             </div>
 
             <div>
-              <label className='font-bold '>Payment Method</label>
+              <label className="font-bold">Payment Method</label>
               <div role="group" aria-labelledby="paymentMethod">
                 <label>
                   <Field type="radio" name="paymentMethod" value="cod" />
@@ -325,32 +243,19 @@ export default function CheckoutPage() {
                 </label><br />
                 <label>
                   <Field type="radio" name="paymentMethod" value="card" />
-                  {' '} online payment
+                  {' '}Online Payment
                 </label>
               </div>
               <ErrorMessage name="paymentMethod" component="div" style={{ color: 'red' }} />
             </div>
 
-            {values.paymentMethod === 'card' && (
-              <>
-
-              </>
-            )}
-
-            <button disabled={isProcessing} type="submit" style={{ padding: '0.5rem', background: 'black', color: 'white' }}>
+            <button
+              disabled={isProcessing}
+              type="submit"
+              style={{ padding: '0.5rem', background: 'black', color: 'white' }}
+            >
               {isProcessing ? 'Processing...' : 'Pay Now'}
             </button>
-
-            {/* <button
-              type='button'
-              onClick={handlePayment}
-              className="bg-blue-500 text-white px-6 py-3 rounded-lg hover:bg-blue-600 transition"
-              
-            >
-              
-            </button> */}
-
-
           </Form>
         )}
       </Formik>
@@ -358,9 +263,7 @@ export default function CheckoutPage() {
       <div className="mt-4">
         <div className="p-4 w-full">
           <div className="bg-white shadow rounded-lg p-6">
-            <h3 className="text-lg font-semibold text-gray-800 mb-4">
-              Order Summary
-            </h3>
+            <h3 className="text-lg font-semibold text-gray-800 mb-4">Order Summary</h3>
             <div className="flex justify-between mb-2">
               <span className="text-gray-600">Order ID</span>
               <span className="text-gray-800 font-semibold">{orderId || 'Generating...'}</span>
@@ -381,13 +284,9 @@ export default function CheckoutPage() {
               <span className="text-gray-800 font-semibold">Total</span>
               <span className="text-gray-800 font-semibold">RS: {totalAmount}</span>
             </div>
-
           </div>
         </div>
       </div>
     </div>
-
-  )
-
-  )
+  );
 }

@@ -1,8 +1,9 @@
 const { Schema, model, Types } = require('../connection');
 const orderSchema = Schema({
-    user: { type: Types.ObjectId, ref: 'user', required: true },
+    seller: { type: Types.ObjectId, ref: 'seller', require: true },
+    user: { type: Types.ObjectId, ref: 'user', require: true },
     items: { type: Array },
-    address: { type: String },
+    shippingAddress: { type: String },
     city: { type: String},
     postalCode: { type: String},
     name: { type: String},
@@ -14,14 +15,14 @@ const orderSchema = Schema({
     email: { type: String},
     phone: { type: String },
 
-    status: { type: String, default: 'pending' },
-    paymentMethod: { type: String, default: 'cod' },
-    paymentStatus: { type: String, default: 'pending' },
+
+    paymentMethod: { type: String },
+    status: { type: String },
     orderDate: { type: Date, default: Date.now() },
     deliveryDate: { type: Date },
     deliveryStatus: { type: String, default: 'pending' },
 
-    orderId: { type: String, unique: true }
+    orderId: { type: String }
     
 });
 
