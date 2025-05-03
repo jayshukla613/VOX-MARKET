@@ -28,6 +28,7 @@ export const AppProvider = ({ children }) => {
     });
 
     const sellerlogout = () => {
+        document.cookie = "seller-token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
         localStorage.removeItem("seller-token");
         setsellerLoggedIn(false);
         router.replace("/seller-login");

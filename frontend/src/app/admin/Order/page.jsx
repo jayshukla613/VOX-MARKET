@@ -33,9 +33,8 @@ const Orderdetailspage = () => {
                         <th className="p-2">Order ID</th>
                         <th className="p-2">Product Image</th>
                         <th className="p-2">Product Name</th>
-                        <th className="p-2">Quantity</th>
-                        <th className="p-2">Price</th>
-                        <th className="p-2">Order Date</th>
+                        
+                        
                         <th className="p-2">Status</th>
                         <th className="p-2">payment  Method</th>
                         <th className="p-2">Action</th>
@@ -55,11 +54,8 @@ const Orderdetailspage = () => {
                                     />
                                 </td>
                                 <td className="p-2 text-center">{item.name || 'Unknown Product'}</td>
-                                <td className="p-2 text-center">{item.quantity || '0'}</td>
-                                <td className="p-2 text-center">RS {item.price || '0.00'}</td>
-                                <td className="p-2 text-center">
-                                    {order.orderDate ? new Date(order.orderDate).toLocaleDateString() : 'No Date'}
-                                </td>
+                               
+                               
                                 <td className="p-2 text-center">
                                     <span
                                         className={`px-2 py-1 text-sm rounded ${

@@ -6,6 +6,7 @@ import axios from "axios";
 export default function SellerProfile() {
   const [sellerdata, setsellerdata] = useState(null);
   const [product, setproduct] = useState([]);
+  const [orderdata, setorderdata] = useState([]);
   const token = typeof window !== 'undefined' ? localStorage.getItem('seller-token') : null;
 
   const getsellerProfileData = () => {
@@ -21,6 +22,7 @@ export default function SellerProfile() {
 
   useEffect(() => {
     if (token) getsellerProfileData();
+    
   }, [token]);
 
   const fetchproductdata = () => {
@@ -38,6 +40,26 @@ export default function SellerProfile() {
   useEffect(() => {
     if (token) fetchproductdata();
   }, [token]);
+
+  const fetchorderdata = () => {
+    axios.get(`${process.env.NEXT_PUBLIC_API_URL}/order/seller-orders`, {
+      headers: { 'x-auth-token': token }  
+      })
+      .then((result) => {
+        console.log('API Response:', result.data);
+        setorderdata(result.data);
+      }).catch((err) => {
+        console.log(err);
+      });
+  };
+
+  useEffect(() => {
+    if (token) fetchorderdata();
+  }, [token]);
+
+
+
+
 
   // Function to truncate product name
   const truncateName = (name, maxLength = 30) => {
@@ -87,44 +109,25 @@ export default function SellerProfile() {
           </div>
         </section>
         {/* Recent Orders */}
-        <section className="mt-6 bg-white p-6 rounded-lg shadow-md">
+        <section className="mt-6 b p-6 rounded-lg shadow-md">
           <h3 className="text-lg font-semibold mb-4">Recent Orders</h3>
-          <div className="overflow-x-auto">
-            <table className="min-w-full bg-white">
-              <thead>
-                <tr>
-                  <th className="py-2 px-4 border-b">Order ID</th>
-                  <th className="py-2 px-4 border-b">Product</th>
-                  <th className="py-2 px-4 border-b">Date</th>
-                  <th className="py-2 px-4 border-b">Status</th>
-                  <th className="py-2 px-4 border-b">Total</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td className="py-2 px-4 border-b">#12345</td>
-                  <td className="py-2 px-4 border-b">Product Name 1</td>
-                  <td className="py-2 px-4 border-b">2023-10-01</td>
-                  <td className="py-2 px-4 border-b text-green-600">Completed</td>
-                  <td className="py-2 px-4 border-b">$100</td>
-                </tr>
-                <tr>
-                  <td className="py-2 px-4 border-b">#12346</td>
-                  <td className="py-2 px-4 border-b">Product Name 2</td>
-                  <td className="py-2 px-4 border-b">2023-10-02</td>
-                  <td className="py-2 px-4 border-b text-yellow-600">Pending</td>
-                  <td className="py-2 px-4 border-b">$200</td>
-                </tr>
-                <tr>
-                  <td className="py-2 px-4 border-b">#12347</td>
-                  <td className="py-2 px-4 border-b">Product Name 3</td>
-                  <td className="py-2 px-4 border-b">2023-10-03</td>
-                  <td className="py-2 px-4 border-b text-red-600">Cancelled</td>
-                  <td className="py-2 px-4 border-b">$150</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            {orderdata.length === 0 ? (
+              <div className="bg-white p-6 rounded-lg shadow-md text-center col-span-3">
+                <p className="text-gray-600">No recent orders found.</p>
+              </div>
+            ) :orderdata.map((order, index) => (
+              <div key={index} className="bg-white p-4 rounded-lg shadow-md">
+                <h4 className="text-lg font-semibold mb-2">Order ID: {order._id}</h4>
+                <p className="text-gray-600 mb-2">Customer: {order.customerName}</p>
+                <p className="text-gray-600 mb-2">Total Amount: Rs. {order.totalAmount}</p>
+                <p className="text-gray-600 mb-2">Status: {order.status}</p>
+              </div>
+            ))}
+          </div>  
+             
+            
+         
         </section>
         {/* Product Listings */}
         <section className="mt-6 bg-white p-6 rounded-lg shadow-md">

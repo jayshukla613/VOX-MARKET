@@ -22,6 +22,8 @@ const SellerLogin = () => {
           toast.success('login succesfull')
           console.log(result.data?.token);
           localStorage.setItem('seller-token', result.data?.token);
+          document.cookie = `seller-token=${result.data?.token}; path=/;`;
+          
           router.push('/seller/profile');
         }).catch((err) => {
           console.log(err);
