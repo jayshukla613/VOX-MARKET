@@ -36,7 +36,7 @@ const CheckoutSchema = Yup.object().shape({
     then: (schema) => schema.required('CVV is required').matches(/^\d{3}$/, 'CVV must be 3 digits'),
   }),
 })
-})
+
 
 export default function CheckoutPage() {
   const { cartItems, calculateTotalAmount, clearCart } = useCartContext();
@@ -207,187 +207,186 @@ export default function CheckoutPage() {
     } finally {
       setIsProcessing(false);
     }
-  };
+  ;
 
-  const handleSubmit = async (values) => {
-      const razorpay = new window.Razorpay(options); // Use Razorpay from the browser SDK
-      razorpay.open();
-    } catch (error) {
+  const handleSubmit = (values) => {
+     try{
+       const razorpay = new window.Razorpay(options); // Use Razorpay from the browser SDK
+       razorpay.open();
+     }
+    catch(error) {
       console.error('Error during payment:', error);
       toast.error('Failed to initiate payment.');
-    } finally {
-      setIsProcessing(false);
     }
-  };
-
-  const handleSubmit = async (values) => {
-
-    handlePayment(async () => {
-    handlePayment(async () => {
-      const order = {
-        shippingAddress: `${values.fullName}, ${values.address}, ${values.city}, ${values.postalCode}, ${values.country}`,
-        paymentMethod: values.paymentMethod,
-        cardDetails:
-          values.paymentMethod === 'card'
-            ? {
-              cardNumber: values.cardNumber,
-              expiry: values.expiry,
-              cvv: values.cvv,
-            }
-            : null,
-        cardDetails:
-          values.paymentMethod === 'card'
-            ? {
-              cardNumber: values.cardNumber,
-              expiry: values.expiry,
-              cvv: values.cvv,
-            }
-            : null,
-        items: cartItems,
-        status: paymentstatus,
-      }
-
-      try {
-        const response = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/order/add`, order, {
-          headers: {
-            'x-auth-token': localStorage.getItem('user-token'),
-          },
-        })
-        console.log('Order placed:', response.data)
-        toast.success('Order placed successfully!');
-        clearCart();
-        router.replace('/user/thankyou');
-
-      } catch (error) {
-        console.error('Order error:', error)
-        toast.error('Error placing order. Please try again.')
-      }
-    })
-
   }
 
-  return (
-    <div style={{ maxWidth: '800px', margin: '0 auto', padding: '2rem' }}>
+  async function handleSubmit(values) {
 
-      <Formik
-        initialValues={{
-          fullName: '',
-          address: '',
-          city: '',
-          postalCode: '',
-          country: '',
-          paymentMethod: '',
-          cardNumber: '',
-          expiry: '',
-          cvv: '',
-        }}
-        validationSchema={CheckoutSchema}
-        onSubmit={handleSubmit}
-      >
-        {({ values }) => (
-          <Form style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-            <div>
-              <label className='font-bold p-1'>Full Name</label><br />
-              <Field name="fullName" className="w-full p-3 border-2 border-black rounded-lg" />
-              <ErrorMessage name="fullName" component="div" style={{ color: 'red' }} />
-            </div>
+    handlePayment(async () => {
+      handlePayment(async () => {
+        const order = {
+          shippingAddress: `${values.fullName}, ${values.address}, ${values.city}, ${values.postalCode}, ${values.country}`,
+          paymentMethod: values.paymentMethod,
+          cardDetails: values.paymentMethod === 'card'
+            ? {
+              cardNumber: values.cardNumber,
+              expiry: values.expiry,
+              cvv: values.cvv,
+            }
+            : null,
+          cardDetails: values.paymentMethod === 'card'
+            ? {
+              cardNumber: values.cardNumber,
+              expiry: values.expiry,
+              cvv: values.cvv,
+            }
+            : null,
+          items: cartItems,
+          status: paymentstatus,
+        }
 
-            <div>
-              <label className='font-bold p-1'>Address</label><br />
-              <Field name="address" className="w-full p-3 border-2 border-black rounded-lg" />
-              <ErrorMessage name="address" component="div" style={{ color: 'red' }} />
-            </div>
+        try {
+          const response = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/order/add`, order, {
+            headers: {
+              'x-auth-token': localStorage.getItem('user-token'),
+            },
+          })
+          console.log('Order placed:', response.data)
+          toast.success('Order placed successfully!')
+          clearCart()
+          router.replace('/user/thankyou')
 
-            <div>
-              <label className='font-bold p-1'>City</label><br />
-              <Field name="city" className="w-full p-3 border-2 border-black rounded-lg" />
-              <ErrorMessage name="city" component="div" style={{ color: 'red' }} />
-            </div>
+        } catch (error) {
+          console.error('Order error:', error)
+          toast.error('Error placing order. Please try again.')
+        }
+      })
 
-            <div>
-              <label className='font-bold p-1'>Postal Code</label><br />
-              <Field name="postalCode" className="w-full p-3 border-2 border-black rounded-lg" />
-              <ErrorMessage name="postalCode" component="div" style={{ color: 'red' }} />
-            </div>
+    }
+    )
+    return (
+      <div style={{ maxWidth: '800px', margin: '0 auto', padding: '2rem' }}>
 
-            <div>
-              <label className='font-bold p-1'>Country</label><br />
-              <Field name="country" className="w-full p-3 border-2 border-black rounded-lg" />
-              <ErrorMessage name="country" component="div" style={{ color: 'red' }} />
-            </div>
-
-            <div>
-              <label className='font-bold '>Payment Method</label>
-              <div role="group" aria-labelledby="paymentMethod">
-                <label>
-                  <Field type="radio" name="paymentMethod" value="cod" />
-                  {' '}Cash on Delivery
-                </label><br />
-                <label>
-                  <Field type="radio" name="paymentMethod" value="card" />
-                  {' '} online payment
-                </label>
+        <Formik
+          initialValues={{
+            fullName: '',
+            address: '',
+            city: '',
+            postalCode: '',
+            country: '',
+            paymentMethod: '',
+            cardNumber: '',
+            expiry: '',
+            cvv: '',
+          }}
+          validationSchema={CheckoutSchema}
+          onSubmit={handleSubmit}
+        >
+          {({ values }) => (
+            <Form style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+              <div>
+                <label className='font-bold p-1'>Full Name</label><br />
+                <Field name="fullName" className="w-full p-3 border-2 border-black rounded-lg" />
+                <ErrorMessage name="fullName" component="div" style={{ color: 'red' }} />
               </div>
-              <ErrorMessage name="paymentMethod" component="div" style={{ color: 'red' }} />
+
+              <div>
+                <label className='font-bold p-1'>Address</label><br />
+                <Field name="address" className="w-full p-3 border-2 border-black rounded-lg" />
+                <ErrorMessage name="address" component="div" style={{ color: 'red' }} />
+              </div>
+
+              <div>
+                <label className='font-bold p-1'>City</label><br />
+                <Field name="city" className="w-full p-3 border-2 border-black rounded-lg" />
+                <ErrorMessage name="city" component="div" style={{ color: 'red' }} />
+              </div>
+
+              <div>
+                <label className='font-bold p-1'>Postal Code</label><br />
+                <Field name="postalCode" className="w-full p-3 border-2 border-black rounded-lg" />
+                <ErrorMessage name="postalCode" component="div" style={{ color: 'red' }} />
+              </div>
+
+              <div>
+                <label className='font-bold p-1'>Country</label><br />
+                <Field name="country" className="w-full p-3 border-2 border-black rounded-lg" />
+                <ErrorMessage name="country" component="div" style={{ color: 'red' }} />
+              </div>
+
+              <div>
+                <label className='font-bold '>Payment Method</label>
+                <div role="group" aria-labelledby="paymentMethod">
+                  <label>
+                    <Field type="radio" name="paymentMethod" value="cod" />
+                    {' '}Cash on Delivery
+                  </label><br />
+                  <label>
+                    <Field type="radio" name="paymentMethod" value="card" />
+                    {' '} online payment
+                  </label>
+                </div>
+                <ErrorMessage name="paymentMethod" component="div" style={{ color: 'red' }} />
+              </div>
+
+              {values.paymentMethod === 'card' && (
+                <>
+
+                </>
+              )}
+
+              <button disabled={isProcessing} type="submit" style={{ padding: '0.5rem', background: 'black', color: 'white' }}>
+                {isProcessing ? 'Processing...' : 'Pay Now'}
+              </button>
+
+              {/* <button
+                      type='button'
+                      onClick={handlePayment}
+                      className="bg-blue-500 text-white px-6 py-3 rounded-lg hover:bg-blue-600 transition"
+                      
+                    >
+                      
+                    </button> */}
+
+
+            </Form>
+          )}
+        </Formik>
+
+        <div className="mt-4">
+          <div className="p-4 w-full">
+            <div className="bg-white shadow rounded-lg p-6">
+              <h3 className="text-lg font-semibold text-gray-800 mb-4">
+                Order Summary
+              </h3>
+              <div className="flex justify-between mb-2">
+                <span className="text-gray-600">Order ID</span>
+                <span className="text-gray-800 font-semibold">{orderId || 'Generating...'}</span>
+              </div>
+              <div className="flex justify-between mb-2">
+                <span className="text-gray-600">Subtotal</span>
+                <span className="text-gray-800 font-semibold">RS: {subtotal.toFixed(2)}</span>
+              </div>
+              <div className="flex justify-between mb-2">
+                <span className="text-gray-600">Shipping</span>
+                <span className="text-gray-800 font-semibold">RS: {shipping.toFixed(2)}</span>
+              </div>
+              <div className="flex justify-between mb-4">
+                <span className="text-gray-600">Tax</span>
+                <span className="text-gray-800 font-semibold">RS: {tax.toFixed(2)}</span>
+              </div>
+              <div className="flex justify-between mb-4">
+                <span className="text-gray-800 font-semibold">Total</span>
+                <span className="text-gray-800 font-semibold">RS: {totalAmount}</span>
+              </div>
+
             </div>
-
-            {values.paymentMethod === 'card' && (
-              <>
-
-              </>
-            )}
-
-            <button disabled={isProcessing} type="submit" style={{ padding: '0.5rem', background: 'black', color: 'white' }}>
-              {isProcessing ? 'Processing...' : 'Pay Now'}
-            </button>
-
-            {/* <button
-              type='button'
-              onClick={handlePayment}
-              className="bg-blue-500 text-white px-6 py-3 rounded-lg hover:bg-blue-600 transition"
-              
-            >
-              
-            </button> */}
-
-
-          </Form>
-        )}
-      </Formik>
-
-      <div className="mt-4">
-        <div className="p-4 w-full">
-          <div className="bg-white shadow rounded-lg p-6">
-            <h3 className="text-lg font-semibold text-gray-800 mb-4">
-              Order Summary
-            </h3>
-            <div className="flex justify-between mb-2">
-              <span className="text-gray-600">Order ID</span>
-              <span className="text-gray-800 font-semibold">{orderId || 'Generating...'}</span>
-            </div>
-            <div className="flex justify-between mb-2">
-              <span className="text-gray-600">Subtotal</span>
-              <span className="text-gray-800 font-semibold">RS: {subtotal.toFixed(2)}</span>
-            </div>
-            <div className="flex justify-between mb-2">
-              <span className="text-gray-600">Shipping</span>
-              <span className="text-gray-800 font-semibold">RS: {shipping.toFixed(2)}</span>
-            </div>
-            <div className="flex justify-between mb-4">
-              <span className="text-gray-600">Tax</span>
-              <span className="text-gray-800 font-semibold">RS: {tax.toFixed(2)}</span>
-            </div>
-            <div className="flex justify-between mb-4">
-              <span className="text-gray-800 font-semibold">Total</span>
-              <span className="text-gray-800 font-semibold">RS: {totalAmount}</span>
-            </div>
-
           </div>
         </div>
       </div>
-    </div>
 
-  )
+    )
 
-  )
+  }
 }
+
