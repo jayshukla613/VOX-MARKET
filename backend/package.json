@@ -13,8 +13,8 @@
   "main": "connection.js",
   "scripts": {
     "dev": "nodemon index.js",
-    "build": "next build",
-    "start": "next start"
+    
+     "start": "node index.js"
   },
   "keywords": [],
   "author": "",
