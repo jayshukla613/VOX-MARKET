@@ -7,6 +7,9 @@ import { useRouter } from 'next/navigation';
 import { FaMicrophone } from "react-icons/fa6";
 import { AnimatePresence, motion } from 'framer-motion';
 import usersignup from '@/app/(main)/user-signup/page';
+import dynamic from 'next/dynamic';
+
+const SpeechComponent = dynamic(() => import('./SpeechComponent'), { ssr: false });
 
 const InfoModal = ({ icon, title, description, showModal, setShowModal, centered = false, duration = 2000 }) => {
 
@@ -509,6 +512,13 @@ export const VoiceProvider = ({ children }) => {
     return command;
   }
 
+  useEffect(() => {
+    if (typeof window !== 'undefined' && typeof SpeechSynthesisUtterance !== 'undefined') {
+      const utterance = new SpeechSynthesisUtterance('Hello, world!');
+      window.speechSynthesis.speak(utterance);
+    }
+  }, []);
+
   return (
     <VoiceContext.Provider value={{
       transcript,
@@ -560,4 +570,8 @@ export const VoiceProvider = ({ children }) => {
 
 const useVoiceContext = () => useContext(VoiceContext);
 
-export default useVoiceContext;
+export { useVoiceContext };
+
+export default function Page() {
+    return <SpeechComponent />;
+}
