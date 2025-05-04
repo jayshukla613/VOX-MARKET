@@ -8,6 +8,9 @@ import { FaMicrophone } from "react-icons/fa6";
 import { AnimatePresence, motion } from 'framer-motion';
 import usersignup from '@/app/(main)/user-signup/page';
 import dynamic from 'next/dynamic';
+// Inside VoiceContext.jsx
+import SpeechComponent from './SpeechComponent';
+
 
 const SpeechComponent = dynamic(() => import('./SpeechComponent'), { ssr: false });
 
