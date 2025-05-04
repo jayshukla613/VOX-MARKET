@@ -5,6 +5,7 @@ import React from 'react'
 import axios from 'axios';
 import toast from 'react-hot-toast';
 import { useRouter } from 'next/navigation';
+import Cookies from 'js-cookie';
 
 const SellerLogin = () => {
   const router = useRouter();
@@ -22,7 +23,10 @@ const SellerLogin = () => {
           toast.success('login succesfull')
           console.log(result.data?.token);
           localStorage.setItem('seller-token', result.data?.token);
-          document.cookie = `seller-token=${result.data?.token}; path=/;`;
+          Cookies.set('seller-token', result.data?.token, { path: '/' });
+          console.log(Cookies.get('seller-token'));
+
+         
           
           router.push('/seller/profile');
         }).catch((err) => {

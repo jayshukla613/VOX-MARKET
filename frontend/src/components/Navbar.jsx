@@ -173,7 +173,7 @@ const Navbar = (product) => {
                     </Link>
                   </DropdownItem>
 
-                  <DropdownItem key="seller-intro" className="h-10 gap-2">
+                  <DropdownItem key="seller-intro"className="h-10 gap-2 hover:bg-gray-200  hover:scale-105">
                     <Link href="/seller/seller-introducepage">Seller Registration</Link>
                   </DropdownItem>
 
