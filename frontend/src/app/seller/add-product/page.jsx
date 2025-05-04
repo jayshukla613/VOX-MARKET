@@ -42,7 +42,7 @@ const Addproduct = () => {
       feature: ''
     },
     onSubmit: (value, { resetForm, setSubmitting }) => {
-      axios.post('http://localhost:5000/product/add', value, {
+      axios.post(`${process.env.NEXT_PUBLIC_API_URL}/product/add`, value, {
         headers: { 'x-auth-token': token }
       })
       .then((result) => {

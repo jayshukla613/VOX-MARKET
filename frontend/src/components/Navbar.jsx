@@ -43,7 +43,7 @@ const Navbar = (product) => {
     setLoading(true);
 
     try {
-      const response = await axios.get(`http://localhost:5000/product/getbysearch/${search}`);
+      const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/product/getbysearch/${search}`);
 
       if (response.status === 200) {
         setProducts(response.data);

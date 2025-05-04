@@ -21,14 +21,14 @@ const UserManagement = () => {
 
 
     useEffect(() => {
-        axios.get('http://localhost:5000/users/').then(res => setUsers(res.data));
+        axios.get(`${process.env.NEXT_PUBLIC_API_URL}/users/`).then(res => setUsers(res.data));
     }, []);
 
 
 
 
       const deleteUser = async (id) => {
-        axios.delete(`http://localhost:5000/user/deletebyid/${id}`)
+        axios.delete(`${process.env.NEXT_PUBLIC_API_URL}/user/deletebyid/${id}`)
           .then((result) => {
             console.log(result.data)
             toast.success('delete')
@@ -48,7 +48,7 @@ const UserManagement = () => {
    };
 
     const userdata = (e) => {
-        axios.get(`http://localhost:5000/user/getall`)
+        axios.get(`${process.env.NEXT_PUBLIC_API_URL}/user/getall`)
             .then((result) => {
                 setUsers(result.data);
 

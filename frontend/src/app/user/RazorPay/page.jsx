@@ -45,7 +45,7 @@ const PaymentGateway = () => {
 
     try {
       // Step 1: Create an order on the server
-      const { data } = await axios.post('http://localhost:5000/razorpay/create-order', {
+      const { data } = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/razorpay/create-order`, {
         amount: calculateTotalAmount(), // Amount in INR (e.g., 500 INR)
         currency: 'INR',
       });
@@ -64,7 +64,7 @@ const PaymentGateway = () => {
           console.log('Payment response:', response);
 
           // Step 3: Verify payment on the server
-          const verifyResponse = await axios.post('http://localhost:5000/razorpay/verify-payment', {
+          const verifyResponse = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/razorpay/verify-payment`, {
             razorpay_order_id: response.razorpay_order_id,
             razorpay_payment_id: response.razorpay_payment_id,
             razorpay_signature: response.razorpay_signature,

@@ -5,15 +5,17 @@ import axios from 'axios';
 import React, { useEffect } from 'react';
 import toast from 'react-hot-toast';
 
+ const ISSERVER = typeof window === 'undefined';
+
 const Ordercard = () => {
 
-  const token = localStorage.getItem('user-token')
+  const token = !ISSERVER && localStorage.getItem('user-token')
   // const [cart, setCart] = useState([])
     const { cartItems, removeItemFromCart, deleteItemFromCart, calculateTotalAmount, addItemToCart } = useCartContext();
 
 
   const fetchcartitems = async () => {
-    axios.get('http://localhost:5000/cart/getbyuser', {
+    axios.get(`${process.env.NEXT_PUBLIC_API_URL}/cart/getbyuser`, {
       headers: { 'x-auth-token': token }
 
     }).then((response) => {

@@ -7,7 +7,12 @@ import toast from 'react-hot-toast';
 import { useRouter } from 'next/navigation';
 import Cookies from 'js-cookie';
 
+const ISSERVER = typeof window === 'undefined';
+
 const SellerLogin = () => {
+
+
+
   const router = useRouter();
   const sellerlogin = useFormik({
     initialValues: {
@@ -22,7 +27,7 @@ const SellerLogin = () => {
         .then((result) => {
           toast.success('login succesfull')
           console.log(result.data?.token);
-          localStorage.setItem('seller-token', result.data?.token);
+          !ISSERVER && localStorage.setItem('seller-token', result.data?.token);
           Cookies.set('seller-token', result.data?.token, { path: '/' });
           console.log(Cookies.get('seller-token'));
 

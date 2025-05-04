@@ -15,7 +15,7 @@ const categorynavigation = () => {
       const fetchProducts = async (selectedCategory) => {
         setLoading(true);
         try {
-          const response = await axios.get(`http://localhost:5000/getbycategory/${encodeURIComponent(selectedCategory)}`);
+          const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/getbycategory/${encodeURIComponent(selectedCategory)}`);
   
           if (response.status === 200) {
            setSelectedCategory(response.data);

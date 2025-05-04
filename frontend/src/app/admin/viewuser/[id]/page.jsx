@@ -10,7 +10,7 @@ const viewuserdetails = () => {
     
         const fetchdetailsbyid = async (id) => {
             try {
-                const result = await axios.get(`http://localhost:5000/user/getbyid/${id}`);
+                const result = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/user/getbyid/${id}`);
                 // Debugging
                 setUserDetails(result.data);
                 

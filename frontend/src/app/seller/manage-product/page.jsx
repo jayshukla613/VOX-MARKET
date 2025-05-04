@@ -38,7 +38,7 @@ const manageproduct = () => {
 
 
   const deleteProduct = (id) => {
-    axios.delete(`http://localhost:5000/product/delete/${id}`)
+    axios.delete(`${process.env.NEXT_PUBLIC_API_URL}/product/delete/${id}`)
       .then((result) => {
         toast.success('product  deleted successfully');
         fetchproductdata();

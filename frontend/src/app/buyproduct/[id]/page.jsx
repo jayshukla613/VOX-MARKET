@@ -13,7 +13,7 @@
          if (id) {
              const fetchProduct = async () => {
                  try {
-                     const res = await axios.get(`http://localhost:5000/product/getbyid/${id}`);
+                     const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/product/getbyid/${id}`);
                      const data = res.data;
                      setProduct(data);
                  } catch (error) {

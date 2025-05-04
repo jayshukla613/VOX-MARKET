@@ -12,7 +12,7 @@ export default function DisplaySellers() {
   // Function to fetch sellers from the server
   const fetchSellers = async () => {
     try {
-      const result = await axios.get("http://localhost:5000/seller/getall");
+      const result = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/seller/getall`);
       setSellers(result.data); // Set the fetched sellers in state
       
     } catch (err) {
@@ -29,7 +29,7 @@ export default function DisplaySellers() {
   }, []);
 
   const deleteseller = async (id) => {
-    axios.delete(`http://localhost:5000/seller/sellerdelete/${id}`)
+    axios.delete(`${process.env.NEXT_PUBLIC_API_URL}/sellerdelete/${id}`)
       .then((result) => {
         console.log(result.data)
         toast.success('delete')

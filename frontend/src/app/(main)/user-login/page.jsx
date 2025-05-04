@@ -19,7 +19,7 @@ const Userlogin = () => {
       })
       .then((result) => {
           console.log(result.data);
-          localStorage.setItem('cartItems', JSON.stringify(result.data.cartItems));
+          !ISSERVER && localStorage.setItem('cartItems', JSON.stringify(result.data.cartItems));
       }).catch((err) => {
           console.log(err);
       });

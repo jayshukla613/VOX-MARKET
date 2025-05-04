@@ -6,12 +6,14 @@ const { createContext, useContext, useState } = require("react");
 
 const AppContext = createContext();
 
+ const ISSERVER=typeof window === "undefined";
+
 export const AppProvider = ({ children }) => {
 
     const router = useRouter();
 
     const [userLoggedIn, setUserLoggedIn] = useState(() => {
-        const token = localStorage.getItem("user-token");
+        const token =!ISSERVER && localStorage.getItem("user-token");
         return token ? true : false;
     });
 
