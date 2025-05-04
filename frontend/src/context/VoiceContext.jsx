@@ -9,10 +9,11 @@ import { AnimatePresence, motion } from 'framer-motion';
 import usersignup from '@/app/(main)/user-signup/page';
 import dynamic from 'next/dynamic';
 // Inside VoiceContext.jsx
-import SpeechComponent from './SpeechComponent';
+// Commenting out the SpeechComponent import and usage
+// import SpeechComponent from './SpeechComponent';
 
 
-const SpeechComponent = dynamic(() => import('./SpeechComponent'), { ssr: false });
+
 
 const InfoModal = ({ icon, title, description, showModal, setShowModal, centered = false, duration = 2000 }) => {
 
@@ -575,6 +576,10 @@ const useVoiceContext = () => useContext(VoiceContext);
 
 export { useVoiceContext };
 
-export default function Page() {
-    return <SpeechComponent />;
-}
+
+
+
+// Commenting out the default export function that uses SpeechComponent
+// export default function Page() {
+//     return <SpeechComponent />;
+// }
