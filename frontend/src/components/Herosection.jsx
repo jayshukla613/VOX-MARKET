@@ -2,7 +2,7 @@
 import Link from 'next/link'
 import Image from 'next/image' // Import the Image component from next/image
 import React, { useState,useEffect } from 'react'
-import pic from '../../public/ecommarce.jpg' 
+
 
 const Herosection = () => {
 

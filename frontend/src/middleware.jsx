@@ -11,10 +11,11 @@ export async function middleware(req, res) {
     const token = await cookieStore.get('seller-token') || '';
     console.log(token.value);
     const ApiResponse = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/seller/authorise`, {}, {
-      headers: {
-        'Authorization': `Bearer ${token.value}`,
-        'Content-Type': 'application/json'
-      }
+     headers:{
+
+      'x-auth-token': token.value
+
+     }
     });
     console.log(ApiResponse.status);
     if (ApiResponse.status !== 200) {

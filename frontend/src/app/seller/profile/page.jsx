@@ -1,6 +1,6 @@
 'use client'
 import { useState, useEffect } from "react";
-import Sellerdashboard from "@/components/Sellerdashboard";
+import Sellerdashboard from "@/Components/Sellerdashboard";
 import axios from "axios";
 
 export default function SellerProfile() {
