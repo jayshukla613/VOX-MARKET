@@ -1,7 +1,7 @@
 
 'use client'
 import React from 'react'
-import Addtocart from '@/Components/Addtocart'
+import Addtocart from '@/components/Addtocart'
 import useCartContext from '@/context/CartContext'
 
 const demo = () => {

@@ -1,5 +1,5 @@
 'use client'
-import Adminsidebar from '@/Components/Adminsidebar';
+import Adminsidebar from '@/components/Adminsidebar';
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import toast from 'react-hot-toast';

@@ -1,6 +1,6 @@
 'use client'
 import useCartContext from '@/context/CartContext';
-import Ordercard from '@/Components/Ordercard';
+import Ordercard from '@/components/Ordercard';
 import React from 'react';
 import Link from 'next/link';
 

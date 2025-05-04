@@ -1,6 +1,6 @@
 'use client';
-import Footeruserpage from '@/Components/Footeruserpage';
-import Sidebaruser from '@/Components/Sidebaruser';
+import Footeruserpage from '@/components/Footeruserpage';
+import Sidebaruser from '@/components/Sidebaruser';
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 

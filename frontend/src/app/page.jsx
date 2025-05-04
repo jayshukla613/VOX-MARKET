@@ -1,13 +1,13 @@
 'use client'
 import React, { useEffect, useState } from "react";
-import Card from "@/Components/Card";
+import Card from "@/components/Card";
 import { IconStarFilled } from "@tabler/icons-react";
 
 
 
-import Herosection from "@/Components/Herosection";
-import Herosection1 from "@/Components/Herosection1";
-import Reviewsection from "@/Components/Reviewsection";
+import Herosection from "@/components/Herosection";
+import Herosection1 from "@/components/Herosection1";
+import Reviewsection from "@/components/Reviewsection";
 import axios from "axios";
 
 

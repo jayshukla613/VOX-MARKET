@@ -4,7 +4,7 @@ import { IconStarFilled } from "@tabler/icons-react";
 import axios from "axios";
 import { useParams, useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
-import Categorynavigation from "@/Components/Categorynavigation";
+import Categorynavigation from "@/components/Categorynavigation";
 
 const ProductBrowser = () => {
   const router = useRouter();

@@ -1,5 +1,5 @@
 'use client';
-import Navbar from '@/Components/Navbar';
+import Navbar from '@/components/Navbar';
 import { AppProvider } from '@/context/AppContext';
 import { VoiceProvider } from '@/context/VoiceContext';
 import { DropdownMenu } from '@heroui/dropdown';

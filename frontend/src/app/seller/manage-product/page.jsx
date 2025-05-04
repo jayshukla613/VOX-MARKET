@@ -1,5 +1,5 @@
 'use client'
-import Sellerdashboard from '@/Components/Sellerdashboard';
+import Sellerdashboard from '@/components/Sellerdashboard';
 import { IconPencil, IconPlus, IconTrashFilled, IconUserEdit } from '@tabler/icons-react';
 import axios from 'axios';
 import Link from 'next/link';

@@ -1,6 +1,6 @@
 'use client'
 import React, { useState, useEffect } from 'react'
-import Sellerdashboard from '@/Components/Sellerdashboard';
+import Sellerdashboard from '@/components/Sellerdashboard';
 import { Field, useFormik } from 'formik';
 import * as Yup from 'yup';
 import axios from 'axios';
