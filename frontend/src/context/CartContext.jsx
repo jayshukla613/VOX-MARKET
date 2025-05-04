@@ -4,6 +4,8 @@ import axios from "axios";
 
 const { createContext, useContext, useState, useEffect } = require("react");
 
+const ISSERVER = typeof window === "undefined";
+
 const CartContext = createContext();
 
 export const CartProvider = ({ children }) => {
@@ -25,14 +27,14 @@ export const CartProvider = ({ children }) => {
 
     const [cartItems, setCartItems] = useState(() => {
         // Initialize cartItems from localStorage if available
-        const storedCart = localStorage.getItem("cartItems");
+        const storedCart =!ISSERVER && localStorage.getItem("cartItems");
         return storedCart ? JSON.parse(storedCart) : [];
     });
 
     // Sync cartItems with localStorage whenever it changes
     useEffect(() => {
         updateCart();
-        localStorage.setItem("cartItems", JSON.stringify(cartItems));
+        !ISSERVER && localStorage.setItem("cartItems", JSON.stringify(cartItems));
     }, [cartItems]);
 
     // Function to add an item to the cart
@@ -70,7 +72,7 @@ export const CartProvider = ({ children }) => {
     // Function to clear the cart
     const clearCart = () => {
         setCartItems([]);
-        localStorage.removeItem("cartItems"); // Optionally clear cart from localStorage
+        !ISSERVER &&   localStorage.removeItem("cartItems"); // Optionally clear cart from localStorage
     };
 
     // Function to calculate the total amount

@@ -6,14 +6,14 @@ const { createContext, useContext, useState } = require("react");
 
 const AppContext = createContext();
 
- const ISSERVER=typeof window === "undefined";
+const ISSERVER = typeof window === "undefined";
 
 export const AppProvider = ({ children }) => {
 
     const router = useRouter();
 
     const [userLoggedIn, setUserLoggedIn] = useState(() => {
-        const token =!ISSERVER && localStorage.getItem("user-token");
+        const token = !ISSERVER && localStorage.getItem("user-token");
         return token ? true : false;
     });
 
@@ -36,7 +36,7 @@ export const AppProvider = ({ children }) => {
         router.replace("/seller-login");
     }
 
-  
+
 
     return <AppContext.Provider value={{
         userLoggedIn,
@@ -44,8 +44,8 @@ export const AppProvider = ({ children }) => {
         logout,
         sellerLoggedIn,
         setsellerLoggedIn,
-        sellerlogout    
-        
+        sellerlogout
+
     }}>{children}</AppContext.Provider>;
 }
 
