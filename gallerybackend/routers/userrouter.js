@@ -25,6 +25,17 @@ router.get('/getallusers', async (req, res) => {
         res.status(500).json({ message: 'Server error' });
     }
 });
+router.delete('/delete/:id', (req, res) => {
+   User.findByIdAndDelete(req.params.id)
+        .then((result) => {
+            res.status(200).json(result);
+
+        })
+        .catch((err) => {
+            console.log(err);
+            res.status(500).json(err);
+        });
+})
 router.get('/getdetails', verifytoken, (req, res) => {
     User.findById(req.user._id)
         .then((result) => {
