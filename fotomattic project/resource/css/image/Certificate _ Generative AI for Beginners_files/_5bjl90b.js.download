@@ -1,0 +1,29 @@
+try { 
+	webengage.onReady(function () {
+  webengage.notification.onOpen(function (data) {
+    if (data.notificationId === '~55855a2b') {
+      // Wait a bit to ensure iframe and elements are rendered
+      setTimeout(function () {
+        var iframe = document.getElementById('webklipper-publisher-widget-container-notification-frame');
+        if (!iframe) return;
+
+        var iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
+        var promoCodes = iframeDoc.querySelector('.dealName');
+
+          promoCodes.addEventListener('click', function (e) {
+         
+              navigator.clipboard.writeText("FREEDOM10");
+      
+        });
+      }, 200); // Add a slight delay to allow iframe content to load
+    }
+  });
+});
+
+ } catch(e) { 
+ 	if (e instanceof Error) { 
+		var data = e.stack || e.description;
+		data = (data.length > 900 ? data.substring(0, 900) : data);
+	 	webengage.eLog(null, 'error', data, 'cwc-error','cwc', '~5bjl90b');
+	 }
+ }

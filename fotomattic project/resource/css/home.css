@@ -172,12 +172,11 @@
         align-items: center;
     }
     .hero1 .herofirst, .hero2 .herosecond{
-        height: 100px;
+        height: 200px;
         width: auto;
-        
     }
     .portfolio{
-        margin: auto;
+        margin: 0px;
     }
     .portfolio-item{
         flex-direction: row;
@@ -186,26 +185,23 @@
         margin: 0 0;
     }
     .team-members{
-        flex-direction: column;
+        flex-direction: row;
         align-items: center;
     }
     .team-container{
-        flex-direction: column;
+        flex-direction: row;
         align-items: center;
         flex-wrap: wrap;
        
     }
     .team-members img{
         height: 150px;
-        width:200px;
-        justify-items: center;
-        align-items: center;
+        width:100px;
     }
     *{
         font-size: small;
     }
     .team{
         height:900px;
-        
     }
 }

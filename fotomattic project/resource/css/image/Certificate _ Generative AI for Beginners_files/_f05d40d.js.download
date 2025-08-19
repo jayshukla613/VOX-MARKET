@@ -1,0 +1,60 @@
+try { 
+	webengage.onReady(function () {
+    webengage.notification.onOpen(function (data) {
+        if (data.notificationId === '~2514368a1') {
+
+            // ✅ Clipboard copy logic only
+            webengage.util.withWeJquery(function () {
+                $weJQuery('#webklipper-publisher-widget-container-notification-frame')
+                    .contents()
+                    .find('.doc.code')
+                    .click(function (e) {
+
+                        var codeElement = $weJQuery('.clipboard .code', $weJQuery(this).closest('body'))[0];
+
+                        if (codeElement) {
+                            var dealText = codeElement.innerText;
+                            navigator.clipboard.writeText(dealText);
+
+                            // Arabic text change on successful copy
+                            e.target.innerText = "Copied";
+                            e.target.classList.add('copied');
+                        }
+                    });
+            });
+
+        }
+    });
+});
+
+
+webengage.onReady(function () {
+  webengage.notification.onOpen(function (data) {
+    if (data.notificationId === '~2514368a1') {
+      
+      var iframe = document.getElementById('webklipper-publisher-widget-container-notification-frame');
+
+      if (iframe && iframe.contentDocument) {
+        var backdrop = iframe.contentDocument.querySelector('.backdrop');
+        var container = iframe.contentDocument.querySelector('#webklipper-publisher-widget-container-notification-container');
+
+      //  if (backdrop) {
+    //      backdrop.style.setProperty('opacity', '0');
+   //     }
+
+        if (container) {
+          container.style.setProperty('background-color', 'transparent', 'important');
+        }
+      }
+
+    }
+  });
+});
+
+ } catch(e) { 
+ 	if (e instanceof Error) { 
+		var data = e.stack || e.description;
+		data = (data.length > 900 ? data.substring(0, 900) : data);
+	 	webengage.eLog(null, 'error', data, 'cwc-error','cwc', '~f05d40d');
+	 }
+ }

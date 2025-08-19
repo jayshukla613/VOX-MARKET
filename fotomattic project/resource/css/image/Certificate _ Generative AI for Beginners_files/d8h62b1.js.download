@@ -1,0 +1,31 @@
+try { 
+	webengage.onReady(function() {
+    webengage.webPersonalization.onOpen(function(data) {
+        console.log("webP on open.");
+       
+      if (data.webPersonalizationId ==="~1qq06hf"){
+      
+      
+      var styleP=document.querySelector("#we-t_14n4df2-t_1qq06hf > div > div > div");
+        
+         function copyCode(){
+        console.log("call copy fn");
+       navigator.clipboard.writeText("PMP10");
+           window.open("https://www.simplilearn.com/project-management/pmp-certification-training", "_blank");
+        }  
+
+        styleP.addEventListener("click",copyCode);
+        
+        
+        
+      }
+  
+    });
+});
+ } catch(e) { 
+ 	if (e instanceof Error) { 
+		var data = e.stack || e.description;
+		data = (data.length > 900 ? data.substring(0, 900) : data);
+	 	webengage.eLog(null, 'error', data, 'cwc-error','cwc', 'd8h62b1');
+	 }
+ }

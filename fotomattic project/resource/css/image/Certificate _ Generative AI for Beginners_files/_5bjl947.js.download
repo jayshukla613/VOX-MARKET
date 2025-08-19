@@ -1,0 +1,30 @@
+try { 
+	webengage.onReady(function() {
+    webengage.webPersonalization.onOpen(function(data) {
+        console.log("webP on open.");
+       
+      if (data.webPersonalizationId ==="1n23jc3"){
+      
+      
+      var styleP= document.querySelector("#we-t_t7dcld-t_214poq1 > div > div > a > div");
+        
+         function copyCode(){
+        console.log("call copy fn");
+       navigator.clipboard.writeText("AIENG");
+           window.open("https://www.simplilearn.com/masters-in-artificial-intelligence?utm_source=Drip-Skillup-MNZTN&utm_medium=Onsite&utm_campaign=Skillup_WebPer_HomePage_AIML_17July2025", "_blank");
+        }  
+
+        styleP.addEventListener("click",copyCode);
+       
+        
+      }
+  
+    });
+});
+ } catch(e) { 
+ 	if (e instanceof Error) { 
+		var data = e.stack || e.description;
+		data = (data.length > 900 ? data.substring(0, 900) : data);
+	 	webengage.eLog(null, 'error', data, 'cwc-error','cwc', '~5bjl947');
+	 }
+ }

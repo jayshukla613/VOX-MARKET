@@ -1,0 +1,82 @@
+try { 
+	webengage.onReady(function () {
+  webengage.notification.onOpen(function (data) {
+    if (data.notificationId === "b8a68aa8" || data.notificationId === "3177433" || data.notificationId === "197145251" || data.notificationId === "~251439a04") {
+      setTimeout(function () {
+        const headerMenu = document.querySelector("#HeaderMenu");
+
+        if (headerMenu) {
+          const screenWidth = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
+
+          headerMenu.style.cssText = screenWidth < 600
+            ? 'margin-top: 47px; position: fixed; top: 14px; z-index: 1;width: 100%;'
+            : 'position: fixed; top: 50px; width: 100%; z-index: 1 ;width: 100%;'
+        }
+
+        const stickyMenu = document.querySelector("div.sticky-menu-wrapper.sticky-cls");
+
+        if (stickyMenu && window.matchMedia('(min-width: 992px)').matches) {
+          stickyMenu.style.cssText = ' width: 100%;margin-top: 70px; position: relative; z-index: -1;';
+        } else {
+          stickyMenu.style.cssText = 'width: 100%;margin-top: 63px; position: relative; z-index: -1;';
+        }
+      }, 10);
+    }
+  });
+
+  webengage.notification.onClose(function (data) {
+    if (data.notificationId === "b8a68aa8" || data.notificationId === "197145251") {
+      setTimeout(function () {
+        const headerMenu = document.querySelector("#HeaderMenu");
+
+        if (headerMenu) {
+          const screenWidth = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
+
+          headerMenu.style.cssText = screenWidth < 600
+            ? 'margin-top: unset; position: unset; top: unset; z-index: unset;width: 100%;'
+            : 'position: unset; top: unset;width: 100%;';
+        }
+
+        const stickyMenu = document.querySelector("div.sticky-menu-wrapper.sticky-cls");
+
+        if (stickyMenu && window.matchMedia('(min-width: 992px)').matches) {
+          stickyMenu.style.cssText = 'width: 100%;margin-top: unset; position: unset; z-index: unset;';
+        } else {
+          stickyMenu.style.cssText = 'width: 100%;margin-top: unset; position: unset; z-index: unset;';
+        }
+      }, 10);
+    }
+  });
+
+  webengage.notification.onClick(function (data) {
+    if (data.notificationId === "b8a68aa8" || data.notificationId === "197145251") {
+      setTimeout(function () {
+        const headerMenu = document.querySelector("#HeaderMenu");
+
+        if (headerMenu) {
+          const screenWidth = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
+
+          headerMenu.style.cssText = screenWidth < 600
+            ? 'margin-top: unset; position: unset; top: unset; z-index: unset;width: 100%;'
+            : 'position: unset; top: unset; width: 100%;';
+        }
+
+        const stickyMenu = document.querySelector("div.sticky-menu-wrapper.sticky-cls");
+
+        if (stickyMenu && window.matchMedia('(min-width: 992px)').matches) {
+          stickyMenu.style.cssText = 'width: 100%;margin-top: unset; position: unset; z-index: unset;width: 100%;'
+        } else {
+          stickyMenu.style.cssText = 'width: 100%;margin-top: unset; position: unset; z-index: unset;width: 100%;'
+        }
+      }, 10);
+    }
+  });
+});
+
+ } catch(e) { 
+ 	if (e instanceof Error) { 
+		var data = e.stack || e.description;
+		data = (data.length > 900 ? data.substring(0, 900) : data);
+	 	webengage.eLog(null, 'error', data, 'cwc-error','cwc', '~a61h6lj');
+	 }
+ }

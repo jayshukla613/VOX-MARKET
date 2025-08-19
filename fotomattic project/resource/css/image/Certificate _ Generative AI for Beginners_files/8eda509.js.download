@@ -1,0 +1,34 @@
+try { 
+	webengage.onReady(function () {
+    webengage.notification.onOpen(function (data) {
+        if (data.notificationId === '22a347335' || data.notificationId === '~197146667' || data.notificationId === '~25143ac60' || data.notificationId === '~10cb52165' ||  data.notificationId === '~5585a86c' || data.notificationId === '~5585a86b' || data.notificationId === '173052947' || data.notificationId === 'b8a5b351') {
+            webengage.util.withWeJquery(function () {
+                var $iframeContent = $weJQuery('#webklipper-publisher-widget-container-notification-frame').contents();
+
+                $iframeContent.find('#promoCode').click(function (e) {
+                    e.preventDefault(); 
+
+                    $iframeContent.find('#promoCode').removeClass('offerCodeDisabled');
+                    e.target.classList.add('offerCodeDisabled');
+
+                    $iframeContent.find('#promoCode').text("CODE COPIED");
+
+                    var dealText = $iframeContent.find('.dealName').text().trim();
+                    navigator.clipboard.writeText(dealText);
+
+                    setTimeout(function () {
+                        webengage.notification.clear();
+                    }, 2000); 
+                });
+            });
+        }
+    });
+});
+
+ } catch(e) { 
+ 	if (e instanceof Error) { 
+		var data = e.stack || e.description;
+		data = (data.length > 900 ? data.substring(0, 900) : data);
+	 	webengage.eLog(null, 'error', data, 'cwc-error','cwc', '8eda509');
+	 }
+ }
