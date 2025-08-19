@@ -12,7 +12,7 @@ const getrandomMessage = () =>{
     const randomText3 = messageThree[randomNumberThree];
 
     const finalText = `${randomText1} ${randomText2} ${randomText3}`;
-    return finalText;
+    return finalText; 
 }
 
 const randomMessage = getrandomMessage();
